@@ -1,0 +1,310 @@
+﻿<ResourceDictionary  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+					xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+					xmlns:local="clr-namespace:Amuqsit.CustomControls.Windows"
+					xmlns:cc="clr-namespace:Amuqsit.CustomControls.Windows">
+    <ControlTemplate x:Key="MainWindowButtonsTemplate" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+
+    </ControlTemplate>
+    <!--Main Window buttons template-->
+
+    <Style x:Key="MainWindowButtonsStyle" TargetType="{x:Type Button}">
+        <Setter Property="Background">
+            <Setter.Value>
+                <SolidColorBrush Color="White" Opacity="0.01"/>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Foreground" Value="#7D7D7D"/>
+        <Setter Property="FontFamily" Value="Myriad Pro"/>
+        <Setter Property="VerticalAlignment" Value="Top"></Setter>
+        <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+        <Setter Property="FontWeight" Value="Bold"/>
+        <Setter Property="FontSize" Value="16"></Setter>
+        <Setter Property="Margin" Value="0,0,0,5"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Width" Value="25"></Setter>
+        <Setter Property="Height" Value="25"></Setter>
+        <Setter Property="Template" Value="{StaticResource MainWindowButtonsTemplate}"/>
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Background" Value="#B1B1B1"></Setter>
+            </Trigger>
+            <Trigger Property="IsPressed" Value="True">
+                <Setter Property="Background" Value="Gray"></Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+    <!-- Main Window Template when resize with grip is true-->
+
+    <ControlTemplate x:Key="WindowTemplateKey"  TargetType="cc:CustomWindow">
+        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+            <Grid>
+                <AdornerDecorator>
+                    <ContentPresenter/>
+                </AdornerDecorator>
+                <ResizeGrip x:Name="WindowResizeGrip" HorizontalAlignment="Right" IsTabStop="false" Visibility="Collapsed" VerticalAlignment="Bottom"/>
+            </Grid>
+        </Border>
+        <ControlTemplate.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="ResizeMode" Value="CanResizeWithGrip"/>
+                    <Condition Property="WindowState" Value="Normal"/>
+                </MultiTrigger.Conditions>
+                <Setter Property="Visibility" TargetName="WindowResizeGrip" Value="Visible"/>
+            </MultiTrigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <!-- Main Window Template -->
+    <Style  TargetType="cc:CustomWindow">
+        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.WindowTextBrushKey}}"/>
+        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
+        <Setter Property="WindowStyle" Value="None"/>
+        <Setter Property="AllowsTransparency" Value="True"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="cc:CustomWindow" x:Name="PART_WindowTemplate">
+                    <Border BorderThickness="1"  x:Name="PART_WindowFrame"  VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="10,10,10,10">
+                        <Border.BorderBrush>
+                            <SolidColorBrush Color="#FFB9B9B9" Opacity="0.4"/>
+                        </Border.BorderBrush>
+                        <Grid Background="White">
+
+                            <Rectangle x:Name="tittleBar" VerticalAlignment="Top" Fill="White"  HorizontalAlignment="Stretch" Height="50" />
+                            <AdornerDecorator >
+                               
+                                    <ContentPresenter />
+                               
+                            </AdornerDecorator>
+                            <StackPanel  x:Name="PART_WindowCaption" VerticalAlignment="Top" HorizontalAlignment="Right" Height="50" Orientation="Horizontal" >
+                                <Path Data="M12,35 L12,73" Height="44" Margin="0,3,5,3" Stretch="Fill" Stroke="#FFE5E5E5" StrokeThickness="1" VerticalAlignment="Center" Width="1" />
+                                <Button x:Name="PART_WindowCaptionMinimizeButton"  FontSize="20" FontWeight="Bold"   Content="-" Style="{StaticResource ResourceKey=MainWindowButtonsStyle}" />
+                                <Button x:Name="PART_WindowCaptionMaximizeButton"  Visibility="Collapsed" FontSize="20" FontWeight="Bold" Style="{StaticResource MainWindowButtonsStyle}"  >
+                                    <Grid>
+                                        <Rectangle Fill="Transparent" Stroke="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" StrokeThickness="2" Height="10" Width="10" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                                        <Rectangle x:Name="rectangle" Fill="Transparent" Stroke="{Binding Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}" StrokeThickness="2" Height="10" Visibility="Collapsed" Margin="6,-3,0,0" Width="10" VerticalAlignment="Top" HorizontalAlignment="Left"/>
+
+                                    </Grid>
+                                </Button>
+                                <Button x:Name="PART_WindowCaptionCloseButton"  FontSize="15"  FontWeight="Bold" Margin="0,0,5,0" Style="{StaticResource MainWindowButtonsStyle}" Content="X"/>
+
+                            </StackPanel>
+
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							VerticalAlignment="Top"
+							Height="5"
+							x:Name="PART_WindowBorderTop"
+							Margin="5,0,5,0" 
+							ForceCursor="True"
+			
+		/>
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							x:Name="PART_WindowBorderBottom"
+							Height="5"
+							VerticalAlignment="Bottom"
+							Margin="5,0,5,0"
+			
+			 />
+                            <Rectangle
+		
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							HorizontalAlignment="Left"
+							Margin="0,5,0,5"
+							Width="5"
+							x:Name="PART_WindowBorderLeft"
+			
+			
+			/>
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							Margin="0,5,0,5"
+							Width="5"
+							HorizontalAlignment="Right"
+							x:Name="PART_WindowBorderRight" 
+			
+			/>
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							HorizontalAlignment="Left"
+							VerticalAlignment="Bottom"
+							Width="5"
+							Height="5"
+							x:Name="PART_WindowBorderBottomLeft" 
+			
+			/>
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							VerticalAlignment="Bottom"
+							Height="5"
+							Width="5"
+							HorizontalAlignment="Right"
+							x:Name="PART_WindowBorderBottomRight" 
+		   />
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							HorizontalAlignment="Right"
+							Width="5"
+							Height="5"
+							VerticalAlignment="Top"
+							x:Name="PART_WindowBorderTopRight"
+			 
+			/>
+                            <Rectangle
+							Stroke="{x:Null}"
+							Fill="Transparent"
+							HorizontalAlignment="Left"
+							Width="6"
+							VerticalAlignment="Top"
+							Height="5"
+							x:Name="PART_WindowBorderTopLeft" 
+			
+			/>
+                        </Grid>
+
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="WindowState" Value="Maximized">
+                            <Setter Property="Margin" TargetName="PART_WindowFrame" Value="0"/>
+                            <Setter Property="Visibility" TargetName="rectangle" Value="Visible"/>
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderTop" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderTop" Value="SizeNS"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderBottom" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderBottom" Value="SizeNS"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderLeft" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderLeft" Value="SizeWE"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderRight" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderRight" Value="SizeWE"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderBottomLeft" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderBottomLeft" Value="SizeNESW"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderBottomRight" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderBottomRight" Value="SizeNWSE"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderTopRight" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderTopRight" Value="SizeNESW"/>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" SourceName="PART_WindowBorderTopLeft" Value="True"/>
+                                <Condition Property="ResizeMode" Value="CanResize"/>
+                                <Condition Property="WindowState" Value="Normal"/>
+                            </MultiTrigger.Conditions>
+                            <Setter Property="Cursor" TargetName="PART_WindowBorderTopLeft" Value="SizeNWSE"/>
+                        </MultiTrigger>
+                        <Trigger Property="ResizeMode" Value="NoResize">
+                            <Setter Property="Visibility" TargetName="PART_WindowCaptionMinimizeButton" Value="Collapsed"/>
+                        </Trigger>
+                        <Trigger Property="ResizeMode" Value="CanResize">
+                            <Setter Property="Visibility" TargetName="PART_WindowCaptionMaximizeButton" Value="Visible"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="ResizeMode" Value="CanResizeWithGrip">
+                <Setter Property="Template" Value="{StaticResource WindowTemplateKey}"/>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+
+
+    <!--Thematic template for buttons-->
+    <ControlTemplate x:Key="ButtonsTemplate" TargetType="{x:Type ButtonBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="3">
+            <ContentPresenter x:Name="contentPresenter" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentStringFormat="{TemplateBinding ContentStringFormat}" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+        </Border>
+    </ControlTemplate>
+
+    <!--Text box template-->
+    <ControlTemplate x:Key="TextBoxTemplate" TargetType="{x:Type TextBoxBase}">
+        <Border x:Name="border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True" CornerRadius="3">
+            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+        </Border>
+        <ControlTemplate.Triggers>
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="#FF7EB4EA"/>
+            </Trigger>
+            <Trigger Property="IsKeyboardFocused" Value="True">
+                <Setter Property="BorderBrush" TargetName="border" Value="#FF569DE5"/>
+            </Trigger>
+        </ControlTemplate.Triggers>
+    </ControlTemplate>
+    <Style x:Key="ThematicButtonsStyle" TargetType="{x:Type Button}">
+        <Setter Property="BorderThickness" Value="0,0" ></Setter>
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF37ADF3" Offset="0"/>
+                    <GradientStop Color="#FF06518F" Offset="1"/>
+                    <GradientStop Color="#FF146CAC" Offset="0.91"/>
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template" Value="{StaticResource ButtonsTemplate}"/>
+        <Setter Property="Foreground" Value="#FFE0E0E0"/>
+        <Setter Property="FontFamily" Value="Myriad Pro"/>
+        <Setter Property="FontSize" Value="20"/>
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="Margin" Value="5"></Setter>
+
+    </Style>
+
+</ResourceDictionary>

@@ -1,0 +1,26 @@
+﻿<cc:CustomWindow
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:ViewModel="clr-namespace:SleepWatcher.ViewModel"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:design="clr-namespace:SleepWatcher.Design"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" 
+        x:Class="SleepWatcher.MainWindow"
+        xmlns:cc="clr-namespace:Amuqsit.CustomControls.Windows;assembly=Amuqsit.CustomControls"
+        mc:Ignorable="d"
+        xmlns:view="clr-namespace:SleepWatcher.View"
+        Title="MainWindow" Height="500" Width="900" WindowStyle="None" AllowsTransparency="True">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <view:PatientView></view:PatientView>
+        <Rectangle Height="10" Fill="#FFE3640A" HorizontalAlignment="Stretch" Grid.Row="1"/>
+        <Path Data="M890,490 L890,10" Fill="#FFBFBEBE" HorizontalAlignment="Right"  Margin="0,60,10,0" Grid.RowSpan="1" Stretch="Fill" Stroke="#FFBFBEBE" VerticalAlignment="Top" Width="1"/>
+        <Path Data="M0,0 L10,0" Fill="#FFBFBEBE" HorizontalAlignment="Center"  Margin="15,55,15,0" Grid.RowSpan="1" Stretch="Fill" Stroke="#FFBFBEBE" VerticalAlignment="Top" Height="1"/>
+
+    </Grid>
+</cc:CustomWindow>

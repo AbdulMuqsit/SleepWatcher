@@ -1,0 +1,37 @@
+﻿<UserControl x:Class="SleepWatcher.View.PatientView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:SleepWatcher.View"
+             mc:Ignorable="d" 
+             xmlns:ViewModel="clr-namespace:SleepWatcher.ViewModel"
+             xmlns:view="clr-namespace:SleepWatcher.View"
+             d:DesignHeight="333" d:DesignWidth="745">
+    <UserControl.Resources>
+     
+
+    </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Mode="OneWay" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
+
+    <Grid   >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Foreground="#FF707071" FontSize="40" FontFamily="Cambria" FontWeight="Bold" Margin="10,10,0,0">Patients</TextBlock>
+        <!--Patients list box-->
+        <ListBox Grid.Row="1"  HorizontalAlignment="Left" Margin="10,5,5,5" ItemTemplate="{DynamicResource ListBoxItemsTemplate}" ItemsSource="{Binding PatientViewModel.Patients}" SelectedItem="{Binding SinglePatientViewModel.Patient}"/>
+        <!--Seperator-->
+        <GridSplitter Grid.Row="1"  Grid.Column="1"  Width="2"/>
+        <!--Add user View Part-->
+        <view:SinglePatinetView Grid.Row="1"  Grid.Column="2"/>
+    </Grid>
+</UserControl>

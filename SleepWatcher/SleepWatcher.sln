@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepWatcher.EF", "SleepWatcher.EF\SleepWatcher.EF.csproj", "{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepWatcher.Entites", "SleepWatcher.Entites\SleepWatcher.Entites.csproj", "{185FDE13-2D26-45F2-A276-8949DEFA8263}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepWatcher", "SleepWatcher\SleepWatcher.csproj", "{D22644CD-807F-44D6-AD24-ECE643E9AEB5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amuqsit.CustomControls", "Amuqsit.CustomControls\Amuqsit.CustomControls.csproj", "{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://abdemuqsit.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SleepWatcher.EF\\SleepWatcher.EF.csproj
+		SccProjectName1 = SleepWatcher.EF
+		SccLocalPath1 = SleepWatcher.EF
+		SccProjectUniqueName2 = SleepWatcher.Entites\\SleepWatcher.Entites.csproj
+		SccProjectName2 = SleepWatcher.Entites
+		SccLocalPath2 = SleepWatcher.Entites
+		SccProjectUniqueName3 = SleepWatcher\\SleepWatcher.csproj
+		SccProjectName3 = SleepWatcher
+		SccLocalPath3 = SleepWatcher
+		SccProjectUniqueName4 = Amuqsit.CustomControls\\Amuqsit.CustomControls.csproj
+		SccProjectName4 = Amuqsit.CustomControls
+		SccLocalPath4 = Amuqsit.CustomControls
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{185FDE13-2D26-45F2-A276-8949DEFA8263}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{185FDE13-2D26-45F2-A276-8949DEFA8263}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{185FDE13-2D26-45F2-A276-8949DEFA8263}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{185FDE13-2D26-45F2-A276-8949DEFA8263}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D22644CD-807F-44D6-AD24-ECE643E9AEB5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D22644CD-807F-44D6-AD24-ECE643E9AEB5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D22644CD-807F-44D6-AD24-ECE643E9AEB5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D22644CD-807F-44D6-AD24-ECE643E9AEB5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
