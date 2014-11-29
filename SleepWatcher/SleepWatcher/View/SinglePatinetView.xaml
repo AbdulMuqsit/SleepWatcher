@@ -22,7 +22,7 @@
 
                     </Grid.ColumnDefinitions>
                     <TextBlock  Grid.Row="1" Text="Add New Patient" HorizontalAlignment="Center" Foreground="#FF7F7F80" FontSize="32" FontFamily="Trebuchet MS"/>
-                    <Button Grid.Row="2" HorizontalAlignment="Center" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource ButtonStyle1}">
+                    <Button Grid.Row="2" HorizontalAlignment="Center" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource ButtonStyle1}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}">
                     +
                     </Button>
                 </Grid>
@@ -76,6 +76,9 @@
             <Setter Property="FontFamily" Value="Arial"/>
         </Style>
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Mode="OneWay" Source="{StaticResource Locator}"/>
+    </UserControl.DataContext>
 
 
 </UserControl>

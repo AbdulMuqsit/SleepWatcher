@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
+using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.ViewModel;
-using SleepWatcher.ViewModel.PatientView;
+
+using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.Design
 {
@@ -20,6 +22,15 @@ namespace SleepWatcher.Design
                 return null;
             }
             set { }
+        }
+
+        public ActionCommand SwitchToAddPatientViewModelCommand
+        {
+            get
+            {
+                return null;
+
+            }
         }
     }
 }

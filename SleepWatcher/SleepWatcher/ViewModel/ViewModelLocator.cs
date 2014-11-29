@@ -7,11 +7,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using SleepWatcher.Design;
-using SleepWatcher.ViewModel.PatientView;
+using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.ViewModel
 {
-    public class ViewModelLocator
+    public  class ViewModelLocator
     {
         public IPatientViewModel PatientViewModel { get; set; }
         public IAddPatientViewModel AddPatientViewModel { get; set; }
@@ -28,7 +28,7 @@ namespace SleepWatcher.ViewModel
             }
             else
             {
-                PatientViewModel = new PatientViewModel();
+                PatientViewModel = new PatientViewModel.PatientViewModel();
             }
             AddPatientViewModel = new AddPatientViewModel();
             SinglePatientViewModel = new SinglePatientViewModel();

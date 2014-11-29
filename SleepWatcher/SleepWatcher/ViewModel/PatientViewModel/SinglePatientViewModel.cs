@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Expression.Interactivity.Core;
+﻿using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 
-namespace SleepWatcher.ViewModel.PatientView
+namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public class SinglePatientViewModel : ViewModelBase, ISinglePatientViewModel
     {
@@ -25,6 +19,8 @@ namespace SleepWatcher.ViewModel.PatientView
             }
         }
 
+        public ActionCommand SwitchToAddPatientViewModelCommand { get; }
+
         public ActionCommand ClearView { get; private set; }
         public SinglePatientViewModel()
         {
@@ -33,6 +29,12 @@ namespace SleepWatcher.ViewModel.PatientView
             ClearView = new ActionCommand(() =>
             {
                 Patient = null;
+            });
+
+            //inititating command which swithces to add patinet view
+            SwitchToAddPatientViewModelCommand = new ActionCommand(() =>
+            {
+                Locator.PatientViewModel.CurrentViewModel = Locator.AddPatientViewModel;
             });
         }
 

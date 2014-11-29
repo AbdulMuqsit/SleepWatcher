@@ -12,6 +12,9 @@
         mc:Ignorable="d"
         xmlns:view="clr-namespace:SleepWatcher.View"
         Title="MainWindow" Height="500" Width="900" WindowStyle="None" AllowsTransparency="True">
+    <Window.Resources>
+
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition/>

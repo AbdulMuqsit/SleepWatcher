@@ -16,6 +16,7 @@ namespace SleepWatcher.ViewModel
 
     public class ViewModelBase : INotifyPropertyChanged, IViewModelBase
     {
+        
         public SleepWatcherDbContext Context { get; set; }
 
         public ViewModelBase()
@@ -23,7 +24,17 @@ namespace SleepWatcher.ViewModel
             Context = new SleepWatcherDbContext();
 
         }
-        protected ViewModelLocator Locator { get; } = Application.Current.Resources["Locator"] as ViewModelLocator;
+
+        protected ViewModelLocator Locator
+        {
+
+            get
+            {
+                var _loator = Application.Current.Resources["Locator"];
+                return _loator as ViewModelLocator;
+            }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)

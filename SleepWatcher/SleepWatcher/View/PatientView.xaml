@@ -6,17 +6,19 @@
              xmlns:local="clr-namespace:SleepWatcher.View"
              mc:Ignorable="d" 
              xmlns:ViewModel="clr-namespace:SleepWatcher.ViewModel"
+             xmlns:patientViewModels="clr-namespace:SleepWatcher.ViewModel.PatientViewModel"
              xmlns:view="clr-namespace:SleepWatcher.View"
              d:DesignHeight="333" d:DesignWidth="745">
     <UserControl.Resources>
-     
-
+        
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Mode="OneWay" Source="{StaticResource Locator}"/>
+
     </UserControl.DataContext>
 
-    <Grid   >
+    <Grid>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
@@ -32,6 +34,6 @@
         <!--Seperator-->
         <GridSplitter Grid.Row="1"  Grid.Column="1"  Width="2"/>
         <!--Add user View Part-->
-        <view:SinglePatinetView Grid.Row="1"  Grid.Column="2"/>
+        <ContentControl Grid.Row="1"  Grid.Column="2" Content="{Binding PatientViewModel.CurrentViewModel}"/>
     </Grid>
 </UserControl>
