@@ -12,7 +12,24 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amuqsit.CustomControls", "Amuqsit.CustomControls\Amuqsit.CustomControls.csproj", "{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}"
 EndProject
 Global
-	
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://abdemuqsit.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SleepWatcher.EF\\SleepWatcher.EF.csproj
+		SccProjectName1 = SleepWatcher.EF
+		SccLocalPath1 = SleepWatcher.EF
+		SccProjectUniqueName2 = SleepWatcher.Entites\\SleepWatcher.Entites.csproj
+		SccProjectName2 = SleepWatcher.Entites
+		SccLocalPath2 = SleepWatcher.Entites
+		SccProjectUniqueName3 = SleepWatcher\\SleepWatcher.csproj
+		SccProjectName3 = SleepWatcher
+		SccLocalPath3 = SleepWatcher
+		SccProjectUniqueName4 = Amuqsit.CustomControls\\Amuqsit.CustomControls.csproj
+		SccProjectName4 = Amuqsit.CustomControls
+		SccLocalPath4 = Amuqsit.CustomControls
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
