@@ -6,7 +6,8 @@
     xmlns:patientViewModels="clr-namespace:SleepWatcher.ViewModel.PatientViewModel"
     xmlns:view="clr-namespace:SleepWatcher.View"
     xmlns:design="clr-namespace:SleepWatcher.Design"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions" mc:Ignorable="d">
+    <!--Single Patient view datatype triggers !-->
     <DataTemplate DataType="{x:Type patientViewModels:SinglePatientViewModel}">
         <view:SinglePatinetView/>
     </DataTemplate>
@@ -16,9 +17,68 @@
     <DataTemplate   DataType="{x:Type patientViewModels:AddPatientViewModel}">
         <view:AddPatientView/>
     </DataTemplate>
+    <!-- Resource dictionary entries should be defined here. -->
+    <!--Datatemplate for notes list box!-->
+    <DataTemplate x:Key="NotesListBoxTemplate">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Text="{Binding Text}" Margin="5,5,0,0" IsReadOnly="{Binding IsChecked, ElementName=IsReadOnly}"  AcceptsReturn="True" AcceptsTab="True"/>
+            <ToggleButton x:Name="IsReadOnly" IsChecked="False" Grid.Column="1" Margin="5,5,0,0"  MinWidth="20"/>
+        </Grid>
+    </DataTemplate>
+    <!-- Steps list box datatemplate!-->
+    <DataTemplate x:Key="StepsListBoxTemplate">
+       
+        <Grid>
+            <Grid.Resources>
+                <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter"/>
+            </Grid.Resources>
+            
+          
 
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock  Grid.Row="0"  Grid.Column="0" Margin="5,5,0,0"  Text="Step: " Style="{DynamicResource TextBlockStyle}" FontWeight="Bold"/>
+                <TextBlock  Grid.Row="0"  Grid.Column="0" Margin="5,5,0,0"  Text="{Binding StepName, Converter={StaticResource EnumConverter}}" Style="{DynamicResource TextBlockStyle}"/>
+
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"  Grid.Row="0" Grid.Column="1">
+                <TextBlock Margin="5,5,0,0" FontWeight="Bold"  Text="Status: " Style="{DynamicResource TextBlockStyle}" />
+                <TextBlock x:Name="textBlock" Grid.Row="0" Grid.Column="2" Margin="5,5,0,0" Text="{Binding Status}"
+                           Style="{DynamicResource TextBlockStyle}" />
+
+                </StackPanel>
+            <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" Style="{StaticResource TextBlockStyle}"  Text="{Binding AlarmTime, Mode=OneWay}"/>
+            <Expander Grid.Row="1" Grid.Column="1" Margin="5,5,0,0" IsExpanded="True" Header="Notes">
+                <ListBox ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotesListBoxTemplate}"/>
+            </Expander>
+            <Button Grid.Row="1"  Grid.Column="2" Margin="5,5,0,0"  Content="New Note" Style="{DynamicResource AddNewNoteButtonStyle}"/>
+            
+        </Grid>
+        
+         <DataTemplate.Triggers>
+            <DataTrigger Binding="{Binding Status}" Value="Completed">
+                <Setter TargetName="textBlock" Property="Foreground" Value="Green"/>
+            </DataTrigger>
+              <DataTrigger Binding="{Binding Status}" Value="Cancled">
+                <Setter TargetName="textBlock" Property="Foreground" Value="Red"/>
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+
+    <!-- list of patients datatemplate !-->
     <DataTemplate x:Key="ListBoxItemsTemplate">
-
         <Grid x:Name="grid" Background="#FFDADADA" d:DesignWidth="200.667" d:DesignHeight="100" MaxHeight="100" Height="Auto" Width="Auto" Margin="5,5,5,0">
             <Grid.Resources>
                 <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter"/>
@@ -32,12 +92,12 @@
                 <RowDefinition Height="Auto"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            <TextBlock  Text="{Binding FullName, Mode=OneWay}" MinWidth="200" MinHeight="0" Foreground="#FF645A53" FontSize="26.667" VerticalAlignment="Top" Padding="0" FontFamily="Javanese Text" Grid.ColumnSpan="2" Margin="5,0,0,0" Height="40" FontWeight="Bold"/>
+            <TextBlock  Text="{Binding FullName, Mode=OneWay}" MinHeight="0" Foreground="#FF645A53" FontSize="26.667" VerticalAlignment="Top" Padding="0" FontFamily="Javanese Text" Grid.ColumnSpan="2" Margin="5,0,0,0" Height="40" FontWeight="Bold"/>
             <TextBlock x:Name="textBlock" Grid.Row="1"  Margin="5,0,5,1" Text="Step:" Foreground="#FF614736" FontSize="13.333" FontWeight="Bold" FontFamily="Sitka Text"/>
             <TextBlock x:Name="textBlock2" Grid.ColumnSpan="1" Height="Auto" Grid.Row="1" Text="{Binding CurrentStep.StepName, Converter={StaticResource EnumConverter}}" Width="Auto" Grid.Column="1" Margin="5,0,5,1" Foreground="#FF513A29" FontSize="13.333" FontFamily="Mongolian Baiti"/>
             <TextBlock x:Name="textBlock_Copy" Grid.Row="2"  Margin="5,0,5,1" Text="Status:" Foreground="#FF614736" FontSize="13.333" FontWeight="Bold" FontFamily="Sitka Text"/>
             <TextBlock x:Name="textBlock1" Grid.ColumnSpan="1" Height="Auto" Grid.Row="2" Text="{Binding CurrentStep.Status, Mode=OneWay}" Width="Auto" Grid.Column="1" Margin="5,0,5,1" Foreground="#FF513A29" FontSize="13.333" FontFamily="Mongolian Baiti"/>
-
+              
         </Grid>
         <DataTemplate.Triggers>
             <Trigger Property="Text" Value="Cancled" SourceName="textBlock1">
@@ -50,8 +110,6 @@
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
-                <Setter Property="Margin" TargetName="textBlock_Copy" Value="5,0,5,2"/>
-                <Setter Property="Margin" TargetName="textBlock1" Value="5,0,5,2"/>
             </Trigger>
             <Trigger Property="Text" Value="Completed" SourceName="textBlock1">
                 <Setter Property="Background" TargetName="grid">
@@ -160,5 +218,62 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <!-- Resource dictionary entries should be defined here. -->
+    <Style x:Key="AddNewNoteButtonStyle" TargetType="{x:Type Button}">
+        <Setter Property="Foreground" Value="#FFE4E4E4"/>
+        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="BorderBrush" Value="{x:Null}"/>
+        <Setter Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFEE7A19" Offset="0.008"/>
+                    <GradientStop Color="#FFDC5700" Offset="0.984"/>
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin" Value="5"/>
+
+
+        <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="Padding" Value="5,1"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFEE7A19" Offset="0.008"/>
+                                <GradientStop Color="#FFDC5700" Offset="0.984"/>
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter x:Name="contentPresenter" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#FFF1872D" Offset="0.008"/>
+                                        <GradientStop Color="#FFEC782C" Offset="0.984"/>
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter Property="Background" TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#FFCA5F06" Offset="0.012"/>
+                                        <GradientStop Color="#FFBE4D04" Offset="0.984"/>
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="MaxHeight" Value="50"/>
+        <Setter Property="Height" Value="20"/>
+    </Style>
 </ResourceDictionary>

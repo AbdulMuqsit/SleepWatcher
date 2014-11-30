@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.ViewModel;
@@ -13,13 +14,33 @@ namespace SleepWatcher.Design
         {
             get
             {
-                //return new Patient
-                //{
-                //    FirstName = "Patient",
-                //    LastName = "Kzam",
-                //    Steps = new List<Step>() { new Step() { StepName = StepName.Approved } }
+                return new Patient
+                {
+                    FirstName = "Patient",
+                    LastName = "Kzam",
+                    Steps = new List<Step>()
+                    {
+                        new Step()
+                        {
+                            StepName = StepName.PaperWorkDone, AlarmTime = DateTime.Now, IsCompleted = true, DateAdded = DateTime.Now,
+                            Notes =  new List<Note>()
+                            {
+                                new Note() {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"},
+                                new Note() {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"}
 
-                return null;
+                            }
+
+                        },
+                        new Step() { StepName = StepName.Approved, AlarmTime = DateTime.Now, IsCompleted = true, DateAdded = DateTime.Now},
+                        new Step() { StepName = StepName.Exam, AlarmTime = DateTime.Now, IsCompleted = true , DateAdded = DateTime.Now},
+                        new Step() { StepName = StepName.Impression, AlarmTime = DateTime.Now , IsCompleted = true, DateAdded = DateTime.Now},
+                        new Step() { StepName = StepName.Delivery, AlarmTime = DateTime.Now , IsCompleted = true, DateAdded = DateTime.Now},
+                        new Step() { StepName = StepName.FollowUp, AlarmTime = DateTime.Now, DateAdded = DateTime.Now},
+
+                    }
+                };
+
+                //return null;
             }
             set { }
         }

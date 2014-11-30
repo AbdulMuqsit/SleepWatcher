@@ -30,7 +30,7 @@
         </Grid.ColumnDefinitions>
         <TextBlock Foreground="#FF707071" FontSize="40" FontFamily="Cambria" FontWeight="Bold" Margin="10,10,0,0">Patients</TextBlock>
         <!--Patients list box-->
-        <ListBox Grid.Row="1"  HorizontalAlignment="Left" Margin="10,5,5,5" ItemTemplate="{DynamicResource ListBoxItemsTemplate}" ItemsSource="{Binding PatientViewModel.Patients}" SelectedItem="{Binding SinglePatientViewModel.Patient}"/>
+        <ListBox Grid.Row="1" Margin="10,5,5,5" ItemTemplate="{DynamicResource ListBoxItemsTemplate}" ItemsSource="{Binding PatientViewModel.Patients}" SelectedItem="{Binding SinglePatientViewModel.Patient}" HorizontalContentAlignment="Stretch"/>
         <!--Seperator-->
         <GridSplitter Grid.Row="1"  Grid.Column="1"  Width="2"/>
         <!--Add user View Part-->

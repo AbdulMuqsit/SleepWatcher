@@ -1,4 +1,5 @@
-﻿using Microsoft.Expression.Interactivity.Core;
+﻿using System.Linq;
+using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 
 namespace SleepWatcher.ViewModel.PatientViewModel

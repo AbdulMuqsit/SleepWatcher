@@ -17,11 +17,17 @@ namespace SleepWatcher.ViewModel
     public class ViewModelBase : INotifyPropertyChanged, IViewModelBase
     {
         
-        public SleepWatcherDbContext Context { get; set; }
+        public static SleepWatcherDbContext Context { get; set; }
+        static  ViewModelBase()
+        {
+            
+            Context= new SleepWatcherDbContext();
+
+        }
 
         public ViewModelBase()
         {
-            Context = new SleepWatcherDbContext();
+            
 
         }
 

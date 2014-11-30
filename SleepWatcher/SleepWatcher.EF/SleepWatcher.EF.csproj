@@ -61,7 +61,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Inatializer.cs" />
     <Compile Include="Migrations\201411242128374_init.cs" />
     <Compile Include="Migrations\201411242128374_init.Designer.cs">
       <DependentUpon>201411242128374_init.cs</DependentUpon>

@@ -23,7 +23,7 @@ namespace SleepWatcher.Entites
                     return 30;
                 }
                 return 15;
-                
+
             }
 
         }
@@ -43,7 +43,7 @@ namespace SleepWatcher.Entites
             {
                 if (IsCompleted)
                 {
-                    return Status.Completed;;
+                    return Status.Completed; ;
                 }
                 if (IsCancled)
                 {
@@ -52,8 +52,10 @@ namespace SleepWatcher.Entites
                 return Status.Ongoing;
             }
         }
-
-        public ICollection<Note> Notes { get; set; }
+        [NotMapped]
+        public string DueDate => AlarmTime.ToShortDateString();
+        public string DateStarted => DateAdded.ToShortDateString();
+        public virtual ICollection<Note> Notes { get; set; }
 
     }
 }

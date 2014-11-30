@@ -5,10 +5,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SleepWatcher.View"
              mc:Ignorable="d" 
-             d:DesignHeight="312" d:DesignWidth="572" Template="{DynamicResource UserControlControlTemplate1}">
+             d:DesignHeight="346" d:DesignWidth="735" Template="{DynamicResource UserControlControlTemplate1}">
     <UserControl.Resources>
-
-
         <ControlTemplate x:Key="UserControlControlTemplate1" TargetType="{x:Type UserControl}">
             <Grid >
                 <Grid Name="AddPatient" Visibility="Collapsed">
@@ -19,29 +17,25 @@
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-
                     </Grid.ColumnDefinitions>
                     <TextBlock  Grid.Row="1" Text="Add New Patient" HorizontalAlignment="Center" Foreground="#FF7F7F80" FontSize="32" FontFamily="Trebuchet MS"/>
-                    <Button Grid.Row="2" HorizontalAlignment="Center" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource ButtonStyle1}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}">
-                    +
-                    </Button>
+                    <Button Grid.Row="2" HorizontalAlignment="Center" Content="+" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource ButtonStyle1}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}"/>
                 </Grid>
-                <Grid Name="ViewPatient">
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="1" Text="Add New Patient"></TextBlock>
-
+                <Grid Name="ViewPatient" Background="White">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
+                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.Steps}" ItemTemplate="{StaticResource StepsListBoxTemplate}"></ListBox>
                 </Grid>
             </Grid>
             <ControlTemplate.Triggers>
                 <DataTrigger Binding="{Binding SinglePatientViewModel.Patient}" Value="{x:Null}">
                     <Setter TargetName="ViewPatient" Property="Visibility" Value="Collapsed"/>
                     <Setter TargetName="AddPatient" Property="Visibility" Value="Visible"/>
-
                 </DataTrigger>
-
-
             </ControlTemplate.Triggers>
-
         </ControlTemplate>
         <Style x:Key="ButtonStyle1" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
@@ -75,6 +69,7 @@
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontFamily" Value="Arial"/>
         </Style>
+
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Mode="OneWay" Source="{StaticResource Locator}"/>

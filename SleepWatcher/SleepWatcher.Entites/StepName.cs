@@ -9,18 +9,19 @@ namespace SleepWatcher.Entites
 {
     public enum StepName
     {
+
         [Display(Name = "Paper Work")]
-        
-        PaperWorkDone ,
+        PaperWorkDone,
+
         [Display(Name = "Approval")]
         Approved,
+
         [Display(Name = "Examination")]
-
         Exam,
-        Impression ,
-        Delivery ,
-        [Display(Name = "Follow Up")]
+        Impression,
+        Delivery,
 
+        [Display(Name = "Follow Up")]
         FollowUp
     }
 }

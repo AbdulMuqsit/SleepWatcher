@@ -13,7 +13,7 @@ namespace SleepWatcher.EF.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            
+          //  Seed(new SleepWatcherDbContext());
         }
 
         protected override void Seed(SleepWatcherDbContext context)
@@ -21,24 +21,72 @@ namespace SleepWatcher.EF.Migrations
             Random rand = new Random();
 
             IList<Patient> patients = new List<Patient>();
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 200; i++)
             {
-                patients.Add(new Patient()
-                {
-                    Steps = new List<Step>()
-                    {
-                        new Step()
-                        {
-                           
-                            DateAdded = DateTime.Now,
-                            AlarmTime = DateTime.Now,
-                            StepName = getStepName(rand),
 
-                        }
-                    },
-                    FirstName = "Bill"+i,
-                    LastName = "Peters"
-                });
+                switch (rand.Next(0, 3))
+                {
+                    case 0:
+                        patients.Add(new Patient()
+                        {
+                            Steps = new List<Step>()
+                            {
+                                new Step()
+                                {
+
+                                    DateAdded = DateTime.Now,
+                                    AlarmTime = DateTime.Now,
+                                    StepName = StepName.FollowUp,
+                                    IsCompleted = true,
+                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
+                                }
+                            },
+                            FirstName = "Bill " + i,
+                            LastName = "Peters"
+                        });
+                        break;
+                    case 1:
+                        patients.Add(new Patient()
+                        {
+                            Steps = new List<Step>()
+                            {
+                                new Step()
+                                {
+
+                                    DateAdded = DateTime.Now,
+                                    AlarmTime = DateTime.Now,
+                                    StepName = getStepName(rand),
+                                    IsCancled = true,
+                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
+                                }
+                            },
+                            FirstName = "Bill" + i,
+                            LastName = "Peters"
+                        });
+                        break;
+                    case 2:
+                        patients.Add(new Patient()
+                        {
+                            Steps = new List<Step>()
+                            {
+                                new Step()
+                                {
+
+                                    DateAdded = DateTime.Now,
+                                    AlarmTime = DateTime.Now,
+                                    StepName = getStepName(rand),
+                                    IsCompleted = false,
+                                    IsCancled = false,
+                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
+
+                                }
+                            },
+                            FirstName = "Bill" + i,
+                            LastName = "Peters"
+                        });
+                        break;
+                }
+
             }
 
 

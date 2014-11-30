@@ -23,15 +23,16 @@ namespace SleepWatcher.ViewModel
             if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
             {
                 PatientViewModel = new DesignPatientViewModel();
-                //   AddPatientViewModel = new DesignAddPatientViewModel();
-                //   SinglePatientViewModel = new DesignSinglePatientViewModel();
+                AddPatientViewModel = new DesignAddPatientViewModel();
+                SinglePatientViewModel = new DesignSinglePatientViewModel();
             }
             else
             {
                 PatientViewModel = new PatientViewModel.PatientViewModel();
+                AddPatientViewModel = new AddPatientViewModel();
+                SinglePatientViewModel = new SinglePatientViewModel();
             }
-            AddPatientViewModel = new AddPatientViewModel();
-            SinglePatientViewModel = new SinglePatientViewModel();
+          
         }
     }
 }
