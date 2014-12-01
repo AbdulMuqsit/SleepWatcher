@@ -31,14 +31,18 @@
     </DataTemplate>
     <!-- Steps list box datatemplate!-->
     <DataTemplate x:Key="StepsListBoxTemplate">
-       
-        <Grid>
+
+        <Grid Margin="0,5,0,0">
             <Grid.Resources>
                 <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter"/>
             </Grid.Resources>
-            
-          
-
+            <Grid.Background>
+                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                    <GradientStop Color="#FF535353" Offset="1"/>
+                    <GradientStop Color="#FFE0E0E0" Offset="0.99"/>
+                    <GradientStop Color="#FFE0E0E0"/>
+                </LinearGradientBrush>
+            </Grid.Background>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
@@ -58,21 +62,44 @@
                 <TextBlock x:Name="textBlock" Grid.Row="0" Grid.Column="2" Margin="5,5,0,0" Text="{Binding Status}"
                            Style="{DynamicResource TextBlockStyle}" />
 
-                </StackPanel>
-            <TextBlock Grid.Row="1" Grid.Column="0" Margin="5,5,0,0" Style="{StaticResource TextBlockStyle}"  Text="{Binding AlarmTime, Mode=OneWay}"/>
-            <Expander Grid.Row="1" Grid.Column="1" Margin="5,5,0,0" IsExpanded="True" Header="Notes">
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
+                <TextBlock FontWeight="Bold"  Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
+                           Text="Start Date: " />
+                <TextBlock Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
+                           Text="{Binding DateStarted, Mode=OneWay}" />
+            </StackPanel>
+            <StackPanel  Orientation="Horizontal" Grid.Row="1" Grid.Column="1" >
+                <TextBlock FontWeight="Bold"  Margin="10,5,0,0" Style="{DynamicResource TextBlockStyle}"
+                           Text="Due Date: " />
+                <TextBlock  Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
+                           Text="{Binding DueDate, Mode=OneWay}" />
+            </StackPanel>
+            <Expander Grid.Row="1" Grid.Column="1" Margin="5,5,0,0" IsExpanded="True" Header="Notes" Visibility="Collapsed">
                 <ListBox ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotesListBoxTemplate}"/>
             </Expander>
-            <Button Grid.Row="1"  Grid.Column="2" Margin="5,5,0,0"  Content="New Note" Style="{DynamicResource AddNewNoteButtonStyle}"/>
-            
+            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2">
+                <Button  Content="New Note" 
+                        Style="{DynamicResource AddNewNoteButtonStyle}" Margin="5,5,5,0" HorizontalAlignment="Right"/>
+                <Button x:Name="btnCancled"  Grid.Column="2" Content="Mark Canceled" Margin="5,5,5,0"
+                        Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right" />
+                <Button x:Name="btnCompleted"  Grid.Column="2" Content="Mark Completed" Margin="5,5,5,5"
+                        Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right" />
+            </StackPanel>
         </Grid>
-        
-         <DataTemplate.Triggers>
+
+        <DataTemplate.Triggers>
+
             <DataTrigger Binding="{Binding Status}" Value="Completed">
                 <Setter TargetName="textBlock" Property="Foreground" Value="Green"/>
+                <Setter TargetName="btnCompleted" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="btnCancled" Property="Visibility" Value="Collapsed"/>
+
             </DataTrigger>
-              <DataTrigger Binding="{Binding Status}" Value="Cancled">
+            <DataTrigger Binding="{Binding Status}" Value="Cancled">
                 <Setter TargetName="textBlock" Property="Foreground" Value="Red"/>
+                <Setter TargetName="btnCompleted" Property="Visibility" Value="Collapsed"/>
+                <Setter TargetName="btnCancled" Property="Visibility" Value="Collapsed"/>
             </DataTrigger>
         </DataTemplate.Triggers>
     </DataTemplate>
@@ -97,7 +124,7 @@
             <TextBlock x:Name="textBlock2" Grid.ColumnSpan="1" Height="Auto" Grid.Row="1" Text="{Binding CurrentStep.StepName, Converter={StaticResource EnumConverter}}" Width="Auto" Grid.Column="1" Margin="5,0,5,1" Foreground="#FF513A29" FontSize="13.333" FontFamily="Mongolian Baiti"/>
             <TextBlock x:Name="textBlock_Copy" Grid.Row="2"  Margin="5,0,5,1" Text="Status:" Foreground="#FF614736" FontSize="13.333" FontWeight="Bold" FontFamily="Sitka Text"/>
             <TextBlock x:Name="textBlock1" Grid.ColumnSpan="1" Height="Auto" Grid.Row="2" Text="{Binding CurrentStep.Status, Mode=OneWay}" Width="Auto" Grid.Column="1" Margin="5,0,5,1" Foreground="#FF513A29" FontSize="13.333" FontFamily="Mongolian Baiti"/>
-              
+
         </Grid>
         <DataTemplate.Triggers>
             <Trigger Property="Text" Value="Cancled" SourceName="textBlock1">

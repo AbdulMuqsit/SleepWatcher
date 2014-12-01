@@ -5,11 +5,12 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:SleepWatcher.View"
              mc:Ignorable="d" 
-             d:DesignHeight="346" d:DesignWidth="735" Template="{DynamicResource UserControlControlTemplate1}">
+             d:DesignHeight="506" d:DesignWidth="748" Template="{DynamicResource UserControlControlTemplate1}">
     <UserControl.Resources>
         <ControlTemplate x:Key="UserControlControlTemplate1" TargetType="{x:Type UserControl}">
             <Grid >
                 <Grid Name="AddPatient" Visibility="Collapsed">
+                   
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
@@ -27,7 +28,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
-                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.Steps}" ItemTemplate="{StaticResource StepsListBoxTemplate}"></ListBox>
+                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.Steps}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch"></ListBox>
                 </Grid>
             </Grid>
             <ControlTemplate.Triggers>
