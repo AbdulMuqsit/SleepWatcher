@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 
@@ -70,12 +71,17 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             MarkCompleteCommand = new ActionCommand(() =>
             {
                 SelectedStep.IsCompleted = true;
+                Patient.Steps.Add(
+                    GetNextStep());
+                Context.SaveChangesAsync();
             });
             //Initializing command which marks a canceled step as uncanceled
-            MarkUnCanceledCommand= new ActionCommand(() =>
-            {
-                SelectedStep.IsCancled = false;
-            });
+            MarkUnCanceledCommand = new ActionCommand(() =>
+             {
+                 SelectedStep.IsCancled = !SelectedStep.IsCancled;
+                 Context.SaveChangesAsync();
+
+             });
             //inititating command which swithces to add patinet view
             SwitchToAddPatientViewModelCommand = new ActionCommand(() =>
             {
@@ -83,5 +89,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             });
         }
 
+        private Step GetNextStep()
+        {
+            return new Step()
+            {
+                DateAdded = DateTime.Now,
+                StepName = SelectedStep.StepName + 1,
+                AlarmTime = SelectedStep.StepName == StepName.Delivery ? DateTime.Now + new TimeSpan(30, 0, 0, 0) : DateTime.Now + new TimeSpan(14, 0, 0, 0)
+            };
+
+        }
     }
 }
