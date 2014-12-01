@@ -45,6 +45,18 @@ namespace SleepWatcher.Design
             set { }
         }
 
+        public Step SelectedStep
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public Note SelectedNote
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public ActionCommand SwitchToAddPatientViewModelCommand
         {
             get
@@ -52,6 +64,26 @@ namespace SleepWatcher.Design
                 return null;
 
             }
+        }
+
+        public ActionCommand AddNewNoteCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand MarkCompleteCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand MarkCanceledCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand ClearView
+        {
+            get { throw new NotImplementedException(); }
         }
     }
 }
