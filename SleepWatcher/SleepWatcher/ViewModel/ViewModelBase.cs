@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using SleepWatcher.EF;
 
@@ -16,24 +11,15 @@ namespace SleepWatcher.ViewModel
 
     public class ViewModelBase : INotifyPropertyChanged, IViewModelBase
     {
-        
+        static ViewModelBase()
+        {
+            Context = new SleepWatcherDbContext();
+        }
+
         public static SleepWatcherDbContext Context { get; set; }
-        static  ViewModelBase()
-        {
-            
-            Context= new SleepWatcherDbContext();
-
-        }
-
-        public ViewModelBase()
-        {
-            
-
-        }
 
         protected ViewModelLocator Locator
         {
-
             get
             {
                 var _loator = Application.Current.Resources["Locator"];
