@@ -15,7 +15,7 @@ namespace SleepWatcher.Design
     {
         public Patient Patient { get; set; }
 
-        public ActionCommand AddPatinetCommand => null;
+        public ActionCommand AddPatinetCommand {get { return null; }}
 
         public ActionCommand SwitchToSinglePatientViewCommand
         {

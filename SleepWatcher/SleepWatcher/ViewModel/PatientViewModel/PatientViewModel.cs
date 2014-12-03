@@ -34,7 +34,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand GetAllPatients { get; }
+        public ActionCommand GetAllPatients { get; private set; }
 
         public PatientViewModel()
         {

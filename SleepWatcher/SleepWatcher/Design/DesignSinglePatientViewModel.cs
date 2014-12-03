@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.ViewModel;
-
 using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.Design
 {
-    class DesignSinglePatientViewModel : ISinglePatientViewModel, IViewModelBase
+    internal class DesignSinglePatientViewModel : ISinglePatientViewModel, IViewModelBase
     {
         public Patient Patient
         {
@@ -18,25 +18,49 @@ namespace SleepWatcher.Design
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>()
+                    Steps = new List<Step>
                     {
-                        new Step()
+                        new Step
                         {
-                            StepName = StepName.PaperWorkDone, AlarmTime = DateTime.Now, IsCompleted = true, DateAdded = DateTime.Now,
-                            Notes =  new List<Note>()
+                            StepName = StepName.PaperWorkDone,
+                            AlarmTime = DateTime.Now,
+                            IsCompleted = true,
+                            DateAdded = DateTime.Now,
+                            Notes = new List<Note>
                             {
-                                new Note() {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"},
-                                new Note() {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"}
-
+                                new Note {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"},
+                                new Note {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"}
                             }
-
                         },
-                        new Step() { StepName = StepName.Approved, AlarmTime = DateTime.Now, IsCompleted = true, DateAdded = DateTime.Now},
-                        new Step() { StepName = StepName.Exam, AlarmTime = DateTime.Now, IsCompleted = true , DateAdded = DateTime.Now},
-                        new Step() { StepName = StepName.Impression, AlarmTime = DateTime.Now , IsCompleted = true, DateAdded = DateTime.Now},
-                        new Step() { StepName = StepName.Delivery, AlarmTime = DateTime.Now , IsCompleted = true, DateAdded = DateTime.Now},
-                        new Step() { StepName = StepName.FollowUp, AlarmTime = DateTime.Now, DateAdded = DateTime.Now},
-
+                        new Step
+                        {
+                            StepName = StepName.Approved,
+                            AlarmTime = DateTime.Now,
+                            IsCompleted = true,
+                            DateAdded = DateTime.Now
+                        },
+                        new Step
+                        {
+                            StepName = StepName.Exam,
+                            AlarmTime = DateTime.Now,
+                            IsCompleted = true,
+                            DateAdded = DateTime.Now
+                        },
+                        new Step
+                        {
+                            StepName = StepName.Impression,
+                            AlarmTime = DateTime.Now,
+                            IsCompleted = true,
+                            DateAdded = DateTime.Now
+                        },
+                        new Step
+                        {
+                            StepName = StepName.Delivery,
+                            AlarmTime = DateTime.Now,
+                            IsCompleted = true,
+                            DateAdded = DateTime.Now
+                        },
+                        new Step {StepName = StepName.FollowUp, AlarmTime = DateTime.Now, DateAdded = DateTime.Now}
                     }
                 };
 
@@ -45,13 +69,13 @@ namespace SleepWatcher.Design
             set { }
         }
 
-        public Step SelectedStep
+        public Model.Step SelectedStep
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
-        public Note SelectedNote
+        public Model.Note SelectedNote
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
@@ -59,11 +83,7 @@ namespace SleepWatcher.Design
 
         public ActionCommand SwitchToAddPatientViewModelCommand
         {
-            get
-            {
-                return null;
-
-            }
+            get { return null; }
         }
 
         public ActionCommand AddNewNoteCommand
@@ -82,6 +102,23 @@ namespace SleepWatcher.Design
         }
 
         public ActionCommand ClearView
+        {
+            get { throw new NotImplementedException(); }
+        }
+
+        public ObservableCollection<Model.Step> Steps
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ObservableCollection<Model.Note> Notes
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand MarkUnCanceledCommand
         {
             get { throw new NotImplementedException(); }
         }

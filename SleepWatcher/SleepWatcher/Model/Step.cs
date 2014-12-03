@@ -1,18 +1,33 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics;
+using SleepWatcher.Entites;
 
-namespace SleepWatcher.Entites
+namespace SleepWatcher.Model
 {
-    public class Step
+    public class Step : ObjectBase
     {
+        private StepName _stepName;
+        private DateTime _alarmTime;
+        private DateTime _dateAdded;
+        private byte[] _modifiedOn;
+        private bool _isCompleted;
+        private bool _isCancled;
 
         public int Id { get; set; }
+
         [Required]
-        public StepName StepName { get; set; }
+        public StepName StepName
+        {
+            get { return _stepName; }
+            set
+            {
+                if (Equals(value, StepName)) return;
+                _stepName = value;
+                OnPropertyChanged();
+            }
+        }
 
         public int Days
         {
@@ -27,13 +42,67 @@ namespace SleepWatcher.Entites
             }
 
         }
+
         [Required]
-        public DateTime DateAdded { get; set; }
-        public DateTime AlarmTime { get; set; }
+        public DateTime DateAdded
+        {
+            get { return _dateAdded; }
+            set
+            {
+                if (Equals(value, DateAdded)) return;
+                _dateAdded = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public DateTime AlarmTime
+        {
+            get { return _alarmTime; }
+            set
+            {
+                if (Equals(value, AlarmTime)) return;
+                _alarmTime = value;
+                OnPropertyChanged();
+            }
+        }
+
         [Timestamp]
-        public byte[] ModifiedOn { get; set; }
-        public bool IsCompleted { get; set; }
-        public bool IsCancled { get; set; }
+        public byte[] ModifiedOn
+        {
+            get { return _modifiedOn; }
+            set
+            {
+                if (Equals(value, ModifiedOn)) return;
+                _modifiedOn = value;
+            }
+        }
+
+        public bool IsCompleted
+        {
+            get { return _isCompleted; }
+            set
+            {
+                if (Equals(value, IsCompleted)) return;
+                _isCompleted = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Status");
+
+            }
+        }
+
+        public bool IsCancled
+        {
+            get { return _isCancled; }
+            set
+            {
+                if (Equals(value, IsCancled)) return;
+                _isCancled = value;
+                OnPropertyChanged();
+                OnPropertyChanged("Status");
+
+            }
+        }
+
         public int PatientId { get; set; }
         public Patient Patient { get; set; }
         [NotMapped]
@@ -53,8 +122,8 @@ namespace SleepWatcher.Entites
             }
         }
         [NotMapped]
-        public string DueDate => AlarmTime.ToShortDateString();
-        public string DateStarted => DateAdded.ToShortDateString();
+        public string DueDate { get { return AlarmTime.ToShortDateString(); } }
+        public string DateStarted { get { return DateAdded.ToShortDateString(); } }
         public virtual ICollection<Note> Notes { get; set; }
 
     }

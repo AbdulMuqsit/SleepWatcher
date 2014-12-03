@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Collections.ObjectModel;
+using System.Linq;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using Model = SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public class SinglePatientViewModel : ViewModelBase, ISinglePatientViewModel
     {
-        private Note _note;
-        private ObservableCollection<Note> _notes;
+        private Model.Note _note;
+        private ObservableCollection<Model.Note> _notes;
         private Patient _patient;
-        private Step _step;
-        private ObservableCollection<Step> _steps;
+        private Model.Step _step;
+        private ObservableCollection<Model.Step> _steps;
 
         public SinglePatientViewModel()
         {
             //Initializing command which adds a new note for selected step
             AddNewNoteCommand = new ActionCommand(async () =>
             {
-                SelectedStep.Notes.Add(new Note { Text = "" });
+                SelectedStep.Notes.Add(new Model.Note { Text = "" });
                 await Context.SaveChangesAsync();
             });
             //initiating command which clears the data of current selected patient and shows the add new patient option
@@ -50,7 +52,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.AddPatientViewModel; });
         }
 
-        public ObservableCollection<Step> Steps
+        public ObservableCollection<Model.Step> Steps
         {
             get { return _steps; }
             set
@@ -61,7 +63,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ObservableCollection<Note> Notes
+        public ObservableCollection<Model.Note> Notes
         {
             get { return _notes; }
             set
@@ -81,25 +83,25 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 if (Equals(value, _patient)) return;
                 _patient = value;
-                Steps = new ObservableCollection<Step>(_patient.Steps);
+                Steps = new ObservableCollection<Model.Step>(_patient.Steps.Select(e => { return new Model.Step() { AlarmTime = e.AlarmTime, DateAdded = e.DateAdded, IsCompleted = e.IsCompleted, IsCancled = e.IsCancled, ModifiedOn = e.ModifiedOn, PatientId = e.PatientId, }; }).ToList());
                 OnPropertyChanged();
             }
         }
 
-        public Step SelectedStep
+        public Model.Step SelectedStep
         {
             get { return _step; }
             set
             {
                 if (Equals(value, _step)) return;
                 _step = value;
-                Notes = new ObservableCollection<Note>(SelectedStep.Notes);
+                Notes = new ObservableCollection<Model.Note>(SelectedStep.Notes.Select(e=> { return new Model.Note(); }));
 
                 OnPropertyChanged();
             }
         }
 
-        public Note SelectedNote
+        public Model.Note SelectedNote
         {
             get { return _note; }
             set
@@ -110,11 +112,11 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand SwitchToAddPatientViewModelCommand { get; }
-        public ActionCommand AddNewNoteCommand { get; }
-        public ActionCommand MarkCompleteCommand { get; }
-        public ActionCommand MarkCanceledCommand { get; }
-        public ActionCommand ClearView { get; }
+        public ActionCommand SwitchToAddPatientViewModelCommand { get; private set; }
+        public ActionCommand AddNewNoteCommand { get; private set; }
+        public ActionCommand MarkCompleteCommand { get; private set; }
+        public ActionCommand MarkCanceledCommand { get; private set; }
+        public ActionCommand ClearView { get; private set; }
 
         private Step GetNextStep()
         {
