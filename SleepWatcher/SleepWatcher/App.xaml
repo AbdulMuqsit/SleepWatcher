@@ -12,7 +12,6 @@
                 <ResourceDictionary Source="Templates.xaml"/>
                 
             </ResourceDictionary.MergedDictionaries>
-             <ViewModel:ViewModelLocator x:Key="Locator"/>
         </ResourceDictionary>
 
     </Application.Resources>

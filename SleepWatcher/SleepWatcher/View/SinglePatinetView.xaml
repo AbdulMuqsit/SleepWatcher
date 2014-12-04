@@ -27,7 +27,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
-                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.Steps}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch"></ListBox>
+                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Steps}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep}"></ListBox>
                 </Grid>
             </Grid>
             <ControlTemplate.Triggers>

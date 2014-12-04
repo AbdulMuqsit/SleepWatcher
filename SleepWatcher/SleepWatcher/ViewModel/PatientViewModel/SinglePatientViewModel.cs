@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
-using Model = SleepWatcher.Model;
+
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
@@ -28,7 +28,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             // initializing command which marks a step as canceled
             MarkCanceledCommand = new ActionCommand(async () =>
             {
-                SelectedStep.IsCancled = true;
+                SelectedStep.IsCancled = !SelectedStep.IsCancled;
                 await Context.SaveChangesAsync();
             });
             //Initializing command which marks a step as completed
@@ -41,12 +41,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 }
                 await Context.SaveChangesAsync();
             });
-            //Initializing command which marks a canceled step as uncanceled
-            MarkUnCanceledCommand = new ActionCommand(async () =>
-            {
-                SelectedStep.IsCancled = !SelectedStep.IsCancled;
-                await Context.SaveChangesAsync();
-            });
+          
             //inititating command which swithces to add patinet view
             SwitchToAddPatientViewModelCommand =
                 new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.AddPatientViewModel; });
