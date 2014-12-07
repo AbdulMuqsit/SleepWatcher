@@ -8,7 +8,7 @@ namespace SleepWatcher.Entites
     public enum Status
     {
         Completed,
-        Cancled,
+        Canceled,
         Ongoing
     }
 }

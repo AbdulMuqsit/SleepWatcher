@@ -47,7 +47,7 @@ namespace SleepWatcher.Entites
                 }
                 if (IsCancled)
                 {
-                    return Status.Cancled;
+                    return Status.Canceled;
                 }
                 return Status.Ongoing;
             }

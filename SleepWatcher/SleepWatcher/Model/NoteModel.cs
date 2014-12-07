@@ -1,8 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using SleepWatcher.Entites;
 
 namespace SleepWatcher.Model
 {
-    public class Note :ObjectBase
+    public class NoteModel :ObjectBase
     {
         public int Id { get; set; }
         [Required]

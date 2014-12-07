@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using SleepWatcher.Entites;
 
 namespace SleepWatcher.EF.Migrations
@@ -13,7 +14,7 @@ namespace SleepWatcher.EF.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-          //  Seed(new SleepWatcherDbContext());
+            
         }
 
         protected override void Seed(SleepWatcherDbContext context)
@@ -21,104 +22,53 @@ namespace SleepWatcher.EF.Migrations
             Random rand = new Random();
 
             IList<Patient> patients = new List<Patient>();
+            
             for (int i = 0; i < 200; i++)
             {
-
-                switch (rand.Next(0, 3))
+                var patient = new Patient()
                 {
-                    case 0:
-                        patients.Add(new Patient()
-                        {
-                            Steps = new List<Step>()
-                            {
-                                new Step()
-                                {
-
-                                    DateAdded = DateTime.Now,
-                                    AlarmTime = DateTime.Now,
-                                    StepName = StepName.FollowUp,
-                                    IsCompleted = true,
-                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
-                                }
-                            },
-                            FirstName = "Bill " + i,
-                            LastName = "Peters"
-                        });
+                    FirstName = "Bill" + i,
+                    LastName = "Peters"
+                };
+                var totalSteps = rand.Next(1, 7);
+                bool canceled = rand.Next(0, 9) == 0;
+                patient.Steps=new List<Step>();
+                for (int j = 0; j < totalSteps; j++)
+                {
+                    
+                    Step step = new Step()
+                    {
+                        DateAdded = DateTime.Now,
+                        AlarmTime = DateTime.Now,
+                        StepName = (StepName)j,
+                        IsCompleted = true,
+                        IsCancled = false,
+                        Notes = new List<Note>() { new Note() { Text = "abc" } }
+                    };
+                    patient.Steps.Add(step);
+                    if (canceled)
+                    {
+                        step.IsCompleted = false;
+                        step.IsCancled = true;
                         break;
-                    case 1:
-                        patients.Add(new Patient()
-                        {
-                            Steps = new List<Step>()
-                            {
-                                new Step()
-                                {
+                    }
+                    if (j == totalSteps - 1)
+                    {
+                        step.IsCompleted = false;
+                    }
 
-                                    DateAdded = DateTime.Now,
-                                    AlarmTime = DateTime.Now,
-                                    StepName = getStepName(rand),
-                                    IsCancled = true,
-                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
-                                }
-                            },
-                            FirstName = "Bill" + i,
-                            LastName = "Peters"
-                        });
-                        break;
-                    case 2:
-                        patients.Add(new Patient()
-                        {
-                            Steps = new List<Step>()
-                            {
-                                new Step()
-                                {
-
-                                    DateAdded = DateTime.Now,
-                                    AlarmTime = DateTime.Now,
-                                    StepName = getStepName(rand),
-                                    IsCompleted = false,
-                                    IsCancled = false,
-                                    Notes = new List<Note>() {new Note() { Text = "abc"} }
-
-                                }
-                            },
-                            FirstName = "Bill" + i,
-                            LastName = "Peters"
-                        });
-                        break;
                 }
+               patients.Add(patient);
 
             }
 
 
             context.Patients.AddRange(patients);
-            context.SaveChanges();
             base.Seed(context);
+            var p = context.Patients.ToList();
+            Debug.WriteLine("Total Patients:"+p.Count);
         }
 
-        private StepName getStepName(Random rand)
-        {
-            int number = rand.Next(1, 7);
-            if (number == 1)
-            {
-                return StepName.Approved;
-            }
-            if (number == 2)
-            {
-                return StepName.Delivery;
-            }
-            if (number == 3)
-            {
-                return StepName.Exam;
-            }
-            if (number == 4)
-            {
-                return StepName.FollowUp;
-            }
-            if (number == 5)
-            {
-                return StepName.Impression;
-            }
-            return StepName.PaperWorkDone;
-        }
+      
     }
 }

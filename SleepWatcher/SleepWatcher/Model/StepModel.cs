@@ -6,7 +6,7 @@ using SleepWatcher.Entites;
 
 namespace SleepWatcher.Model
 {
-    public class Step : ObjectBase
+    public class StepModel : ObjectBase
     {
         private StepName _stepName;
         private DateTime _alarmTime;
@@ -116,7 +116,7 @@ namespace SleepWatcher.Model
                 }
                 if (IsCancled)
                 {
-                    return Status.Cancled;
+                    return Status.Canceled;
                 }
                 return Status.Ongoing;
             }

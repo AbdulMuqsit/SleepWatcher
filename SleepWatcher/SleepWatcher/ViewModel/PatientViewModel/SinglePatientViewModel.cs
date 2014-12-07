@@ -1,26 +1,27 @@
 ﻿using System;
-using System.Collections.ObjectModel;
+using System.Data.Entity;
 using System.Linq;
+using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
-
+using SleepWatcher.Infrastructure;
+using SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public class SinglePatientViewModel : ViewModelBase, ISinglePatientViewModel
     {
-        private Model.Note _note;
-        private ObservableCollection<Model.Note> _notes;
-        private Patient _patient;
-        private Model.Step _step;
-        private ObservableCollection<Model.Step> _steps;
+        private NoteModel _note;
+        private RangeObservableCollection<NoteModel> _notes = new RangeObservableCollection<NoteModel>();
+        private PatientModel _patient;
+        private StepModel _step;
+        private RangeObservableCollection<StepModel> _steps = new RangeObservableCollection<StepModel>();
 
         public SinglePatientViewModel()
         {
             //Initializing command which adds a new note for selected step
             AddNewNoteCommand = new ActionCommand(async () =>
             {
-                SelectedStep.Notes.Add(new Model.Note { Text = "" });
                 await Context.SaveChangesAsync();
             });
             //initiating command which clears the data of current selected patient and shows the add new patient option
@@ -29,25 +30,34 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             MarkCanceledCommand = new ActionCommand(async () =>
             {
                 SelectedStep.IsCancled = !SelectedStep.IsCancled;
+                (await Context.Steps.FirstAsync(e => e.Id == SelectedStep.Id)).IsCancled =
+                    SelectedStep.IsCancled;
                 await Context.SaveChangesAsync();
             });
             //Initializing command which marks a step as completed
             MarkCompleteCommand = new ActionCommand(async () =>
             {
                 SelectedStep.IsCompleted = true;
+                Patient.Steps.Last().IsCompleted = true;
                 if (SelectedStep.StepName != StepName.FollowUp)
                 {
-                    Patient.Steps.Add(GetNextStep());
+                    StepModel nextStep = GetNextStep();
+                    (await Context.Patients.FirstAsync(e => e.Id == Patient.Id)).Steps.Add(Mapper.Map<StepModel, Step>(nextStep));
+                    await Context.SaveChangesAsync();
+                    Patient.StepModels.Add(Mapper.Map<StepModel>(Context.Patients.First(e => e.Id == Patient.Id).Steps.Last()));
+
                 }
                 await Context.SaveChangesAsync();
+
+
             });
-          
+
             //inititating command which swithces to add patinet view
             SwitchToAddPatientViewModelCommand =
                 new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.AddPatientViewModel; });
         }
 
-        public ObservableCollection<Model.Step> Steps
+        public RangeObservableCollection<StepModel> Steps
         {
             get { return _steps; }
             set
@@ -58,7 +68,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ObservableCollection<Model.Note> Notes
+        public RangeObservableCollection<NoteModel> Notes
         {
             get { return _notes; }
             set
@@ -71,32 +81,30 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public ActionCommand MarkUnCanceledCommand { get; private set; }
 
-        public Patient Patient
+        public PatientModel Patient
         {
             get { return _patient; }
             set
             {
                 if (Equals(value, _patient)) return;
                 _patient = value;
-                Steps = new ObservableCollection<Model.Step>(_patient.Steps.Select(e => { return new Model.Step() { AlarmTime = e.AlarmTime, DateAdded = e.DateAdded, IsCompleted = e.IsCompleted, IsCancled = e.IsCancled, ModifiedOn = e.ModifiedOn, PatientId = e.PatientId, }; }).ToList());
                 OnPropertyChanged();
             }
         }
-
-        public Model.Step SelectedStep
+        public StepModel SelectedStep
         {
             get { return _step; }
             set
             {
                 if (Equals(value, _step)) return;
                 _step = value;
-                Notes = new ObservableCollection<Model.Note>(SelectedStep.Notes.Select(e=> { return new Model.Note(); }));
+                Notes.Clear();
 
                 OnPropertyChanged();
             }
         }
 
-        public Model.Note SelectedNote
+        public NoteModel SelectedNote
         {
             get { return _note; }
             set
@@ -107,15 +115,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand SwitchToAddPatientViewModelCommand { get; private set; }
-        public ActionCommand AddNewNoteCommand { get; private set; }
-        public ActionCommand MarkCompleteCommand { get; private set; }
-        public ActionCommand MarkCanceledCommand { get; private set; }
-        public ActionCommand ClearView { get; private set; }
+        public ActionCommand SwitchToAddPatientViewModelCommand { get; }
+        public ActionCommand AddNewNoteCommand { get; }
+        public ActionCommand MarkCompleteCommand { get; }
+        public ActionCommand MarkCanceledCommand { get; }
+        public ActionCommand ClearView { get; }
 
-        private Step GetNextStep()
+        private StepModel GetNextStep()
         {
-            return new Step
+            return new StepModel
             {
                 DateAdded = DateTime.Now,
                 StepName = SelectedStep.StepName + 1,

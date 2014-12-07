@@ -93,7 +93,7 @@
                 <Button Content="New Note"
                         Style="{DynamicResource AddNewNoteButtonStyle}" Margin="5,5,5,0" HorizontalAlignment="Right"
                         Command="{Binding SinglePatientViewModel.AddNewNoteCommand, Mode=OneWay}"
-                        Visibility="{Binding IsSelected, RelativeSource={RelativeSource TemplatedParent}}" />
+                         />
                 <Button x:Name="btnCancled" Grid.Column="2" Content="Mark Canceled" Margin="5,5,5,0"
                         Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right"
                         Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}" />
@@ -152,7 +152,7 @@
 
         </Grid>
         <DataTemplate.Triggers>
-            <Trigger Property="Text" Value="Cancled" SourceName="textBlock1">
+            <Trigger Property="Text" Value="Canceled" SourceName="textBlock1">
                 <Setter Property="Background" TargetName="grid">
                     <Setter.Value>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">

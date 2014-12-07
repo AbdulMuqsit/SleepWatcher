@@ -106,11 +106,13 @@
     <Compile Include="Design\DesignAddPatientViewModel.cs" />
     <Compile Include="Design\DesignPatientViewModel.cs" />
     <Compile Include="Design\DesignSinglePatientViewModel.cs" />
-    <Compile Include="Model\Note.cs" />
+    <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
+    <Compile Include="Infrastructure\RangeObservableCollection.cs" />
+    <Compile Include="Model\NoteModel.cs" />
     <Compile Include="Model\ObjectBase.cs" />
-    <Compile Include="Model\Patient.cs" />
-    <Compile Include="Model\Status.cs" />
-    <Compile Include="Model\Step.cs" />
+    <Compile Include="Model\PatientModel.cs" />
+    <Compile Include="Model\StepModel.cs" />
+    <Compile Include="ViewModel\OverDuePatientsViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\IAddPatientViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\IPatientViewModel.cs" />

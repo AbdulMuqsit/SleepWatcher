@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
+using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using SleepWatcher.Infrastructure;
+using SleepWatcher.Model;
 using SleepWatcher.ViewModel;
 using SleepWatcher.ViewModel.PatientViewModel;
 
@@ -10,17 +14,17 @@ namespace SleepWatcher.Design
 {
     internal class DesignSinglePatientViewModel : ISinglePatientViewModel, IViewModelBase
     {
-        public Patient Patient
+        public PatientModel Patient
         {
             get
             {
-                return new Patient
+                return new PatientModel()
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>
+                    StepModels = new RangeObservableCollection<StepModel>()
                     {
-                        new Step
+                        new StepModel
                         {
                             StepName = StepName.PaperWorkDone,
                             AlarmTime = DateTime.Now,
@@ -32,35 +36,35 @@ namespace SleepWatcher.Design
                                 new Note {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"}
                             }
                         },
-                        new Step
+                        new StepModel
                         {
                             StepName = StepName.Approved,
                             AlarmTime = DateTime.Now,
                             IsCompleted = true,
                             DateAdded = DateTime.Now
                         },
-                        new Step
+                        new StepModel
                         {
                             StepName = StepName.Exam,
                             AlarmTime = DateTime.Now,
                             IsCompleted = true,
                             DateAdded = DateTime.Now
                         },
-                        new Step
+                        new StepModel
                         {
                             StepName = StepName.Impression,
                             AlarmTime = DateTime.Now,
                             IsCompleted = true,
                             DateAdded = DateTime.Now
                         },
-                        new Step
+                        new StepModel
                         {
                             StepName = StepName.Delivery,
                             AlarmTime = DateTime.Now,
                             IsCompleted = true,
                             DateAdded = DateTime.Now
                         },
-                        new Step {StepName = StepName.FollowUp, AlarmTime = DateTime.Now, DateAdded = DateTime.Now}
+                        new StepModel {StepName = StepName.FollowUp, AlarmTime = DateTime.Now, DateAdded = DateTime.Now}
                     }
                 };
 
@@ -69,13 +73,13 @@ namespace SleepWatcher.Design
             set { }
         }
 
-        public Model.Step SelectedStep
+        public StepModel SelectedStep
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
 
-        public Model.Note SelectedNote
+        public NoteModel SelectedNote
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
@@ -106,13 +110,13 @@ namespace SleepWatcher.Design
             get { throw new NotImplementedException(); }
         }
 
-        public ObservableCollection<Model.Step> Steps
+        public RangeObservableCollection<StepModel> Steps
         {
-            get { throw new NotImplementedException(); }
+            get { return null; }
             set { throw new NotImplementedException(); }
         }
 
-        public ObservableCollection<Model.Note> Notes
+        public RangeObservableCollection<NoteModel> Notes
         {
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }

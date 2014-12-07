@@ -1,16 +1,50 @@
-﻿using System.Collections.ObjectModel;
-using System.Data.Entity;
+﻿using System.Data.Entity;
+using System.Diagnostics;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using SleepWatcher.Infrastructure;
+using SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
-    class PatientViewModel : ViewModelBase, IPatientViewModel
+    internal class PatientViewModel : ViewModelBase, IPatientViewModel
     {
-        private Patient _patient = new Patient();
         private IViewModelBase _currentViewModel;
+        private Patient _patient = new Patient();
+        private RangeObservableCollection<PatientModel> _patients;
 
-        public ObservableCollection<Patient> Patients { get; set; }
+        public PatientViewModel()
+        {
+            
+            CurrentViewModel = new SinglePatientViewModel();
+            //initiate switch to add pateint view model command
+            SwitchToAddPatientViewCommmand = new ActionCommand(() => { CurrentViewModel = Locator.AddPatientViewModel; });
+            //initiate get all patients command
+            GetAllPatients =
+                new ActionCommand(
+                     async () =>
+                    {
+                        Task task = new Task(async() =>
+                        {
+                            Patients =
+                            new RangeObservableCollection<PatientModel>(
+                                (await Context.Patients.Include(e=>e.Steps).ToListAsync()).Select(Mapper.Map<Patient, PatientModel>));
+                        });
+                        task.Start();
+                        await Task.WhenAll(task);
+                        var pa = Patients;
+                        Debug.Write(pa.Count);
+                    });
+
+            //getting patients from database to populate listbox
+            GetAllPatients.Execute(null);
+           
+        }
+
         public Patient Patient
         {
             get { return _patient; }
@@ -21,43 +55,31 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 OnPropertyChanged();
             }
         }
-        public ActionCommand SwitchToAddPatientViewCommmand { get; private set; }
+
+        public ActionCommand GetAllPatients { get; }
+
+        public RangeObservableCollection<PatientModel> Patients
+        {
+            get { return _patients; }
+            set
+            {
+                if (Equals(value, Patients)) return;
+                _patients = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public ActionCommand SwitchToAddPatientViewCommmand { get; }
 
         public IViewModelBase CurrentViewModel
         {
             get { return _currentViewModel; }
             set
             {
-                if (Equals(value,CurrentViewModel)) return;
+                if (Equals(value, CurrentViewModel)) return;
                 _currentViewModel = value;
                 OnPropertyChanged();
             }
         }
-
-        public ActionCommand GetAllPatients { get; private set; }
-
-        public PatientViewModel()
-        {
-            
-            CurrentViewModel = new SinglePatientViewModel();
-            //initiate switch to add pateint view model command
-            SwitchToAddPatientViewCommmand = new ActionCommand(() =>
-            {
-                CurrentViewModel = Locator.AddPatientViewModel;
-            });
-            //initiate get all patients command
-            GetAllPatients = new ActionCommand(async () =>
-             {
-
-                 await Context.Patients.ToListAsync();
-
-             });
-
-            //getting patients from database to populate listbox
-            GetAllPatients.Execute(null);
-            Patients = Context.Patients.Local;
-        }
-
-     
     }
 }

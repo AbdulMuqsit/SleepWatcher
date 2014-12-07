@@ -14,7 +14,7 @@ namespace SleepWatcher.EF
         public DbSet<Step> Steps { get; set; }
 
         public SleepWatcherDbContext()
-            : base("SleepWatcherDb")
+            : base(nameOrConnectionString:"SleepWatcher")
         {
             
         }
