@@ -1,6 +1,4 @@
-﻿using System.Collections.ObjectModel;
-using Microsoft.Expression.Interactivity.Core;
-using SleepWatcher.Entites;
+﻿using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Infrastructure;
 using SleepWatcher.Model;
 

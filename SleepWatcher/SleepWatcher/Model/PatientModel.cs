@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Windows;
 using AutoMapper;
 using SleepWatcher.Entites;
@@ -67,7 +66,7 @@ namespace SleepWatcher.Model
             StepModels.CollectionChanged += StepModels_CollectionChanged;
         }
 
-        private void StepModels_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void StepModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged("CurrentStep");
         }

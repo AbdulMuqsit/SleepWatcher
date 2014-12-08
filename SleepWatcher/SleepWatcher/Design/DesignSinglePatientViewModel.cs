@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.Infrastructure;
@@ -18,11 +15,11 @@ namespace SleepWatcher.Design
         {
             get
             {
-                return new PatientModel()
+                return new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    StepModels = new RangeObservableCollection<StepModel>()
+                    StepModels = new RangeObservableCollection<StepModel>
                     {
                         new StepModel
                         {

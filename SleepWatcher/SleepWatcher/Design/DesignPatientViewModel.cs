@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.Infrastructure;
@@ -29,47 +24,47 @@ namespace SleepWatcher.Design
             {
                 FirstName = "Patient",
                 LastName = "Kzam",
-                Steps = new List<Step>() { new Step() { StepName = StepName.Approved } }
+                Steps = new List<Step> { new Step { StepName = StepName.Approved } }
             };
          
             
-            Patients = new RangeObservableCollection<PatientModel>()
+            Patients = new RangeObservableCollection<PatientModel>
             {
                 new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Approved}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved}}
                 },
                  new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Delivery, IsCancled=true}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, IsCancled=true}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Approved, IsCompleted = true}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved, IsCompleted = true}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Approved}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved}}
                 },
                  new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Delivery, IsCancled=true}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, IsCancled=true}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step>() {new Step() {StepName = StepName.Approved, IsCompleted = true}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved, IsCompleted = true}}
                 }
             };
 

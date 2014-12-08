@@ -1,7 +1,6 @@
 ﻿using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;

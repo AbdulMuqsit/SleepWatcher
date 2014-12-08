@@ -2,17 +2,14 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SleepWatcher.Infrastructure
 {
     public class RangeObservableCollection<T> : ObservableCollection<T>
     {
-        private bool _suppressNotification = false;
+        private bool _suppressNotification;
 
-        public RangeObservableCollection() :base()
+        public RangeObservableCollection()
         {
             
         }

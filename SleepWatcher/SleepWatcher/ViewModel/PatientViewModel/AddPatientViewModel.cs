@@ -1,6 +1,4 @@
-﻿using System.Windows;
-using Microsoft.Expression.Interactivity.Core;
-using SleepWatcher.EF.Migrations;
+﻿using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
@@ -21,9 +19,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand AddPatinetCommand { get; private set; }
+        public ActionCommand AddPatinetCommand { get; }
 
-        public ActionCommand SwitchToSinglePatientViewCommand { get; private set; }
+        public ActionCommand SwitchToSinglePatientViewCommand { get; }
 
         public bool StartFirstStep
         {

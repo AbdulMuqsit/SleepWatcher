@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Net.Mime;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows;
 using SleepWatcher.Design;
 using SleepWatcher.ViewModel.PatientViewModel;
@@ -16,7 +10,7 @@ namespace SleepWatcher.ViewModel
         public IPatientViewModel PatientViewModel { get; set; }
         public IAddPatientViewModel AddPatientViewModel { get; set; }
         public ISinglePatientViewModel SinglePatientViewModel { get; set; }
-
+        public OverDuePatientsViewModel OverDuePatientsViewModel { get;set; }
 
         public ViewModelLocator()
         {
@@ -31,6 +25,7 @@ namespace SleepWatcher.ViewModel
                 PatientViewModel = new PatientViewModel.PatientViewModel();
                 AddPatientViewModel = new AddPatientViewModel();
                 SinglePatientViewModel = new SinglePatientViewModel();
+                OverDuePatientsViewModel = new OverDuePatientsViewModel();
             }
           
         }

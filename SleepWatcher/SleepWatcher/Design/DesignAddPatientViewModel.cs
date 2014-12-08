@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
-using SleepWatcher.ViewModel;
 using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.Design

@@ -1,7 +1,6 @@
 ﻿<Application x:Class="SleepWatcher.App"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                          xmlns:ViewModel="clr-namespace:SleepWatcher.ViewModel"
 
              StartupUri="MainWindow.xaml">
     <Application.Resources>
@@ -10,6 +9,7 @@
             
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Templates.xaml"/>
+                <ResourceDictionary Source="Resource.xaml"/>
                 
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

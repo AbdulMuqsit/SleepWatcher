@@ -33,7 +33,7 @@ namespace SleepWatcher.Model
         {
             get
             {
-                if (this.StepName == StepName.FollowUp)
+                if (StepName == StepName.FollowUp)
                 {
                     return 30;
                 }

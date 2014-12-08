@@ -4,7 +4,5 @@
     xmlns:local="clr-namespace:Amuqsit.CustomControls">
     <ResourceDictionary.MergedDictionaries>
         <ResourceDictionary  Source="/Amuqsit.CustomControls;Component/Windows/CustomWindowResoursces.xaml"/>
-            
     </ResourceDictionary.MergedDictionaries>
-  
 </ResourceDictionary>
