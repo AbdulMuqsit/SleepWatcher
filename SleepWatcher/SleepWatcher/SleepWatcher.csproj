@@ -113,14 +113,15 @@
     <Compile Include="Infrastructure\AutoMapperConfiguration.cs" />
     <Compile Include="Infrastructure\RangeObservableCollection.cs" />
     <Compile Include="Model\NoteModel.cs" />
+    <Compile Include="Model\NotificationModel.cs" />
     <Compile Include="Model\ObjectBase.cs" />
     <Compile Include="Model\PatientModel.cs" />
+    <Compile Include="Model\PatientNotificaitonModel.cs" />
     <Compile Include="Model\StepModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel\OverDuePatientsViewModel.cs" />
     <Compile Include="View\Notifications\GrowlNotifiactions.xaml.cs">
       <DependentUpon>GrowlNotifiactions.xaml</DependentUpon>
     </Compile>
-    <Compile Include="ViewModel\Notification.cs" />
-    <Compile Include="ViewModel\OverDuePatientsViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\AddPatientViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\IAddPatientViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\IPatientViewModel.cs" />
@@ -150,6 +151,14 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <DesignData Include="SampleData\PatientNotificaitonModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
+    <DesignData Include="SampleData\NotificationModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="View\Notifications\DesignTimeNotificationData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

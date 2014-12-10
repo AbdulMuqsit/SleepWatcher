@@ -15,7 +15,79 @@ namespace SleepWatcher.Design
 
         public ActionCommand SwitchToAddPatientViewCommmand { get; set; }
 
+        public bool IsBusy
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public ActionCommand GetOverDuePatientsCommand
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
         public Patient Patient { get; set; }
+
+        public ActionCommand GetAllPatients
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public RangeObservableCollection<PatientModel> OverDuePatients
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public NotificationModel NotificationModel
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public ActionCommand FilterPatientsCommand
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public ActionCommand SubscribeNotificationsCommand
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public ActionCommand FilterCnacled
+        {
+            get { throw new System.NotImplementedException(); }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public bool ShowOverDue
+        {
+            get { return true; }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public bool ShowCanceled
+        {
+            get { return true; }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public bool ShowCompleted
+        {
+            get { return true; }
+            set { throw new System.NotImplementedException(); }
+        }
+
+        public bool ShowOngoing
+        {
+            get { return true; }
+            set { throw new System.NotImplementedException(); }
+        }
 
         public DesignPatientViewModel()
         {

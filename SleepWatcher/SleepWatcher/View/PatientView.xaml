@@ -10,7 +10,7 @@
              xmlns:view="clr-namespace:SleepWatcher.View"
              d:DesignHeight="333" d:DesignWidth="745">
     <UserControl.Resources>
-        
+
     </UserControl.Resources>
     <UserControl.DataContext>
         <Binding Mode="OneWay" Source="{StaticResource Locator}"/>
@@ -21,19 +21,36 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="*" MinWidth="170"/>
             <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition/>
+            <ColumnDefinition MinWidth="300" Width="2.2*"/>
         </Grid.ColumnDefinitions>
         <TextBlock Foreground="#FF707071" FontSize="40" FontFamily="Cambria" FontWeight="Bold" Margin="10,10,0,0">Patients</TextBlock>
+        <Expander Margin="5,0"  Grid.Row="1" Grid.Column="0" Header="Search Filters">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal">
+                    <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowOngoing}">Ongoing</CheckBox>
+                    <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowOverDue}">Overdue</CheckBox>
+                </StackPanel>
+                <StackPanel Grid.Row="1" Orientation="Horizontal">
+                    <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowCanceled}">Canceled</CheckBox>
+                    <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowCompleted}">Completed</CheckBox>
+                </StackPanel>
+            </Grid>
+        </Expander>
         <!--Patients list box-->
-        <ListBox Grid.Row="1" Margin="10,5,5,5" ItemTemplate="{DynamicResource ListBoxItemsTemplate}" ItemsSource="{Binding PatientViewModel.Patients}" SelectedItem="{Binding SinglePatientViewModel.Patient}" HorizontalContentAlignment="Stretch"/>
+        <ListBox Grid.Row="2" Margin="10,5,5,5" ItemTemplate="{DynamicResource ListBoxItemsTemplate}" HorizontalAlignment="Stretch" ItemsSource="{Binding PatientViewModel.Patients}" SelectedItem="{Binding SinglePatientViewModel.Patient}" HorizontalContentAlignment="Stretch"/>
         <!--Seperator-->
-        <GridSplitter Grid.Row="1"  Grid.Column="1"  Width="2"/>
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Grid.Column="1"  Width="3"/>
         <!--Add user View Part-->
-        <ContentControl Grid.Row="1"  Grid.Column="2" Content="{Binding PatientViewModel.CurrentViewModel}"/>
+        <ContentControl Grid.Row="1" Grid.RowSpan="2" Margin="5"  Grid.Column="2" Content="{Binding PatientViewModel.CurrentViewModel}"/>
     </Grid>
 </UserControl>

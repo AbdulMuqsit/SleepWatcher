@@ -1,8 +1,12 @@
-﻿<viewModel:Notifications
+﻿<model:Notifications
     xmlns:notifications="clr-namespace:SleepWatcher.View.Notifications"
-    xmlns:viewModel="clr-namespace:SleepWatcher.ViewModel">
-    <viewModel:Notification Id="1" Title="Notification #1"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="2" Title="Notification #2"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="3" Title="Notification #3"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-    <viewModel:Notification Id="4" Title="Notification #4"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
-</viewModel:Notifications>
+    xmlns:viewModel="clr-namespace:SleepWatcher.ViewModel"
+    xmlns:model="clr-namespace:SleepWatcher.Model">
+    <model:NotificationModel Id="1" Title="NotificationModel #1"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    <model:NotificationModel Id="2" Title="NotificationModel #2"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    <model:PatientNotificaitonModel Id="3" Name="Tobby Williams" StepName="Approved" />
+    <model:NotificationModel Id="4" Title="NotificationModel #4"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+    <model:NotificationModel Id="5" Title="NotificationModel #4"  Message="Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." />
+   
+    
+</model:Notifications>

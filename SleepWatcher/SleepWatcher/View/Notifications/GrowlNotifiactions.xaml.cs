@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using SleepWatcher.Model;
 using SleepWatcher.ViewModel;
 
 namespace SleepWatcher.View.Notifications
@@ -10,8 +11,8 @@ namespace SleepWatcher.View.Notifications
     {
         private const byte MAX_NOTIFICATIONS = 4;
         private int count;
-        public ViewModel.Notifications Notifications = new ViewModel.Notifications();
-        private readonly ViewModel.Notifications buffer = new ViewModel.Notifications();
+        public Model.Notifications Notifications = new Model.Notifications();
+        private readonly Model.Notifications buffer = new Model.Notifications();
 
         public GrowlNotifiactions()
         {
@@ -19,23 +20,23 @@ namespace SleepWatcher.View.Notifications
             NotificationsControl.DataContext = Notifications;
         }
 
-        public void AddNotification(Notification notification)
+        public void AddNotification(NotificationModel notificationModel)
         {
-            notification.Id = count++;
+            notificationModel.Id = count++;
             if (Notifications.Count + 1 > MAX_NOTIFICATIONS)
-                buffer.Add(notification);
+                buffer.Add(notificationModel);
             else
-                Notifications.Add(notification);
+                Notifications.Add(notificationModel);
             
             //Show window if there're notifications
             if (Notifications.Count > 0 && !IsActive)
                 Show();
         }
 
-        public void RemoveNotification(Notification notification)
+        public void RemoveNotification(NotificationModel notificationModel)
         {
-            if (Notifications.Contains(notification))
-                Notifications.Remove(notification);
+            if (Notifications.Contains(notificationModel))
+                Notifications.Remove(notificationModel);
             
             if (buffer.Count > 0)
             {

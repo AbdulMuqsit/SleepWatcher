@@ -18,7 +18,6 @@ namespace SleepWatcher.Model
         private ICollection<Step> _steps;
         private ICollection<Note> _notes;
         private RangeObservableCollection<StepModel> _stepModels = new RangeObservableCollection<StepModel>();
-        private Step _currentStep;
 
         public RangeObservableCollection<StepModel> StepModels
         {

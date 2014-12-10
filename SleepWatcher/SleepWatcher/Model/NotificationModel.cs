@@ -1,13 +1,12 @@
 ﻿using System.Collections.ObjectModel;
-using System.ComponentModel;
 using Microsoft.Expression.Interactivity.Core;
-using SleepWatcher.Model;
+using SleepWatcher.Entites;
+using SleepWatcher.ViewModel;
 
-namespace SleepWatcher.ViewModel
+namespace SleepWatcher.Model
 {
-    public class Notification :ViewModelBase
+    public class NotificationModel :ViewModelBase
     {
-        public ActionCommand ShowPatientCommand { get; set; }
         private string message;
         public string Message
         {
@@ -21,22 +20,22 @@ namespace SleepWatcher.ViewModel
             }
         }
 
-        private int id;
+        private int _id;
         public int Id
         {
-            get { return id; }
+            get { return _id; }
 
             set
             {
-                if (id == value) return;
-                id = value;
+                if (_id == value) return;
+                _id = value;
                 OnPropertyChanged("Id");
             }
         }
 
-        
-
         private string title;
+      
+
         public string Title
         {
             get { return title; }
@@ -52,5 +51,5 @@ namespace SleepWatcher.ViewModel
       
     }
 
-    public class Notifications : ObservableCollection<Notification> { }
+    public class Notifications : ObservableCollection<NotificationModel> { }
 }
