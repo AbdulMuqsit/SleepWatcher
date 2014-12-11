@@ -44,9 +44,8 @@
             </Grid.Resources>
             <Grid.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF535353" Offset="1" />
-                    <GradientStop Color="#FFE0E0E0" Offset="0.99" />
-                    <GradientStop Color="#FFE0E0E0" />
+                    <GradientStop Color="Black" Offset="1" />
+                    <GradientStop Color="#26D8D8D8" Offset="0.972" />
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.RowDefinitions>
@@ -111,8 +110,16 @@
                 <Setter TargetName="btnCancled" Property="Visibility" Value="Collapsed" />
 
             </DataTrigger>
-            <DataTrigger Binding="{Binding IsCancled}" Value="True">
+             <DataTrigger Binding="{Binding Status}" Value="Ongoing">
+                <Setter TargetName="textBlock" Property="Foreground" Value="DarkOrange" />
+                
+            </DataTrigger>
+             <DataTrigger Binding="{Binding Status}" Value="Overdue">
                 <Setter TargetName="textBlock" Property="Foreground" Value="Red" />
+                
+            </DataTrigger>
+            <DataTrigger Binding="{Binding IsCancled}" Value="True">
+                <Setter TargetName="textBlock" Property="Foreground" Value="Black" />
                 <Setter TargetName="btnCompleted" Property="Visibility" Value="Collapsed" />
                 <Setter TargetName="btnCancled" Property="Content" Value="Uncancel" />
             </DataTrigger>
@@ -152,24 +159,43 @@
 
         </Grid>
         <DataTemplate.Triggers>
-            <Trigger Property="Text" Value="Canceled" SourceName="textBlock1">
+            <Trigger Property="Text" Value="Ongoing" SourceName="textBlock1">
                 <Setter Property="Background" TargetName="grid">
                     <Setter.Value>
                         <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="#FFE42727" Offset="0.965" />
-                            <GradientStop Color="#FFD66666" Offset="1" />
-                            <GradientStop Color="#FFDADADA" Offset="0.96" />
+                            <GradientStop Color="DarkOrange" Offset="1" />
+                            <GradientStop Color="White" Offset="0.96" />
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>
             </Trigger>
+                        <Trigger Property="Text" Value="Overdue" SourceName="textBlock1">
+                <Setter Property="Background" TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.96" />
+                            <GradientStop Color="Red" Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger Property="Text" Value="Canceled" SourceName="textBlock1">
+                <Setter Property="Background" TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                            <GradientStop Color="White" Offset="0.96"/>
+                            <GradientStop Color="Black" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+
             <Trigger Property="Text" Value="Completed" SourceName="textBlock1">
                 <Setter Property="Background" TargetName="grid">
                     <Setter.Value>
                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="#FF15C745" Offset="0.965" />
-                            <GradientStop Color="#FF6BE48C" Offset="1" />
-                            <GradientStop Color="#FFDADADA" Offset="0.96" />
+                            <GradientStop Color="Green" Offset="1" />
+                            <GradientStop Color="White" Offset="0.96" />
                         </LinearGradientBrush>
                     </Setter.Value>
                 </Setter>

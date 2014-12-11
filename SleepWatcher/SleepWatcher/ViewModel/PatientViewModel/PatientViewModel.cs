@@ -25,11 +25,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private NotificationModel _notificationModel;
         private RangeObservableCollection<PatientModel> _overDuePatients = new RangeObservableCollection<PatientModel>();
         private readonly GrowlNotifiactions _growlNotificaitons = new GrowlNotifiactions();
-        private bool _showOverDue;
-        private bool _showCanceled;
-        private bool _showCompleted;
-        private bool _showOngoing;
-        private bool _isBusy;
+        private bool _showOverDue = true;
+        private bool _showCanceled = true;
+        private bool _showCompleted = true;
+        private bool _showOngoing = true;
+        private bool _isBusy = false;
+        private string _busyMessage
+            ;
 
         public bool IsBusy
         {
@@ -38,6 +40,17 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 if (Equals(value, IsBusy)) return;
                 _isBusy = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string BusyMessage
+        {
+            get { return _busyMessage; }
+            set
+            {
+                if (Equals(value, BusyMessage)) return;
+                _busyMessage = value;
                 OnPropertyChanged();
             }
         }
@@ -55,6 +68,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
 
         public ActionCommand GetAllPatients { get; set; }
+
+        public ActionCommand ExitCommand { get; set; }
 
         public RangeObservableCollection<PatientModel> Patients
         {
@@ -123,7 +138,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                      Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
 
                  }
-                 else 
+                 else
                  {
                      Patients = OverDuePatients;
                  }
@@ -169,15 +184,24 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 });
             });
 
+            ExitCommand= new ActionCommand(() =>
+            {
+                Application.Current.Shutdown();
+            });
             SubscribeNotificationsCommand = new ActionCommand(async () =>
             {
+
                 await Task.Run(async () =>
                 {
+                    while (IsBusy) {}
 
+                    IsBusy = true;
+                    BusyMessage = "Loading Patients";
                     Patients =
                     new RangeObservableCollection<PatientModel>(
                         (await Context.Patients.Include(e => e.Steps).ToListAsync()).Select(Mapper.Map<Patient, PatientModel>));
 
+                    BusyMessage = "Checking for overdue Steps";
 
 
                     OverDuePatients.Clear();
@@ -202,14 +226,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 }
                 var interval = Observable.Interval(new TimeSpan(0, 10, 0), DispatcherScheduler.Current);
 
-               interval.Subscribe(
-                    e =>
-                    {
-                        Notify();
-                    });
+                interval.Subscribe(
+                     e =>
+                     {
+                         Notify();
+                     });
+                IsBusy = false;
                 Notify();
                 await interval;
-                
+
             });
 
         }
@@ -223,7 +248,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 NotificationModel =
                     new NotificationModel
                     {
-                        Message = overDuePatientCount + "patients have a step overdue"
+                        Message = overDuePatientCount + " patients have a step overdue"
                     };
             }
             else if (overDuePatientCount == 1)

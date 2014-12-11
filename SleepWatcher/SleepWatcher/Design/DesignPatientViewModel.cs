@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.Infrastructure;
@@ -8,8 +9,13 @@ using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.Design
 {
-    public class DesignPatientViewModel :ViewModelBase, IPatientViewModel
+    public class DesignPatientViewModel : ViewModelBase, IPatientViewModel
     {
+        public ActionCommand ExitCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public RangeObservableCollection<PatientModel> Patients { get; set; }
         public IViewModelBase CurrentViewModel { get; set; }
 
@@ -19,6 +25,12 @@ namespace SleepWatcher.Design
         {
             get { throw new System.NotImplementedException(); }
             set { throw new System.NotImplementedException(); }
+        }
+
+        public string BusyMessage
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
         }
 
         public ActionCommand GetOverDuePatientsCommand
@@ -91,28 +103,28 @@ namespace SleepWatcher.Design
 
         public DesignPatientViewModel()
         {
-            CurrentViewModel= new DesignSinglePatientViewModel();
+            CurrentViewModel = new DesignSinglePatientViewModel();
             Patient = new Patient
             {
                 FirstName = "Patient",
                 LastName = "Kzam",
                 Steps = new List<Step> { new Step { StepName = StepName.Approved } }
             };
-         
-            
+
+
             Patients = new RangeObservableCollection<PatientModel>
             {
                 new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved,AlarmTime = DateTime.MaxValue}}
                 },
                  new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, IsCancled=true}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, AlarmTime = DateTime.MinValue}}
                 },
                   new PatientModel
                 {
@@ -124,7 +136,7 @@ namespace SleepWatcher.Design
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved}}
+                    Steps = new List<Step> {new Step {StepName = StepName.Approved, AlarmTime = DateTime.MaxValue}}
                 },
                  new PatientModel
                 {

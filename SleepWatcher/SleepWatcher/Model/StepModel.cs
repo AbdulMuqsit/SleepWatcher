@@ -118,6 +118,10 @@ namespace SleepWatcher.Model
                 {
                     return Status.Canceled;
                 }
+                if (AlarmTime < DateTime.Now)
+                {
+                    return Status.Overdue;
+                }
                 return Status.Ongoing;
             }
         }

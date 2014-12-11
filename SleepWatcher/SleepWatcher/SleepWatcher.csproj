@@ -234,11 +234,12 @@
       <Name>SleepWatcher.Entites</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="View\Notifications\close.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\dentist.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

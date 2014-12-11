@@ -49,6 +49,10 @@ namespace SleepWatcher.Entites
                 {
                     return Status.Canceled;
                 }
+                if (AlarmTime < DateTime.Now)
+                {
+                    return Status.Overdue;
+                }
                 return Status.Ongoing;
             }
         }

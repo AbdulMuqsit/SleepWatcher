@@ -7,10 +7,12 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public interface IPatientViewModel : IViewModelBase
     {
+        ActionCommand ExitCommand { get; }
         RangeObservableCollection<PatientModel> Patients { get; }
         IViewModelBase CurrentViewModel { get; set; }
         ActionCommand SwitchToAddPatientViewCommmand { get; }
         bool IsBusy { get; set; }
+        string BusyMessage { get; set; }
         ActionCommand GetOverDuePatientsCommand { get; set; }
         Patient Patient { get; set; }
         ActionCommand GetAllPatients { get; set; }

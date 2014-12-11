@@ -9,6 +9,7 @@ namespace SleepWatcher.Entites
     {
         Completed,
         Canceled,
-        Ongoing
+        Ongoing,
+        Overdue
     }
 }

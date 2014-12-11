@@ -25,7 +25,6 @@ namespace SleepWatcher.Design
                         {
                             StepName = StepName.PaperWorkDone,
                             AlarmTime = DateTime.Now,
-                            IsCompleted = true,
                             DateAdded = DateTime.Now,
                             Notes = new List<Note>
                             {
@@ -37,27 +36,25 @@ namespace SleepWatcher.Design
                         {
                             StepName = StepName.Approved,
                             AlarmTime = DateTime.Now,
-                            IsCompleted = true,
+                            IsCancled = true,
                             DateAdded = DateTime.Now
                         },
                         new StepModel
                         {
                             StepName = StepName.Exam,
-                            AlarmTime = DateTime.Now,
-                            IsCompleted = true,
+                            AlarmTime = DateTime.MinValue,
                             DateAdded = DateTime.Now
                         },
                         new StepModel
                         {
                             StepName = StepName.Impression,
-                            AlarmTime = DateTime.Now,
-                            IsCompleted = true,
+                            AlarmTime = DateTime.MaxValue,
                             DateAdded = DateTime.Now
                         },
                         new StepModel
                         {
                             StepName = StepName.Delivery,
-                            AlarmTime = DateTime.Now,
+                            AlarmTime = DateTime.MaxValue,
                             IsCompleted = true,
                             DateAdded = DateTime.Now
                         },
