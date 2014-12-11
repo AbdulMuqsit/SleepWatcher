@@ -25,5 +25,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         bool ShowCanceled { get; set; }
         bool ShowCompleted { get; set; }
         bool ShowOngoing { get; set; }
+        ActionCommand FilterCompleted { get; set; }
+        ActionCommand FilterOngoing { get; set; }
+        ActionCommand FilterOverdue { get; set; }
     }
 }

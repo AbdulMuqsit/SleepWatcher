@@ -101,6 +101,24 @@ namespace SleepWatcher.Design
             set { throw new System.NotImplementedException(); }
         }
 
+        public ActionCommand FilterCompleted
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand FilterOngoing
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
+        public ActionCommand FilterOverdue
+        {
+            get { throw new NotImplementedException(); }
+            set { throw new NotImplementedException(); }
+        }
+
         public DesignPatientViewModel()
         {
             CurrentViewModel = new DesignSinglePatientViewModel();
