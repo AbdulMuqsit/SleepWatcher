@@ -18,12 +18,12 @@
             <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="1"  Grid.Column="1" >
-            <TextBlock Text="First Name" Style="{DynamicResource TextBlockStyle}" />
-            <TextBlock Text="Last Name"  Style="{DynamicResource TextBlockStyle}"/>
+            <TextBlock Text="First Name" Style="{DynamicResource AddViewTextBlockStyle}" />
+            <TextBlock Text="Last Name" Margin="5,17" Style="{DynamicResource AddViewTextBlockStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Row="1"  Grid.Column="2" >
-            <TextBox Style="{DynamicResource TextBoxStyle}" Text="{Binding AddPatientViewModel.Patient.FirstName}" />
+            <TextBox Text="{Binding AddPatientViewModel.Patient.FirstName}" Style="{DynamicResource TextBoxStyle}" />
             <TextBox Style="{DynamicResource TextBoxStyle}" Text="{Binding AddPatientViewModel.Patient.LastName}" />
             <CheckBox Content="Start first Step" Style="{DynamicResource CheckBoxStyle}" FontSize="18.667" IsChecked="{Binding AddPatientViewModel.StartFirstStep}"  />
             <StackPanel MinHeight="50" VerticalAlignment="Top" HorizontalAlignment="Right" Orientation="Horizontal">
