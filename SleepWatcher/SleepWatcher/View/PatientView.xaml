@@ -162,7 +162,12 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
                 <RowDefinition Height="Auto"/>
+
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
             <StackPanel Orientation="Horizontal">
                 <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowOngoing}" Content="Ongoing" Style="{DynamicResource FilterCheckBoxStyle}"/>
                 <CheckBox Margin="9,5,5,5" IsChecked="{Binding PatientViewModel.ShowOverDue}" Content="Overdue" Style="{DynamicResource FilterCheckBoxStyle}"/>
@@ -171,6 +176,29 @@
                 <CheckBox Margin="5,0" IsChecked="{Binding PatientViewModel.ShowCanceled}"  Content="Canceled" Style="{DynamicResource FilterCheckBoxStyle}"/>
                 <CheckBox Margin="5,0" IsChecked="{Binding PatientViewModel.ShowCompleted}" Content="Completed" Style="{DynamicResource FilterCheckBoxStyle}"/>
             </StackPanel>
+            <ComboBox Grid.Column="1" Text="Step" SelectedIndex="0" Margin="10"  Grid.RowSpan="2">
+                <ComboBoxItem IsSelected="True">
+                    <TextBlock TextTrimming="CharacterEllipsis">All</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Paper Work</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Approval</TextBlock></ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Examinatin</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Impression</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Delivery</TextBlock>
+                </ComboBoxItem>
+                <ComboBoxItem>
+                    <TextBlock TextTrimming="CharacterEllipsis">Follow Up</TextBlock>
+                </ComboBoxItem>
+
+            </ComboBox>
         </Grid>
     </Grid>
 </UserControl>
