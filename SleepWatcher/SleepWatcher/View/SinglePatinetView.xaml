@@ -9,137 +9,8 @@
              d:DesignHeight="506" d:DesignWidth="748" >
     <UserControl.Resources>
         <ControlTemplate x:Key="UserControlControlTemplate1" TargetType="{x:Type UserControl}">
-            <Grid >
-                <VisualStateManager.VisualStateGroups>
-                    <VisualStateGroup x:Name="BusyStates">
-                        <VisualStateGroup.Transitions>
-                            <VisualTransition GeneratedDuration="0" To="Busy">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
-                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0.2"/>
-                                    </DoubleAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
-                                        <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                            <VisualTransition From="Busy" GeneratedDuration="0">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
-                                        <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
-                                        <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
-                                    </DoubleAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
-                                        <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                        </VisualStateGroup.Transitions>
-                        <VisualState x:Name="Busy">
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
-                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0.2"/>
-                                </DoubleAnimationUsingKeyFrames>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
-                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="Free"/>
-                    </VisualStateGroup>
-                </VisualStateManager.VisualStateGroups>
-                <i:Interaction.Triggers>
-                    <ei:DataTrigger Binding="{Binding PatientViewModel.IsBusy}" Value="False">
-                        <ei:GoToStateAction StateName="Free"/>
-                    </ei:DataTrigger>
-                    <ei:DataTrigger Binding="{Binding PatientViewModel.IsBusy}" Value="True">
-                        <ei:GoToStateAction StateName="Busy"/>
-                    </ei:DataTrigger>
-                </i:Interaction.Triggers>
-                <Grid x:Name="AddPatient" Visibility="Collapsed" d:IsHidden="True">
-                   
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="3*"/>
-                    </Grid.RowDefinitions>
-                  
-                    <TextBlock  Grid.Row="1" Text="Add New Patient" HorizontalAlignment="Center" Foreground="#FF7F7F80" FontSize="32" FontFamily="Trebuchet MS"/>
-                    <Button Grid.Row="2" HorizontalAlignment="Center" Content="+" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource AddNewPatientButtonStyle}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}"/>
-                </Grid>
-                <Grid x:Name="ViewPatient" Background="White">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"/>
-                    <Button Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="30" MinWidth="30" Content="X"/>
-                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"/>
-                    <Rectangle x:Name="rectangle" HorizontalAlignment="Stretch" Grid.RowSpan="1" StrokeThickness="6" VerticalAlignment="Stretch" Fill="Gray" Grid.Row="1" Margin="5" Visibility="Collapsed" Opacity="0"/>
-                    <StackPanel x:Name="stackPanel" VerticalAlignment="Center"  HorizontalAlignment="Center" Orientation="Vertical" Grid.Row="2" Visibility="Collapsed" Opacity="0">
-                        <Ellipse x:Name="ellipse" Height="50" Width="50"  StrokeThickness="6" RenderTransformOrigin="0.5,0.5">
-                            <Ellipse.Effect>
-                                <DropShadowEffect Color="#FFCFB79A" Opacity="0.5"/>
-                            </Ellipse.Effect>
-                            <Ellipse.RenderTransform>
-                                <TransformGroup>
-                                    <ScaleTransform/>
-                                    <SkewTransform/>
-                                    <RotateTransform/>
-                                    <TranslateTransform/>
-                                </TransformGroup>
-                            </Ellipse.RenderTransform>
-                            <Ellipse.Stroke>
-                                <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                                    <GradientStop Color="#FFC9C9C9" Offset="1"/>
-                                    <GradientStop Color="#FFEC9C28" Offset="0.3"/>
-                                </LinearGradientBrush>
-                            </Ellipse.Stroke>
-                        </Ellipse>
-                        <TextBlock  Margin="5" HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667">
-                            <TextBlock.Effect>
-                                <DropShadowEffect Opacity="0.3"/>
-                            </TextBlock.Effect><Run Text="Please Wait"/></TextBlock>
-                        <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
-                            <TextBlock.Effect>
-                                <DropShadowEffect Opacity="0.3"/>
-                            </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/><Run Text=" "/><Run Text="..."/></TextBlock>
 
-                    </StackPanel>
-                    <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
-                    <Button Grid.Row="0" Style="{DynamicResource BackButton}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,5" ><Image Height="20" Width="32" Margin="5" Source="../Resources/back.png"></Image></Button>
-                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"></ListBox>
-                </Grid>
-            </Grid>
-            <ControlTemplate.Triggers>
-                <DataTrigger Binding="{Binding SinglePatientViewModel.Patient}" Value="{x:Null}">
-                    <Setter TargetName="AddPatient" Property="Visibility" Value="Visible"/>
-                </DataTrigger>
-            </ControlTemplate.Triggers>
+
         </ControlTemplate>
         <Style x:Key="AddNewPatientButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
@@ -173,68 +44,259 @@
             <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontFamily" Value="Arial"/>
         </Style>
+        <Storyboard x:Key="BusyAnimation">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipse1">
+                <EasingDoubleKeyFrame KeyTime="0:0:2" Value="360"/>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
 
     </UserControl.Resources>
+    <UserControl.Triggers>
+        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
+            <BeginStoryboard Storyboard="{StaticResource BusyAnimation}"/>
+        </EventTrigger>
+    </UserControl.Triggers>
 
     <UserControl.DataContext>
         <Binding Mode="OneWay" Source="{StaticResource Locator}"/>
     </UserControl.DataContext>
-    <Grid x:Name="ViewPatient" Background="White">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"/>
-        <Button Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="30" MinWidth="30" Content="X"/>
-        <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"/>
-        <Rectangle x:Name="rectangle" HorizontalAlignment="Stretch" Grid.RowSpan="1" StrokeThickness="6" VerticalAlignment="Stretch" Fill="Gray" Grid.Row="1" Margin="5" Visibility="Collapsed" Opacity="0"/>
-        <StackPanel x:Name="stackPanel" VerticalAlignment="Center"  HorizontalAlignment="Center" Orientation="Vertical" Grid.Row="2" Visibility="Collapsed" Opacity="0">
-            <Ellipse x:Name="ellipse" Height="50" Width="50"  StrokeThickness="6" RenderTransformOrigin="0.5,0.5">
-                <Ellipse.Effect>
-                    <DropShadowEffect Color="#FFCFB79A" Opacity="0.5"/>
-                </Ellipse.Effect>
-                <Ellipse.RenderTransform>
-                    <TransformGroup>
-                        <ScaleTransform/>
-                        <SkewTransform/>
-                        <RotateTransform/>
-                        <TranslateTransform/>
-                    </TransformGroup>
-                </Ellipse.RenderTransform>
-                <Ellipse.Stroke>
-                    <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                        <GradientStop Color="#FFC9C9C9" Offset="1"/>
-                        <GradientStop Color="#FFEC9C28" Offset="0.3"/>
-                    </LinearGradientBrush>
-                </Ellipse.Stroke>
-            </Ellipse>
-            <TextBlock  Margin="5" HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667">
-                <TextBlock.Effect>
-                    <DropShadowEffect Opacity="0.3"/>
-                </TextBlock.Effect><Run Text="Please Wait"/></TextBlock>
-            <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
-                <TextBlock.Effect>
-                    <DropShadowEffect Opacity="0.3"/>
-                </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/><Run Text=" "/><Run Text="..."/></TextBlock>
+    <Grid x:Name="grid" >
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="BusyStates">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0" To="Busy">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0.2"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition From="Busy" GeneratedDuration="0">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Collapsed}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0.2"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="Busy">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="rectangle">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="rectangle">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="0.2"/>
+                        </DoubleAnimationUsingKeyFrames>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="stackPanel">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.6" Value="{x:Static Visibility.Visible}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="stackPanel">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="1"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="Free"/>
+            </VisualStateGroup>
+            <VisualStateGroup x:Name="ViewStates">
+                <VisualStateGroup.Transitions>
+                    <VisualTransition GeneratedDuration="0" To="AddState">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="AddPatient">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AddPatient">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition From="AddState" GeneratedDuration="0">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="AddPatient">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AddPatient">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition GeneratedDuration="0" To="ViewState">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ViewPatient">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ViewPatient">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                    <VisualTransition From="ViewState" GeneratedDuration="0">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ViewPatient">
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{x:Static Visibility.Visible}"/>
+                                <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Collapsed}"/>
+                            </ObjectAnimationUsingKeyFrames>
+                            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ViewPatient">
+                                <EasingDoubleKeyFrame KeyTime="0" Value="1"/>
+                                <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                            </DoubleAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualTransition>
+                </VisualStateGroup.Transitions>
+                <VisualState x:Name="AddState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="AddPatient">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Visible}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="AddPatient">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+                <VisualState x:Name="ViewState">
+                    <Storyboard>
+                        <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)" Storyboard.TargetName="ViewPatient">
+                            <DiscreteObjectKeyFrame KeyTime="0:0:0.3" Value="{x:Static Visibility.Visible}"/>
+                        </ObjectAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="ViewPatient">
+                            <EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <i:Interaction.Triggers>
+            <ei:DataTrigger Binding="{Binding PatientViewModel.IsBusy}" Value="False">
+                <ei:GoToStateAction StateName="Free"/>
+            </ei:DataTrigger>
+            <ei:DataTrigger Binding="{Binding PatientViewModel.IsBusy}" Value="True">
+                <ei:GoToStateAction StateName="Busy"/>
+            </ei:DataTrigger>
+            <ei:DataTrigger Binding="{Binding SinglePatientViewModel.Patient}" Value="{x:Null}">
+                <ei:GoToStateAction StateName="AddState"/>
+            </ei:DataTrigger>
+            <ei:DataTrigger Comparison="NotEqual" Value="{x:Null}" Binding="{Binding SinglePatientViewModel.Patient}">
+                <ei:GoToStateAction StateName="ViewState"/>
+            </ei:DataTrigger>
+            <i:EventTrigger>
+                <ei:GoToStateAction StateName="AddState"/>
+            </i:EventTrigger>
+            <i:EventTrigger SourceName="ViewPatient">
+                <ei:GoToStateAction StateName="Busy"/>
+            </i:EventTrigger>
+            <ei:DataTrigger Binding="{Binding SinglePatientViewModel.IsBusy}" Value="False">
+                <ei:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource BusyAnimation}"/>
+            </ei:DataTrigger>
+            <ei:DataTrigger Binding="{Binding SinglePatientViewModel.IsBusy}" Value="True">
+                <ei:ControlStoryboardAction Storyboard="{StaticResource BusyAnimation}"/>
+            </ei:DataTrigger>
+        </i:Interaction.Triggers>
+        <Grid x:Name="AddPatient" Visibility="Collapsed" Opacity="0">
 
-        </StackPanel>
-        <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
-        <Button Grid.Row="0" Style="{DynamicResource BackButton}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,5" >
-            <Image Height="20" Width="32" Margin="5" Source="../Resources/back.png"></Image>
-        </Button>
-        <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"></ListBox>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock  Grid.Row="1" Text="Add New Patient" HorizontalAlignment="Center" Foreground="#FF7F7F80" FontSize="32" FontFamily="Trebuchet MS"/>
+            <Button Grid.Row="2" HorizontalAlignment="Center" Content="+" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource AddNewPatientButtonStyle}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}"/>
+        </Grid>
+        <Grid x:Name="ViewPatient" Visibility="Collapsed" Opacity="0"  Background="White">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"/>
+            <Button Grid.Row="0" Style="{StaticResource ButtonStyle}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" MinHeight="30" MinWidth="30" Content="X"/>
+            <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"/>
+            <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
+            <Button Grid.Row="0" Style="{DynamicResource BackButton}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,5" >
+                <Image Height="20" Width="20" Margin="5" Source="../Resources/back.png"></Image>
+            </Button>
+            <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"></ListBox>
+            <Rectangle x:Name="rectangle" HorizontalAlignment="Stretch" Grid.RowSpan="2" StrokeThickness="6" VerticalAlignment="Stretch" Fill="Gray" Margin="5" Visibility="Collapsed" Opacity="0"/>
+            <StackPanel x:Name="stackPanel" VerticalAlignment="Center"  HorizontalAlignment="Center" Orientation="Vertical" Grid.RowSpan="2" Margin="5" Visibility="Collapsed" Opacity="0">
+                <Grid Width="50">
+                    <Ellipse x:Name="ellipse"  StrokeThickness="6" RenderTransformOrigin="0.5,0.5" Height="49">
+                        <Ellipse.Effect>
+                            <DropShadowEffect Color="#FFCFB79A" Opacity="0.5"/>
+                        </Ellipse.Effect>
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC9C9C9" Offset="1"/>
+                                <GradientStop Color="#FFEC9C28" Offset="0.3"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                    </Ellipse>
+                    <Ellipse x:Name="ellipse1"  StrokeThickness="6" RenderTransformOrigin="0.5,0.5" Height="49">
+                        <Ellipse.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </Ellipse.RenderTransform>
+                        <Ellipse.Stroke>
+                            <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
+                                <GradientStop Color="#FFC9C9C9" Offset="1"/>
+                                <GradientStop Color="#FFEC9C28" Offset="0.3"/>
+                            </LinearGradientBrush>
+                        </Ellipse.Stroke>
+                    </Ellipse>
+                </Grid>
+                <TextBlock  Margin="5" HorizontalAlignment="Center" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667">
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.3"/>
+                    </TextBlock.Effect><Run Text="Please Wait"/></TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.3"/>
+                    </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/></TextBlock>
+                <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
+                    <TextBlock.Effect>
+                        <DropShadowEffect Opacity="0.3"/>
+                    </TextBlock.Effect><Run Text="..."/></TextBlock>
+
+            </StackPanel>
+        </Grid>
     </Grid>
-
-    <VisualStateManager.VisualStateGroups>
-    <VisualStateGroup x:Name="ViewStates">
-        <VisualState x:Name="ViewState">
-           <Storyboard>
-               <DoubleAnimationUsingKeyFrames Storyboard.TargetName="rectangle" Storyboard.TargetProperty="Opacity">
-                   <EasingDoubleKeyFrame KeyTime="0:0:0.6" Value="100"></EasingDoubleKeyFrame>
-               </DoubleAnimationUsingKeyFrames>
-           </Storyboard>
-        </VisualState>
-    </VisualStateGroup>
-</VisualStateManager.VisualStateGroups>
 
 </UserControl>
