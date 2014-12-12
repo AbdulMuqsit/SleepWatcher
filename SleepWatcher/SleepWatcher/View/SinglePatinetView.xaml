@@ -80,14 +80,14 @@
                     </ei:DataTrigger>
                 </i:Interaction.Triggers>
                 <Grid x:Name="AddPatient" Visibility="Collapsed">
-
+                   
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="3*"/>
                     </Grid.RowDefinitions>
-
+                  
                     <TextBlock  Grid.Row="1" Text="Add New Patient" HorizontalAlignment="Center" Foreground="#FF7F7F80" FontSize="32" FontFamily="Trebuchet MS"/>
                     <Button Grid.Row="2" HorizontalAlignment="Center" Content="+" MinWidth="80" MinHeight="50"   BorderBrush="{x:Null}" Margin="0,20,0,0" Style="{DynamicResource ButtonStyle1}" Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}"/>
                 </Grid>
@@ -130,6 +130,9 @@
                             </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/><Run Text=" "/><Run Text="..."/></TextBlock>
 
                     </StackPanel>
+                    <TextBlock Grid.Row="0" Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}" Foreground="#FF636363" FontSize="32" Margin="5,5,0,0"></TextBlock>
+                    <Button Grid.Row="0" Style="{DynamicResource BackButton}" Command="{Binding SinglePatientViewModel.ClearView}"  HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,5,5,5" ><Image Height="20" Width="32" Margin="5" Source="../Resources/back.png"></Image></Button>
+                    <ListBox Grid.Row="1"  ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}" ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch" SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"></ListBox>
                 </Grid>
             </Grid>
             <ControlTemplate.Triggers>

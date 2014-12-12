@@ -43,9 +43,8 @@ namespace SleepWatcher.Entites
             }
         }
         [NotMapped]
-        public string DueDate => AlarmTime.ToShortDateString();
-        [NotMapped]
-        public string DateStarted => DateAdded.ToShortDateString();
+        public string DueDate {get{return AlarmTime.ToShortDateString();}} 
+        public string DateStarted{get{return DateAdded.ToShortDateString();}} 
         public virtual ICollection<Note> Notes { get; set; }
 
     }

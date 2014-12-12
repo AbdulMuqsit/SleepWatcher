@@ -19,9 +19,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand AddPatinetCommand { get; }
+        public ActionCommand AddPatinetCommand { get; set; }
 
-        public ActionCommand SwitchToSinglePatientViewCommand { get; }
+        public ActionCommand SwitchToSinglePatientViewCommand { get; set; }
 
         public bool StartFirstStep
         {

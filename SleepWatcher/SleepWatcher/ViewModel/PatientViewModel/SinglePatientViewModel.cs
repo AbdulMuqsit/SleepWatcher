@@ -151,11 +151,11 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand SwitchToAddPatientViewModelCommand { get; }
-        public ActionCommand AddNewNoteCommand { get; }
-        public ActionCommand MarkCompleteCommand { get; }
-        public ActionCommand MarkCanceledCommand { get; }
-        public ActionCommand ClearView { get; }
+        public ActionCommand SwitchToAddPatientViewModelCommand { get; set; }
+        public ActionCommand AddNewNoteCommand { get; set; }
+        public ActionCommand MarkCompleteCommand { get; set; }
+        public ActionCommand MarkCanceledCommand { get; set; }
+        public ActionCommand ClearView { get; set; }
 
         private StepModel GetNextStep()
         {
