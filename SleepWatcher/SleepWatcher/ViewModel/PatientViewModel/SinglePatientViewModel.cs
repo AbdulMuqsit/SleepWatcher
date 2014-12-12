@@ -109,9 +109,10 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private async void LoadSteps()
         {
-            await Task.Run(() =>
+            await Task.Run(async () =>
             {
                 Busy();
+                await Task.Delay(10000);
                 if (Patient == null) return;
                 var steps = new RangeObservableCollection<StepModel>( Context.Steps.Where(e => e.PatientId == Patient.Id).Select(Mapper.Map<StepModel>));
                 Patient.StepModels = steps;
