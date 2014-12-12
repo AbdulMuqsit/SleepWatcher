@@ -13,20 +13,6 @@ namespace SleepWatcher.Entites
         public int Id { get; set; }
         [Required]
         public StepName StepName { get; set; }
-
-        public int Days
-        {
-            get
-            {
-                if (this.StepName == StepName.FollowUp)
-                {
-                    return 30;
-                }
-                return 15;
-
-            }
-
-        }
         [Required]
         public DateTime DateAdded { get; set; }
         public DateTime AlarmTime { get; set; }
@@ -58,6 +44,7 @@ namespace SleepWatcher.Entites
         }
         [NotMapped]
         public string DueDate => AlarmTime.ToShortDateString();
+        [NotMapped]
         public string DateStarted => DateAdded.ToShortDateString();
         public virtual ICollection<Note> Notes { get; set; }
 

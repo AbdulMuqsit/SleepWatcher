@@ -17,6 +17,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 {
     internal class PatientViewModel : ViewModelBase, IPatientViewModel
     {
+        #region Fields
         private IViewModelBase _currentViewModel;
         private Patient _patient = new Patient();
         private RangeObservableCollection<PatientModel> _patients;
@@ -31,7 +32,71 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private bool _showOngoing = true;
         private bool _isBusy = false;
         private string _busyMessage;
+        #endregion
+        #region Properties
+        private void Free()
+        {
+            IsBusy = false;
+        }
 
+        private void Busy()
+        {
+            IsBusy = true;
+        }
+
+        public ActionCommand FilterCompleted { get; set; }
+
+        public ActionCommand FilterOngoing { get; set; }
+
+        public ActionCommand FilterOverdue { get; set; }
+
+
+        public ActionCommand FilterCnacled { get; set; }
+
+        public bool ShowOverDue
+        {
+            get { return _showOverDue; }
+            set
+            {
+                if (Equals(value, ShowOverDue)) return;
+                _showOverDue = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowCanceled
+        {
+            get { return _showCanceled; }
+            set
+            {
+                if (Equals(value, ShowCanceled)) return;
+                _showCanceled = value;
+                FilterCnacled.Execute(null);
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowCompleted
+        {
+            get { return _showCompleted; }
+            set
+            {
+                if (Equals(value, ShowCompleted)) return;
+                _showCompleted = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public bool ShowOngoing
+        {
+            get { return _showOngoing; }
+            set
+            {
+                if (Equals(value, ShowOngoing)) return; ;
+                _showOngoing = value;
+                OnPropertyChanged();
+            }
+        }
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -67,6 +132,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
 
         public ActionCommand GetAllPatients { get; set; }
+
+        public ActionCommand ShowWindowCommand { get; set; }
 
         public ActionCommand ExitCommand { get; set; }
 
@@ -117,6 +184,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
         public ActionCommand FilterPatientsCommand { get; set; }
         public ActionCommand SubscribeNotificationsCommand { get; set; }
+        #endregion
+        #region Methods
         public PatientViewModel()
         {
             CurrentViewModel = new SinglePatientViewModel();
@@ -130,199 +199,43 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private void InitializeCommands()
         {
-            FilterPatientsCommand = new ActionCommand(async (obj) =>
-            {
-                
-                await Task.Run(() =>
-                {
-                    while (IsBusy) { }
-                    Busy();
-                    if (obj is int)
-                    {
-                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
-
-                    }
-                    else
-                    {
-                        Patients.Clear();
-                        Patients.AddRange(OverDuePatients);
-                    }
-                    Free();
-                });
-            });
-            FilterCnacled = new ActionCommand(() =>
-            {
-               
-                Task.Run(() =>
-                {
-                    while (IsBusy) { }
-                    Busy();
-                    if (ShowCanceled)
-                    {
-                        Patients.AddRange(
-                            Context.Patients.Local.Where(e => e.CurrentStep.IsCancled).Select(Mapper.Map<PatientModel>));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < Patients.Count; i++)
-                        {
-                            var patient = Patients[i];
-                            if (patient.CurrentStep.IsCancled)
-                            {
-                                Patients.Remove(patient);
-                            }
-
-                        }
-                    }
-                    Free();
-                });
-            });
-            FilterCompleted = new ActionCommand(() =>
-            {
-                Task.Run(() =>
-                {
-                    while (IsBusy) { }
-                    Busy();
-                    if (ShowCompleted)
-                    {
-                        Patients.AddRange(
-                            Context.Patients.Local.Where(e => e.CurrentStep.IsCompleted).Select(Mapper.Map<PatientModel>));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < Patients.Count; i++)
-                        {
-                            var patient = Patients[i];
-                            if (patient.CurrentStep.IsCompleted)
-                            {
-                                Patients.Remove(patient);
-                            }
-
-                        }
-                    }
-                    Free();
-                });
-            });
-            FilterOngoing = new ActionCommand(() =>
-            {
-               
-                Task.Run(() =>
-                {
-                    while (IsBusy) { }
-                    Busy();
-                    if (ShowCompleted)
-                    {
-                        Patients.AddRange(
-                            Context.Patients.Local.Where(e => e.CurrentStep.Status == Status.Ongoing).Select(Mapper.Map<PatientModel>));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < Patients.Count; i++)
-                        {
-                            var patient = Patients[i];
-                            if (patient.CurrentStep.Status == Status.Ongoing)
-                            {
-                                Patients.Remove(patient);
-                            }
-
-                        }
-                    }
-                    Free();
-                });
-            });
-
-            FilterOverdue = new ActionCommand(() =>
-            {
-                
-                Task.Run(() =>
-                {
-                    while(IsBusy){ }
-                    Busy();
-                    if (ShowCompleted)
-                    {
-                        Patients.AddRange(
-                            Context.Patients.Local.Where(e => e.CurrentStep.Status==Status.Overdue).Select(Mapper.Map<PatientModel>));
-                    }
-                    else
-                    {
-                        for (int i = 0; i < Patients.Count; i++)
-                        {
-                            var patient = Patients[i];
-                            if (patient.CurrentStep.Status==Status.Overdue)
-                            {
-                                Patients.Remove(patient);
-                            }
-
-                        }
-                    }
-                    Free();
-                });
-            });
+            InitializeFilterCommands();
             //initiate switch to add pateint view model command
             SwitchToAddPatientViewCommmand = new ActionCommand(() => { CurrentViewModel = Locator.AddPatientViewModel; });
             //initiate get all patients command
-            GetAllPatients =
-                new ActionCommand(
-                     async () =>
-                     {
-                        
-                         await Task.Run(async () =>
-                         {
-                             while (IsBusy) { }
-                             Busy();
-                             Patients =
-                             new RangeObservableCollection<PatientModel>(
-                                 (await Context.Patients.Include(e => e.Steps).ToListAsync()).Select(Mapper.Map<Patient, PatientModel>));
-                             Free();
-                         });
-                     });
-
-            //getting patients from database to populate listbox
-
-
-            GetOverDuePatientsCommand = new ActionCommand(async () =>
+            InitializeGetCommands();
+            ShowWindowCommand = new ActionCommand(() =>
             {
-               
-                await Task.Run(async () =>
-                {
-                    while (IsBusy) { }
-                    Busy();
-                    OverDuePatients.Clear();
-                    var patients = await Context.Patients.ToListAsync();
-                    OverDuePatients.Clear();
-                    OverDuePatients.AddRange(patients.Where(e => e.CurrentStep.AlarmTime < DateTime.Now + new TimeSpan(1, 0, 0, 0) && !e.CurrentStep.IsCompleted && !e.CurrentStep.IsCancled).Select(Mapper.Map<PatientModel>));
-                    Free();
-                });
+                Application.Current.MainWindow.Show();
+                Application.Current.MainWindow.Activate();
             });
-
             ExitCommand = new ActionCommand(() =>
-             {
-                 Application.Current.Shutdown();
-             });
+            {
+                Application.Current.Shutdown();
+            });
             SubscribeNotificationsCommand = new ActionCommand(async () =>
             {
 
                 await Task.Run(async () =>
                 {
-                    while (IsBusy) { }
+                    while (IsBusy)
+                    {
+                    }
 
                     Busy();
                     BusyMessage = "Loading Patients";
                     Patients =
-                    new RangeObservableCollection<PatientModel>(
-                        (await Context.Patients.Include(e => e.Steps).ToListAsync()).Select(Mapper.Map<Patient, PatientModel>));
+                        new RangeObservableCollection<PatientModel>(
+                            (await Context.Patients.Include(e => e.CurrentStep).ToListAsync()).Select(PatientSelector));
 
                     BusyMessage = "Checking for overdue Steps";
-
-
                     OverDuePatients.Clear();
                     OverDuePatients.AddRange(
                         Patients.Where(
                             e =>
                                 e.CurrentStep.AlarmTime < DateTime.Now + new TimeSpan(1, 0, 0, 0) &&
-                                !e.CurrentStep.IsCompleted && !e.CurrentStep.IsCancled).Select(Mapper.Map<PatientModel>));
+                                !e.CurrentStep.IsCompleted && !e.CurrentStep.IsCancled));
                 });
-
                 foreach (var item in OverDuePatients.Where(e => e.CurrentStep.AlarmTime > DateTime.Now))
                 {
                     var singlePatientTimer =
@@ -332,40 +245,236 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     singlePatientTimer.Subscribe(
                         k =>
                         {
-                            NotificationModel = new PatientNotificaitonModel { PatientId = patientModel.Id, Name = patientModel.FullName };
+                            NotificationModel = new PatientNotificaitonModel
+                            {
+                                PatientId = patientModel.Id,
+                                Name = patientModel.FullName
+                            };
                         });
                 }
                 var interval = Observable.Interval(new TimeSpan(0, 10, 0), DispatcherScheduler.Current);
 
                 interval.Subscribe(
-                     e =>
-                     {
-                         Notify();
-                     });
+                    e =>
+                    {
+                        Notify();
+                    });
                 Free();
                 Notify();
                 await interval;
 
             });
-
         }
 
-        private void Free()
+        private void InitializeGetCommands()
         {
-            IsBusy = false;
+            GetAllPatients =
+                new ActionCommand(
+                    async () =>
+                    {
+                        await Task.Run(async () =>
+                        {
+                            while (IsBusy)
+                            {
+                            }
+                            Busy();
+                            Patients =
+                                new RangeObservableCollection<PatientModel>(
+                                    (await Context.Patients.Include(e => e.Steps).ToListAsync()).Select(PatientSelector));
+                            Free();
+                        });
+                    });
+
+            //getting patients from database to populate listbox
+
+
+            GetOverDuePatientsCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(async () =>
+                {
+                    while (IsBusy)
+                    {
+                    }
+                    Busy();
+                    OverDuePatients.Clear();
+                    var patients = await Context.Patients.ToListAsync();
+                    OverDuePatients.Clear();
+                    OverDuePatients.AddRange(
+                        patients.Where(
+                            e =>
+                                e.CurrentStep.AlarmTime < DateTime.Now + new TimeSpan(1, 0, 0, 0) && !e.CurrentStep.IsCompleted &&
+                                !e.CurrentStep.IsCancled).Select(PatientSelector));
+                    Free();
+                });
+            });
         }
 
-        private void Busy()
+        private PatientModel PatientSelector(Patient patient)
         {
-            IsBusy = true;
+            return new PatientModel() { FirstName = patient.FirstName, CurrentStep = Mapper.Map<StepModel>(patient.CurrentStep), LastName = patient.LastName, Id = patient.Id, Notes = patient.Notes, Steps = patient.Steps };
         }
 
-        public ActionCommand FilterCompleted { get; set; }
+        private void InitializeFilterCommands()
+        {
+            FilterPatientsCommand = new ActionCommand(async (obj) =>
+            {
+                var patients = new RangeObservableCollection<PatientModel>();
 
-        public ActionCommand FilterOngoing { get; set; }
+                await Task.Run(() =>
+                {
+                    while (IsBusy)
+                    {
+                    }
+                    Busy();
+                    if (obj is int)
+                    {
+                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
+                    }
+                    else
+                    {
+                        ShowOngoing = false;
+                        ShowCanceled = false;
+                        ShowCompleted = false;
+                        patients.AddRange(OverDuePatients);
+                        Patients = patients;
+                    }
 
-        public ActionCommand FilterOverdue { get; set; }
+                    Free();
+                });
+            });
+            FilterCnacled = new ActionCommand(async () =>
+            {
+                var patients = new RangeObservableCollection<PatientModel>();
 
+                await Task.Run(() =>
+                {
+                    while (IsBusy)
+                    {
+                    }
+                    Busy();
+                    if (ShowCanceled)
+                    {
+                        patients.AddRange(Patients);
+                        patients.AddRange(
+                            Context.Patients.Local.Where(e => e.CurrentStep.IsCancled).Select(PatientSelector));
+                        patients = new RangeObservableCollection<PatientModel>(patients.OrderBy(e => e.Id));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Patients.Count; i++)
+                        {
+                            var patient = Patients[i];
+                            if (!patient.CurrentStep.IsCancled)
+                            {
+                                patients.Add(patient);
+                            }
+                        }
+                    }
+                    Patients = patients;
+                    Free();
+                });
+            });
+            FilterCompleted = new ActionCommand(async () =>
+            {
+                var patients = new RangeObservableCollection<PatientModel>();
+
+                await Task.Run(() =>
+                {
+                    while (IsBusy)
+                    {
+                    }
+                    Busy();
+                    if (ShowCompleted)
+                    {
+                        patients.AddRange(Patients);
+                        patients.AddRange(
+                            Context.Patients.Local.Where(e => e.CurrentStep.IsCompleted).Select(PatientSelector));
+                        patients = new RangeObservableCollection<PatientModel>(patients.OrderBy(e => e.Id));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Patients.Count; i++)
+                        {
+                            var patient = Patients[i];
+                            if (!patient.CurrentStep.IsCompleted)
+                            {
+                                patients.Add(patient);
+                            }
+                        }
+                    }
+                    Patients = patients;
+                    Free();
+                });
+            });
+            FilterOngoing = new ActionCommand(async () =>
+            {
+                var patients = new RangeObservableCollection<PatientModel>();
+
+                await Task.Run(() =>
+                {
+                    while (IsBusy)
+                    {
+                    }
+                    Busy();
+                    if (ShowOngoing)
+                    {
+                        patients.AddRange(Patients);
+                        patients.AddRange(
+                            Context.Patients.Local.Where(e => e.CurrentStep.Status == Status.Ongoing)
+                                .Select(PatientSelector));
+                        patients = new RangeObservableCollection<PatientModel>(patients.OrderBy(e => e.Id));
+                    }
+                    else
+                    {
+                        for (int i = 0; i < Patients.Count; i++)
+                        {
+                            var patient = Patients[i];
+                            if (patient.CurrentStep.Status != Status.Ongoing)
+                            {
+                                patients.Add(patient);
+                            }
+                        }
+                    }
+                    Patients = patients;
+                    Free();
+                });
+            });
+
+            FilterOverdue = new ActionCommand(async () =>
+            {
+                var patients = new RangeObservableCollection<PatientModel>();
+                await Task.Run(() =>
+               {
+
+                   while (IsBusy)
+                   {
+                   }
+                   Busy();
+                   if (ShowOverDue)
+                   {
+                       patients.AddRange(Patients);
+                       patients.AddRange(
+                           Context.Patients.Local.Where(e => e.CurrentStep.Status == Status.Overdue)
+                               .Select(PatientSelector));
+                       patients = new RangeObservableCollection<PatientModel>(patients.OrderBy(e => e.Id));
+                   }
+                   else
+                   {
+                       for (int i = 0; i < Patients.Count; i++)
+                       {
+                           var patient = Patients[i];
+                           if (patient.CurrentStep.Status != Status.Overdue)
+                           {
+                               patients.Add(patient);
+                           }
+                       }
+                   }
+                   Patients = patients;
+                   Free();
+               });
+
+            });
+        }
         private void Notify()
         {
             var overDuePatientCount =
@@ -387,52 +496,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 };
             }
         }
+        #endregion
 
-        public ActionCommand FilterCnacled { get; set; }
-
-        public bool ShowOverDue
-        {
-            get { return _showOverDue; }
-            set
-            {
-                if (Equals(value, ShowOverDue)) return;
-                _showOverDue = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowCanceled
-        {
-            get { return _showCanceled; }
-            set
-            {
-                if (Equals(value, ShowCanceled)) return;
-                _showCanceled = value;
-                FilterCnacled.Execute(null);
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowCompleted
-        {
-            get { return _showCompleted; }
-            set
-            {
-                if (Equals(value, ShowCompleted)) return;
-                _showCompleted = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public bool ShowOngoing
-        {
-            get { return _showOngoing; }
-            set
-            {
-                if (Equals(value, ShowOngoing)) return; ;
-                _showOngoing = value;
-                OnPropertyChanged();
-            }
-        }
     }
 }

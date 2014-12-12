@@ -14,17 +14,12 @@ namespace SleepWatcher.Entites
         [Key]
         public int Id { get; set; }
         [Required]
-
         public string FirstName { get; set; }
         [Required]
         public string LastName { get; set; }
-        public string FullName
-        {
-            get { return FirstName + " " + LastName; }
-        }
 
-        [NotMapped]
-        public Step CurrentStep { get { return Steps.Last(); } }
+        public int CurrentStepId { get; set; }
+        public virtual CurrentStep CurrentStep { get; set; }
 
         public virtual ICollection<Step> Steps { get; set; }
         public virtual ICollection<Note> Notes { get; set; }

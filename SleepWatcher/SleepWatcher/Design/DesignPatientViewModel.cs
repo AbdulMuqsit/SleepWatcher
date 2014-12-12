@@ -11,6 +11,11 @@ namespace SleepWatcher.Design
 {
     public class DesignPatientViewModel : ViewModelBase, IPatientViewModel
     {
+        public ActionCommand ShowWindowCommand
+        {
+            get { throw new NotImplementedException(); }
+        }
+
         public ActionCommand ExitCommand
         {
             get { throw new NotImplementedException(); }

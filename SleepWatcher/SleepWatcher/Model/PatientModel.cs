@@ -18,6 +18,7 @@ namespace SleepWatcher.Model
         private ICollection<Step> _steps;
         private ICollection<Note> _notes;
         private RangeObservableCollection<StepModel> _stepModels = new RangeObservableCollection<StepModel>();
+        private StepModel _currentStep;
 
         public RangeObservableCollection<StepModel> StepModels
         {
@@ -60,26 +61,23 @@ namespace SleepWatcher.Model
             }
         }
 
-        public PatientModel()
-        {
-            StepModels.CollectionChanged += StepModels_CollectionChanged;
-        }
-
-        private void StepModels_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            OnPropertyChanged("CurrentStep");
-        }
-
+      
         public string FullName
         {
-            get { return FirstName + " " + LastName; }
+            get { return FirstName + ", " + LastName; }
         }
 
         [NotMapped]
         public StepModel CurrentStep
         {
-            get { return StepModels.Last(); }
-            
+            get { return _currentStep; }
+            set
+            {
+                if (Equals(value, CurrentStep))
+                    return;
+                _currentStep = value;
+                OnPropertyChanged();
+            } 
         }
 
         public virtual ICollection<Step> Steps

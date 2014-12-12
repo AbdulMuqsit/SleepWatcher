@@ -21,7 +21,7 @@
             <RowDefinition/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <tb:TaskbarIcon  IconSource="Resources/dentist.ico" DataContext="{Binding Mode=OneWay, Source={StaticResource Locator}}">
+        <tb:TaskbarIcon  IconSource="Resources/dentist.ico" DataContext="{Binding Mode=OneWay, Source={StaticResource Locator}}" LeftClickCommand="{Binding PatientViewModel.ShowWindowCommand, Mode=OneWay}">
             <tb:TaskbarIcon.ContextMenu>
                 <ContextMenu>
                     <MenuItem Command="{Binding PatientViewModel.ExitCommand}" Header="Exit"/>

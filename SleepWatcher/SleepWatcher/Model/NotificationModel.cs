@@ -5,9 +5,11 @@ using SleepWatcher.ViewModel;
 
 namespace SleepWatcher.Model
 {
-    public class NotificationModel :ViewModelBase
+    public class NotificationModel : ViewModelBase
     {
+        private int _id;
         private string message;
+        private string title;
         public string Message
         {
             get { return message; }
@@ -19,8 +21,6 @@ namespace SleepWatcher.Model
                 OnPropertyChanged();
             }
         }
-
-        private int _id;
         public int Id
         {
             get { return _id; }
@@ -32,10 +32,6 @@ namespace SleepWatcher.Model
                 OnPropertyChanged("Id");
             }
         }
-
-        private string title;
-      
-
         public string Title
         {
             get { return title; }
@@ -48,8 +44,6 @@ namespace SleepWatcher.Model
             }
         }
 
-      
     }
-
     public class Notifications : ObservableCollection<NotificationModel> { }
 }

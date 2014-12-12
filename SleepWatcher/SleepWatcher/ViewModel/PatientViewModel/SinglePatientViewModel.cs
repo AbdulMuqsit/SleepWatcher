@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
@@ -16,6 +17,18 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private PatientModel _patient;
         private StepModel _step;
         private RangeObservableCollection<StepModel> _steps = new RangeObservableCollection<StepModel>();
+        private bool _isBusy;
+
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (Equals(value, IsBusy)) return;
+                _isBusy = value;
+                OnPropertyChanged();
+            }
+        }
 
         public SinglePatientViewModel()
         {
@@ -62,6 +75,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             get { return _steps; }
             set
             {
+               
                 if (Equals(_steps, value)) return;
                 _steps = value;
                 OnPropertyChanged();
@@ -88,9 +102,33 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 if (Equals(value, _patient)) return;
                 _patient = value;
+                LoadSteps();
                 OnPropertyChanged();
             }
         }
+
+        private async void LoadSteps()
+        {
+            await Task.Run(() =>
+            {
+                Busy();
+                if (Patient == null) return;
+                var steps = new RangeObservableCollection<StepModel>( Context.Steps.Where(e => e.PatientId == Patient.Id).Select(Mapper.Map<StepModel>));
+                Patient.StepModels = steps;
+                Free();
+            });
+        }
+
+        private void Free()
+        {
+            IsBusy = false;
+        }
+
+        private void Busy()
+        {
+            IsBusy = true;
+        }
+
         public StepModel SelectedStep
         {
             get { return _step; }
@@ -98,8 +136,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 if (Equals(value, _step)) return;
                 _step = value;
-                Notes.Clear();
-
                 OnPropertyChanged();
             }
         }

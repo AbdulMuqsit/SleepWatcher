@@ -13,7 +13,7 @@ namespace SleepWatcher.EF.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201412041831395_init"; }
+            get { return "201412112030189_init"; }
         }
         
         string IMigrationMetadata.Source

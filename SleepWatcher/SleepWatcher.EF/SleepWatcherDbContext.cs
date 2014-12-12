@@ -16,7 +16,7 @@ namespace SleepWatcher.EF
         public SleepWatcherDbContext()
             : base(nameOrConnectionString:"SleepWatcher")
         {
-            
+            Configuration.LazyLoadingEnabled = false;
         }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -29,7 +29,9 @@ namespace SleepWatcher.EF
                 .HasMany(e => e.Notes)
                 .WithRequired(e => e.Step)
                 .HasForeignKey(e => e.StepId);
-            
+            modelBuilder.Entity<Patient>()
+                .HasOptional(e => e.CurrentStep)
+                .WithRequired(e => e.Patient);
         }
     }
 }

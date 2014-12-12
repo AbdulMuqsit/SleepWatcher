@@ -14,7 +14,7 @@ namespace SleepWatcher.EF.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            
+           
         }
 
         protected override void Seed(SleepWatcherDbContext context)
@@ -22,7 +22,7 @@ namespace SleepWatcher.EF.Migrations
             Random rand = new Random();
 
             IList<Patient> patients = new List<Patient>();
-            
+
             for (int i = 0; i < 200; i++)
             {
                 var patient = new Patient()
@@ -32,14 +32,16 @@ namespace SleepWatcher.EF.Migrations
                 };
                 var totalSteps = rand.Next(1, 7);
                 bool canceled = rand.Next(0, 9) == 0;
-                patient.Steps=new List<Step>();
+                patient.Steps = new List<Step>();
+                Step step = new Step();
+                DateTime alarmTime = rand.Next(0, 5)==1?DateTime.Now - TimeSpan.FromDays(30) : DateTime.Now + TimeSpan.FromDays(30);
                 for (int j = 0; j < totalSteps; j++)
                 {
-                    
-                    Step step = new Step()
+
+                    step = new Step()
                     {
                         DateAdded = DateTime.Now,
-                        AlarmTime = DateTime.Now,
+                        AlarmTime = alarmTime,
                         StepName = (StepName)j,
                         IsCompleted = true,
                         IsCancled = false,
@@ -50,15 +52,18 @@ namespace SleepWatcher.EF.Migrations
                     {
                         step.IsCompleted = false;
                         step.IsCancled = true;
+                        patient.CurrentStep = new CurrentStep() { AlarmTime = step.AlarmTime, IsCancled = step.IsCancled, IsCompleted = step.IsCompleted, StepName = step.StepName };
                         break;
                     }
                     if (j == totalSteps - 1)
                     {
                         step.IsCompleted = false;
+                        patient.CurrentStep = new CurrentStep() { AlarmTime = step.AlarmTime, IsCancled = step.IsCancled, IsCompleted = step.IsCompleted, StepName = step.StepName };
                     }
 
                 }
-               patients.Add(patient);
+
+                patients.Add(patient);
 
             }
 
@@ -66,9 +71,9 @@ namespace SleepWatcher.EF.Migrations
             context.Patients.AddRange(patients);
             base.Seed(context);
             var p = context.Patients.ToList();
-            Debug.WriteLine("Total Patients:"+p.Count);
+            Debug.WriteLine("Total Patients:" + p.Count);
         }
 
-      
+
     }
 }

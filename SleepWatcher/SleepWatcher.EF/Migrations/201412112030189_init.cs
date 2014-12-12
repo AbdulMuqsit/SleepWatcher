@@ -14,8 +14,24 @@ namespace SleepWatcher.EF.Migrations
                         Id = c.Int(nullable: false, identity: true),
                         FirstName = c.String(nullable: false, maxLength: 4000),
                         LastName = c.String(nullable: false, maxLength: 4000),
+                        CurrentStepId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.CurrentSteps",
+                c => new
+                    {
+                        Id = c.Int(nullable: false),
+                        StepName = c.Int(nullable: false),
+                        AlarmTime = c.DateTime(nullable: false),
+                        IsCompleted = c.Boolean(nullable: false),
+                        IsCancled = c.Boolean(nullable: false),
+                        PatientId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Patients", t => t.Id)
+                .Index(t => t.Id);
             
             CreateTable(
                 "dbo.Notes",
@@ -56,11 +72,14 @@ namespace SleepWatcher.EF.Migrations
             DropForeignKey("dbo.Steps", "PatientId", "dbo.Patients");
             DropForeignKey("dbo.Notes", "Patient_Id", "dbo.Patients");
             DropForeignKey("dbo.Notes", "StepId", "dbo.Steps");
+            DropForeignKey("dbo.CurrentSteps", "Id", "dbo.Patients");
             DropIndex("dbo.Steps", new[] { "PatientId" });
             DropIndex("dbo.Notes", new[] { "Patient_Id" });
             DropIndex("dbo.Notes", new[] { "StepId" });
+            DropIndex("dbo.CurrentSteps", new[] { "Id" });
             DropTable("dbo.Steps");
             DropTable("dbo.Notes");
+            DropTable("dbo.CurrentSteps");
             DropTable("dbo.Patients");
         }
     }

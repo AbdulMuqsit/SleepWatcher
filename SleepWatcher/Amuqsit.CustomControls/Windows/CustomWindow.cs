@@ -90,7 +90,7 @@ namespace Amuqsit.CustomControls.Windows
 
             if (_closeButton != null)
             {
-                _closeButton.Click += (sender, e) => Close();
+                _closeButton.Click += (sender, e) => Hide();
             }
         }
 
