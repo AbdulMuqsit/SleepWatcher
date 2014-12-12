@@ -241,6 +241,9 @@
   <ItemGroup>
     <Resource Include="Resources\dentist.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\back.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>
