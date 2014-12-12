@@ -7,6 +7,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     public interface ISinglePatientViewModel : IViewModelBase
     {
         bool IsBusy { get; set; }
+        string BusyMessage { get; set; }
         PatientModel Patient { get; set; }
         StepModel SelectedStep { get; set; }
         NoteModel SelectedNote { get; set; }

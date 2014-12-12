@@ -209,10 +209,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 Application.Current.MainWindow.Show();
                 Application.Current.MainWindow.Activate();
             });
-            ExitCommand = new ActionCommand(() =>
-            {
-                Application.Current.Shutdown();
-            });
+            ExitCommand = new ActionCommand(() => Application.Current.Shutdown());
             SubscribeNotificationsCommand = new ActionCommand(async () =>
             {
 
@@ -278,6 +275,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                             {
                             }
                             Busy();
+                            BusyMessage = "Loading Patients";
+
                             Patients =
                                 new RangeObservableCollection<PatientModel>(
                                     (await Context.Patients.Include(e => e.Steps).ToListAsync()).Select(PatientSelector));
@@ -296,6 +295,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                     }
                     Busy();
+                    BusyMessage = "Applying Filter";
                     OverDuePatients.Clear();
                     var patients = await Context.Patients.ToListAsync();
                     OverDuePatients.Clear();
@@ -326,12 +326,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                     }
                     Busy();
+
                     if (obj is int)
                     {
+                        BusyMessage = "Loading Patient";
                         Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
                     }
                     else
                     {
+                        BusyMessage = "Loading Patients";
                         ShowOngoing = false;
                         ShowCanceled = false;
                         ShowCompleted = false;
@@ -352,6 +355,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                     }
                     Busy();
+                    BusyMessage = "Applying Filter";
                     if (ShowCanceled)
                     {
                         patients.AddRange(Patients);
@@ -384,6 +388,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                     }
                     Busy();
+                    BusyMessage = "Applying Filter";
                     if (ShowCompleted)
                     {
                         patients.AddRange(Patients);
@@ -416,6 +421,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                     }
                     Busy();
+                    BusyMessage = "Applying Filter";
                     if (ShowOngoing)
                     {
                         patients.AddRange(Patients);
@@ -450,6 +456,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                    {
                    }
                    Busy();
+                   BusyMessage = "Applying Filter";
                    if (ShowOverDue)
                    {
                        patients.AddRange(Patients);

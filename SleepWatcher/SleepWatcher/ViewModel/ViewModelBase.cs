@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows;
 using SleepWatcher.EF;
@@ -31,8 +32,24 @@ namespace SleepWatcher.ViewModel
 
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
-            var handler = PropertyChanged;
-            if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            try
+            {
+                var handler = PropertyChanged;
+                if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+            }
+            catch (Exception ex)
+            {
+
+                try
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                catch (Exception exception)
+                {
+                    MessageBox.Show(exception.Message);
+                    
+                }
+            }
         }
     }
 }

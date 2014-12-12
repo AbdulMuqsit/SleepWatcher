@@ -12,6 +12,7 @@ namespace SleepWatcher.Design
     internal class DesignSinglePatientViewModel : ISinglePatientViewModel, IViewModelBase
     {
         public bool IsBusy { get; set; }
+        public string BusyMessage { get { return "loading"; }set{} }
 
         public PatientModel Patient
         {

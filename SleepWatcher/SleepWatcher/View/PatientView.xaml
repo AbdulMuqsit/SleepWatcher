@@ -180,7 +180,11 @@
             <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
                 <TextBlock.Effect>
                     <DropShadowEffect Opacity="0.3"/>
-                </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/><Run Text=" "/><Run Text="..."/></TextBlock>
+                </TextBlock.Effect><Run Text="{Binding PatientViewModel.BusyMessage}"/></TextBlock>
+            <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}" Foreground="#FF727272" FontSize="18.667" >
+                <TextBlock.Effect>
+                    <DropShadowEffect Opacity="0.3"/>
+                </TextBlock.Effect><Run Text="..."/></TextBlock>
 
         </StackPanel>
         <Grid x:Name="grid1" Margin="10,5,5,5" Grid.Row="1" Grid.Column="0">
