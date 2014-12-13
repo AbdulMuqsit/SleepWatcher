@@ -259,18 +259,32 @@
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type Button}">
                     <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                		BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
                         <Border.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFEE7A19" Offset="0.008" />
                                 <GradientStop Color="#FFDC5700" Offset="0.984" />
                             </RadialGradientBrush>
                         </Border.Background>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal"/>
+                                <VisualState x:Name="MouseOver"/>
+                                <VisualState x:Name="Pressed"/>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="border">
+                                            <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FFCDCDCD"/>
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
                         <ContentPresenter x:Name="contentPresenter" Focusable="False"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                			HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                			Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
+                			SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                			VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
