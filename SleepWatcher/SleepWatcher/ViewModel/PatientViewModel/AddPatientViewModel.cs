@@ -13,61 +13,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public class AddPatientViewModel : ViewModelBase, IAddPatientViewModel
     {
+        #region Fields
         private string _busyMessage;
         private bool _isBusy;
         private PatientModel _patient;
         private bool _startFirstStep;
+        #endregion
 
-        public AddPatientViewModel()
-        {
-            Patient = new PatientModel();
-            AddPatinetCommand = new ActionCommand(async () =>
-            {
-                await Task.Run(async () =>
-                {
-                    //convert patient model to patient
-                    var patient = Mapper.Map<Patient>(Patient);
-
-                    //attach patient to context
-                    DbEntityEntry entry = Context.Entry(patient);
-                    if (entry.State == EntityState.Detached)
-                    {
-                        Context.Patients.Attach(patient);
-                    }
-                    Context.Patients.Add(patient);
-
-                    //make state busy
-                    Busy();
-                    BusyMessage = "Saving Data";
-
-                    //assgn first step
-                    var step = GetStep();
-                    patient.Steps = new List<Step>();
-                    patient.Steps.Add(step);
-                    patient.CurrentStep = Mapper.Map<CurrentStep>(step);
-
-                    //make parent state busy     
-                    Locator.PatientViewModel.IsBusy = true;
-
-                    //save changes to database
-                    await Context.SaveChangesAsync();
-
-                    //update patients list
-                    var patients = new RangeObservableCollection<PatientModel>(Locator.PatientViewModel.Patients);
-                    patients.Add(Mapper.Map<PatientModel>(Mapper.Map<PatientModel>(patient)));
-                    Locator.PatientViewModel.Patients = patients;
-
-                    //make state free
-                    Free();
-                    Locator.PatientViewModel.IsBusy = false;
-                });
-            });
-
-            //initiate command which swithes the add pateint view back to the main view
-            SwitchToSinglePatientViewCommand =
-                new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel; });
-        }
-
+        #region Properties
         public bool IsBusy
         {
             get { return _isBusy; }
@@ -104,6 +57,59 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         public ActionCommand AddPatinetCommand { get; set; }
 
         public ActionCommand SwitchToSinglePatientViewCommand { get; set; }
+        #endregion
+
+        #region Methods
+        public AddPatientViewModel()
+        {
+            Patient = new PatientModel();
+            AddPatinetCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(async () =>
+                {
+                    //convert patient model to patient
+                    var patient = Mapper.Map<Patient>(Patient);
+
+                    //attach patient to context
+                    DbEntityEntry entry = Context.Entry(patient);
+                    if (entry.State == EntityState.Detached)
+                    {
+                        Context.Patients.Attach(patient);
+                    }
+                    Context.Patients.Add(patient);
+
+                    //Make state busy
+                    Busy();
+                    BusyMessage = "Saving Data";
+
+                    //Assgn first step
+                    var step = GetStep();
+                    patient.Steps = new List<Step> { step };
+                    patient.CurrentStep = Mapper.Map<CurrentStep>(step);
+
+                    //Make parent state busy     
+                    Locator.PatientViewModel.IsBusy = true;
+
+                    //save changes to database
+                    await Context.SaveChangesAsync();
+
+                    //Update patients list
+                    var patients = new RangeObservableCollection<PatientModel>(Locator.PatientViewModel.Patients)
+                    {
+                        Mapper.Map<PatientModel>(Mapper.Map<PatientModel>(patient))
+                    };
+                    Locator.PatientViewModel.Patients = patients;
+
+                    //Make state free
+                    Free();
+                    Locator.PatientViewModel.IsBusy = false;
+                });
+            });
+
+            //Initiate command which swithes the add pateint view back to the main view
+            SwitchToSinglePatientViewCommand =
+                new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel; });
+        }
 
         public bool StartFirstStep
         {
@@ -136,5 +142,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             while (IsBusy) { }
             IsBusy = true;
         }
+        #endregion
     }
 }
