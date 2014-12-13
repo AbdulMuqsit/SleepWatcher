@@ -7,6 +7,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public interface IPatientViewModel : IViewModelBase
     {
+        string SearchText { get; set; }
+        string StepNameFilterString { get; set; }
         ActionCommand ShowWindowCommand { get; }
         ActionCommand ExitCommand { get; }
         RangeObservableCollection<PatientModel> Patients { get; set; }
