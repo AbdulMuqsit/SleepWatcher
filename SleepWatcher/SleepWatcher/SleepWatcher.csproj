@@ -263,7 +263,7 @@
     <Resource Include="Resources\back.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Alarm.mp3" />
+    <Content Include="Resources\Alarm.wav" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
