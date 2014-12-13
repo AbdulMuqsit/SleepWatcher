@@ -11,6 +11,10 @@ namespace SleepWatcher.Design
 {
     public class DesignPatientViewModel : ViewModelBase, IPatientViewModel
     {
+        public List<string> StepFilters { get; set; }
+        public string SearchText { get; set; }
+        public string StepNameFilterString { get; set; }
+
         public ActionCommand ShowWindowCommand
         {
             get { throw new NotImplementedException(); }
@@ -123,6 +127,10 @@ namespace SleepWatcher.Design
             get { throw new NotImplementedException(); }
             set { throw new NotImplementedException(); }
         }
+
+        public ActionCommand ReverseSortCommand { get; set; }
+        public ActionCommand SearchCommand { get; set; }
+        public ActionCommand FilterStepCommand { get; set; }
 
         public DesignPatientViewModel()
         {

@@ -1,4 +1,6 @@
-﻿using Microsoft.Expression.Interactivity.Core;
+﻿using System.Collections.Generic;
+using System.Windows.Documents;
+using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
 using SleepWatcher.Infrastructure;
 using SleepWatcher.Model;
@@ -6,7 +8,8 @@ using SleepWatcher.Model;
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
     public interface IPatientViewModel : IViewModelBase
-    {
+    { 
+        List<string> StepFilters { get;  }
         string SearchText { get; set; }
         string StepNameFilterString { get; set; }
         ActionCommand ShowWindowCommand { get; }
@@ -31,5 +34,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         ActionCommand FilterCompleted { get; set; }
         ActionCommand FilterOngoing { get; set; }
         ActionCommand FilterOverdue { get; set; }
+        ActionCommand ReverseSortCommand { get; set; }
+        ActionCommand SearchCommand { get; set; }
+        ActionCommand FilterStepCommand { get; set; }
     }
 }

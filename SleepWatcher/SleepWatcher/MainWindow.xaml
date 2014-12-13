@@ -14,7 +14,7 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib" 
         x:Class="SleepWatcher.MainWindow"
         mc:Ignorable="d"
-    
+        MinWidth="200" MinHeight="70"
         Title="MainWindow" Height="500" Width="900" WindowStyle="None" AllowsTransparency="True">
     <Grid >
         <Grid.RowDefinitions>
