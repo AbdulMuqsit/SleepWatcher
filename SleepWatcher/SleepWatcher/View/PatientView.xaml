@@ -15,6 +15,7 @@
             <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)" Storyboard.TargetName="ellipse1">
                 <EasingDoubleKeyFrame KeyTime="0:0:2" Value="360"/>
             </DoubleAnimationUsingKeyFrames>
+            <MediaTimeline Source="../Resources/Alarm.mp3" Storyboard.TargetName="Alarm" d:DesignTimeNaturalDuration="6.6304444"/>
         </Storyboard>
     </UserControl.Resources>
     <UserControl.Triggers>
@@ -207,28 +208,29 @@
             </StackPanel>
             <ComboBox Grid.Column="1" Text="Step" SelectedIndex="0" Margin="10"  Grid.RowSpan="2">
                 <ComboBoxItem IsSelected="True">
-                    <TextBlock TextTrimming="CharacterEllipsis">All</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="All"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Paper Work</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Paper Work"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Approval</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Approval"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Examinatin</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Examinatin"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Impression</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Impression"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Delivery</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Delivery"/></TextBlock>
                 </ComboBoxItem>
                 <ComboBoxItem>
-                    <TextBlock TextTrimming="CharacterEllipsis">Follow Up</TextBlock>
+                    <TextBlock TextTrimming="CharacterEllipsis"><Run Text="Follow Up"/></TextBlock>
                 </ComboBoxItem>
 
             </ComboBox>
         </Grid>
+        <MediaElement x:Name="Alarm"  Stretch="Fill"/>
     </Grid>
 </UserControl>
