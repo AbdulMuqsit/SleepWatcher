@@ -307,8 +307,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(async () =>
                 {
-
-
+                    await Task.Delay(200);
                     Busy();
                     BusyMessage = "Loading Patients";
                     Patients =
@@ -418,7 +417,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 await Task.Run(() =>
                 {
                     Busy();
-                    var patients = new RangeObservableCollection<PatientModel>(Context.Patients.Local.Where(e => e.FirstName.Contains(SearchText) || e.LastName.Contains(SearchText)).Select(PatientSelector));
+                    var patients = new RangeObservableCollection<PatientModel>(Context.Patients.Local.Where(e => e.FirstName.ToLower().Contains(SearchText.ToLower()) || e.LastName.ToLower().Contains(SearchText.ToLower())).Select(PatientSelector));
                     Patients = patients;
                     Free();
                 });

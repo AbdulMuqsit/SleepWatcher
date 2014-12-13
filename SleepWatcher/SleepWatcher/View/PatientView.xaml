@@ -18,20 +18,30 @@
                 Storyboard.TargetName="ellipse1">
                 <EasingDoubleKeyFrame KeyTime="0:0:2" Value="360" />
             </DoubleAnimationUsingKeyFrames>
-            <MediaTimeline Source="../Resources/Alarm.mp3" Storyboard.TargetName="Alarm" d:DesignTimeNaturalDuration="6.6304444"/>
+        </Storyboard>
+        <Storyboard x:Key="PlayAlarmStoryboard" RepeatBehavior="Forever">
+            <MediaTimeline Source="../Resources/Alarm.wav" Storyboard.TargetName="Alarm" RepeatBehavior="Forever"/>
+
         </Storyboard>
     </UserControl.Resources>
-    <UserControl.Triggers>
-        <EventTrigger RoutedEvent="FrameworkElement.Loaded">
-            <BeginStoryboard Storyboard="{StaticResource BusyAnimation}" />
-        </EventTrigger>
-    </UserControl.Triggers>
     <UserControl.DataContext>
         <Binding Mode="OneWay" Source="{StaticResource Locator}" />
 
     </UserControl.DataContext>
 
     <Grid x:Name="grid">
+        <Grid.Triggers>
+            <EventTrigger RoutedEvent="Button.Click">
+                <EventTrigger.Actions>
+                    <BeginStoryboard>
+                        <Storyboard>
+                            <MediaTimeline Source="Alarm.wma" Storyboard.TargetName="audio"/>
+                        </Storyboard>
+                    </BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+
+        </Grid.Triggers>
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="BusyStates">
                 <VisualStateGroup.Transitions>
@@ -134,15 +144,12 @@
                 <ei:GoToStateAction StateName="Busy" />
                 <ei:ControlStoryboardAction Storyboard="{StaticResource BusyAnimation}" />
             </ei:DataTrigger>
-            <i:EventTrigger>
-                <ei:GoToStateAction StateName="Busy" />
-            </i:EventTrigger>
             <ei:DataTrigger Binding="{Binding PatientViewModel.IsBusy}" Value="False">
                 <ei:GoToStateAction StateName="Free" />
                 <ei:ControlStoryboardAction ControlStoryboardOption="Stop" Storyboard="{StaticResource BusyAnimation}" />
             </ei:DataTrigger>
-            <i:EventTrigger EventName="Loaded">
-                <ei:ControlStoryboardAction Storyboard="{StaticResource BusyAnimation}" />
+            <i:EventTrigger>
+                <ei:PlaySoundAction Volume="1" Source="../Resources/Alarm.wav"/>
             </i:EventTrigger>
         </i:Interaction.Triggers>
         <TextBlock Foreground="#FFE05F06" FontSize="40" FontFamily="Cambria" FontWeight="Bold" Margin="10,10,0,2"
@@ -270,7 +277,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            <TextBox Style="{StaticResource placeHolder}" Margin="5" Tag="Search" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding  PatientViewModel.SearchText, Delay=500}" />
+            <TextBox  Style="{StaticResource placeHolder}" Margin="5" Tag="Search" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding  PatientViewModel.SearchText, Delay=500,UpdateSourceTrigger=PropertyChanged}" />
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <CheckBox Margin="5" IsChecked="{Binding PatientViewModel.ShowOngoing}" Content="Ongoing"
                           Style="{DynamicResource FilterCheckBoxStyle}"
@@ -288,11 +295,13 @@
                           Command="{Binding PatientViewModel.FilterCompleted}" />
             </StackPanel>
             <ComboBox Grid.Column="1" Grid.Row="1" FontSize="10" Text="Step" SelectedIndex="0" Margin="5" HorizontalAlignment="Right" Width="Auto" Height="20" ItemsSource="{Binding PatientViewModel.StepFilters}">
-               
+
 
             </ComboBox>
-            <Button Style="{StaticResource ButtonStyle}" Grid.Row="2" Grid.Column="1" MinHeight="0" MinWidth="0" Margin="5,-1,5,0" FontSize="10" HorizontalAlignment="Right" Command="{Binding PatientViewModel.ReverseSortCommand}" > Reverse</Button>
+            <Button Style="{StaticResource ButtonStyle}" Grid.Row="2" Grid.Column="1" MinHeight="0" MinWidth="0" Margin="5,-1,5,0" FontSize="10" HorizontalAlignment="Right" Command="{Binding PatientViewModel.ReverseSortCommand}" >Reverse</Button>
         </Grid>
-        <MediaElement x:Name="Alarm"  Stretch="Fill"/>
+        <MediaElement x:Name="Alarm" Stretch="Fill" Volume="1"/>
+       
+
     </Grid>
 </UserControl>
