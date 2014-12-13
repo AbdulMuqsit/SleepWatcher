@@ -192,6 +192,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (Equals(value, SearchText)) return;
                 _searchText = value;
                 OnPropertyChanged();
+                SearchCommand.Execute(null);
             }
         }
 
@@ -203,6 +204,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (Equals(value, StepNameFilterString)) return;
                 _stepNameFilterString = value;
                 OnPropertyChanged();
+                FilterStepCommand.Execute(null);
             }
         }
 
