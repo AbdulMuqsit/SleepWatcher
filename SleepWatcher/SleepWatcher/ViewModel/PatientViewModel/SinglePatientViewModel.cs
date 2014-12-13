@@ -83,12 +83,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     SelectedStep.IsCompleted = true;
                     (await Context.Steps.FirstAsync(e => e.Id == SelectedStep.Id)).IsCompleted = true;
                     Patient.CurrentStep.IsCompleted = true;
+                    var patient = (await Context.Patients.FirstAsync(e => e.Id == Patient.Id));
+                    patient.CurrentStep.IsCompleted = true;
                     if (SelectedStep.StepName != StepName.FollowUp)
                     {
                         var steps = new RangeObservableCollection<StepModel>(Patient.StepModels);
                         StepModel nextStep = GetNextStep();
                         Patient.CurrentStep = nextStep;
-                        var patient = (await Context.Patients.FirstAsync(e => e.Id == Patient.Id));
+                        
                         patient.Steps.Add(Mapper.Map<StepModel, Step>(nextStep));
                         patient.CurrentStep = Mapper.Map<CurrentStep>(nextStep);
                         await Context.SaveChangesAsync();

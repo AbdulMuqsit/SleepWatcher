@@ -32,6 +32,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private bool _showOngoing = true;
         private bool _isBusy = false;
         private string _busyMessage;
+        private string _searchText;
+        private string _stepNameFilterString;
+
         #endregion
         #region Properties
         private void Free()
@@ -132,6 +135,28 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
 
         public ActionCommand GetAllPatients { get; set; }
+
+        public string SearchText
+        {
+            get { return _searchText; }
+            set
+            {
+                if(Equals(value,SearchText))return;
+                _searchText = value;
+                OnPropertyChanged();
+            }
+        }
+
+        public string StepNameFilterString
+        {
+            get { return _stepNameFilterString; }
+            set
+            {
+                if (Equals(value, StepNameFilterString)) return;
+                _stepNameFilterString = value;
+                OnPropertyChanged();
+            }
+        }
 
         public ActionCommand ShowWindowCommand { get; set; }
 
