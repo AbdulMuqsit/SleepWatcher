@@ -16,6 +16,8 @@ namespace SleepWatcher.Infrastructure
             Mapper.CreateMap<PatientModel, Patient>();
             Mapper.CreateMap<CurrentStep, StepModel>();
             Mapper.CreateMap<StepModel, CurrentStep>();
+            Mapper.CreateMap<Step, CurrentStep>();
+
 
         }
     }

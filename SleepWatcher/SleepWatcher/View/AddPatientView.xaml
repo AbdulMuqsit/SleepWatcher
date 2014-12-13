@@ -146,11 +146,11 @@
                     </StackPanel>
                 </StackPanel>
 
-                <Rectangle x:Name="rectangle" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1"
+                <Rectangle Height="133" x:Name="rectangle" HorizontalAlignment="Stretch" Grid.Row="1" Grid.Column="1"
                            StrokeThickness="6"
-                           VerticalAlignment="Stretch" Fill="Gray" Margin="5" Visibility="Collapsed" Opacity="0" />
-                <StackPanel x:Name="stackPanel" VerticalAlignment="Center" HorizontalAlignment="Center"
-                            Orientation="Vertical" Grid.Row="1"  Grid.Column="0" Margin="5" Visibility="Collapsed" Opacity="0">
+                           VerticalAlignment="Top" Fill="Gray" Visibility="Collapsed" Opacity="0" Grid.ColumnSpan="2" />
+                <StackPanel x:Name="stackPanel" VerticalAlignment="Top" HorizontalAlignment="Center"
+                            Orientation="Vertical" Grid.Row="1"  Grid.Column="1" Margin="5,3,5,5" Visibility="Collapsed" Opacity="0" Grid.ColumnSpan="2">
                     <Grid Width="50">
                         <Ellipse x:Name="ellipse" StrokeThickness="6" RenderTransformOrigin="0.5,0.5" Height="49">
                             <Ellipse.Effect>
@@ -215,7 +215,7 @@
                         </TextBlock.Effect>
                         <Run Text="{Binding AddPatientViewModel.BusyMessage}" />
                     </TextBlock>
-                    <TextBlock HorizontalAlignment="Center" Margin="5" Style="{DynamicResource TextBlockStyle}"
+                    <TextBlock HorizontalAlignment="Center" Margin="5,-21,5,5" Style="{DynamicResource TextBlockStyle}"
                                Foreground="#FF727272" FontSize="18.667">
                         <TextBlock.Effect>
                             <DropShadowEffect Opacity="0.3" />

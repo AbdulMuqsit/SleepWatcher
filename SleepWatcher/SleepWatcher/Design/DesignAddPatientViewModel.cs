@@ -8,6 +8,8 @@ namespace SleepWatcher.Design
 
     public class DesignAddPatientViewModel :IAddPatientViewModel
     {
+        public bool IsBusy { get; set; }
+        public string BusyMessage { get; set; }
         public Patient Patient { get; set; }
 
         public ActionCommand AddPatinetCommand {get { return null; }}
