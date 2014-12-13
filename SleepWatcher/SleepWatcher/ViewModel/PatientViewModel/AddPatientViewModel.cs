@@ -5,6 +5,7 @@ using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using SleepWatcher.Infrastructure;
 using SleepWatcher.Model;
 using AutoMapper;
 
@@ -14,32 +15,49 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     {
         private string _busyMessage;
         private bool _isBusy;
-        private Patient _patient;
+        private PatientModel _patient;
         private bool _startFirstStep;
 
         public AddPatientViewModel()
         {
-            Patient = new Patient();
+            Patient = new PatientModel();
             AddPatinetCommand = new ActionCommand(async () =>
             {
                 await Task.Run(async () =>
                 {
-                    Patient.Id = 0;
-                    DbEntityEntry entry = Context.Entry(Patient);
+                    //convert patient model to patient
+                    var patient = Mapper.Map<Patient>(Patient);
+
+                    //attach patient to context
+                    DbEntityEntry entry = Context.Entry(patient);
                     if (entry.State == EntityState.Detached)
                     {
-                        Context.Patients.Attach(Patient);
+                        Context.Patients.Attach(patient);
                     }
+                    Context.Patients.Add(patient);
+
+                    //make state busy
                     Busy();
                     BusyMessage = "Saving Data";
+
+                    //assgn first step
                     var step = GetStep();
-                    Patient.Steps = new List<Step>();
-                    Patient.Steps.Add(step);
-                    Patient.CurrentStep = Mapper.Map<CurrentStep>(step);
-                    Context.Patients.Add(Patient);
+                    patient.Steps = new List<Step>();
+                    patient.Steps.Add(step);
+                    patient.CurrentStep = Mapper.Map<CurrentStep>(step);
+
+                    //make parent state busy     
                     Locator.PatientViewModel.IsBusy = true;
+
+                    //save changes to database
                     await Context.SaveChangesAsync();
-                    Locator.PatientViewModel.Patients.Add(Mapper.Map<PatientModel>(Patient));
+
+                    //update patients list
+                    var patients = new RangeObservableCollection<PatientModel>(Locator.PatientViewModel.Patients);
+                    patients.Add(Mapper.Map<PatientModel>(Mapper.Map<PatientModel>(patient)));
+                    Locator.PatientViewModel.Patients = patients;
+
+                    //make state free
                     Free();
                     Locator.PatientViewModel.IsBusy = false;
                 });
@@ -72,7 +90,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public Patient Patient
+        public PatientModel Patient
         {
             get { return _patient; }
             set

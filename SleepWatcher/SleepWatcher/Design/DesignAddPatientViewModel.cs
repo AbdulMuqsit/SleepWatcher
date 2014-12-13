@@ -1,6 +1,7 @@
 ﻿using System;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using SleepWatcher.Model;
 using SleepWatcher.ViewModel.PatientViewModel;
 
 namespace SleepWatcher.Design
@@ -10,7 +11,7 @@ namespace SleepWatcher.Design
     {
         public bool IsBusy { get; set; }
         public string BusyMessage { get; set; }
-        public Patient Patient { get; set; }
+        public PatientModel Patient { get; set; }
 
         public ActionCommand AddPatinetCommand {get { return null; }}
 

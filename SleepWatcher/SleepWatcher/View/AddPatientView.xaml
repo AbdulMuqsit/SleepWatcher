@@ -119,10 +119,10 @@
 
                 </VisualStateManager.VisualStateGroups>
                 <i:Interaction.Triggers>
-                    <ei:DataTrigger Binding="{Binding SinglePatientViewModel.IsBusy}" Value="False">
+                    <ei:DataTrigger Binding="{Binding AddPatientViewModel.IsBusy}" Value="False">
                         <ei:GoToStateAction StateName="Free" TargetObject="{Binding ElementName=RootElement}" />
                     </ei:DataTrigger>
-                    <ei:DataTrigger Binding="{Binding SinglePatientViewModel.IsBusy}" Value="True">
+                    <ei:DataTrigger Binding="{Binding AddPatientViewModel.IsBusy}" Value="True">
                         <ei:GoToStateAction StateName="Busy" TargetObject="{Binding ElementName=RootElement}" />
                     </ei:DataTrigger>
                 </i:Interaction.Triggers>

@@ -1,5 +1,6 @@
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
+using SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
@@ -7,7 +8,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     {
         bool IsBusy { get; set; }
         string BusyMessage { get; set; }
-        Patient Patient { get; set; }
+        PatientModel Patient { get; set; }
         ActionCommand AddPatinetCommand { get; }
         ActionCommand SwitchToSinglePatientViewCommand { get; }
         bool StartFirstStep { get; set; }
