@@ -143,6 +143,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 _patient = value;
                 OnPropertyChanged();
                 LoadSteps();
+
             }
         }
 
