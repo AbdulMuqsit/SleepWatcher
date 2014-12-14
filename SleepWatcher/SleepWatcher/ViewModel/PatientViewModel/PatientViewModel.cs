@@ -287,7 +287,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             InitializeCommands();
 
             SubscribeNotificationsCommand.Execute(null);
-            //GetAllPatients.Execute(null);
+           
         }
 
         private void InitializeCommands()
@@ -480,10 +480,10 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             });
             FilterPatientsCommand = new ActionCommand(async obj =>
             {
-                var patients = new RangeObservableCollection<PatientModel>();
-
+                ShowWindowCommand.Execute(null);
                 await Task.Run(() =>
-                {
+                {   var patients = new RangeObservableCollection<PatientModel>();
+
                     Busy();
 
                     if (obj is int)
