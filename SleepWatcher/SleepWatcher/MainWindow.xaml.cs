@@ -1,4 +1,6 @@
-﻿using Amuqsit.CustomControls.Windows;
+﻿using System.Diagnostics;
+using System.Windows.Navigation;
+using Amuqsit.CustomControls.Windows;
 
 namespace SleepWatcher
 {
@@ -10,6 +12,11 @@ namespace SleepWatcher
         public MainWindow()
         {
             InitializeComponent();
+        }
+        private void Hyperlink_RequestNavigate(object sender, RequestNavigateEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo(e.Uri.AbsoluteUri));
+            e.Handled = true;
         }
     }
 }
