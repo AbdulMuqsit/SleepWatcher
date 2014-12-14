@@ -32,6 +32,10 @@
         <Rectangle Height="10" Fill="#FFE3640A" HorizontalAlignment="Stretch" Grid.Row="1"/>
         <Path Data="M890,490 L890,10" Fill="#FFBFBEBE" HorizontalAlignment="Right"  Margin="0,60,10,0" Grid.RowSpan="1" Stretch="Fill" Stroke="#FFBFBEBE" VerticalAlignment="Top" Width="1"/>
         <Path Data="M0,0 L10,0" Fill="#FFBFBEBE" HorizontalAlignment="Center"  Margin="15,55,15,0" Grid.RowSpan="1" Stretch="Fill" Stroke="#FFBFBEBE" VerticalAlignment="Top" Height="1"/>
-
+        <TextBlock HorizontalAlignment="Right" Margin="15,0" FontSize="9" Grid.Row="1" Foreground="White">           
+    <Hyperlink Foreground="White" NavigateUri="http://Fiverr.com/Amuqsit" RequestNavigate="Hyperlink_RequestNavigate">
+        Fiverr.com/Amuqsit
+    </Hyperlink>
+        </TextBlock>
     </Grid>
 </cc:CustomWindow>
