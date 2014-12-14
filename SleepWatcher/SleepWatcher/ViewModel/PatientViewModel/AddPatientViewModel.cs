@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Expression.Interactivity.Core;
 using SleepWatcher.Entites;
@@ -92,13 +93,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                     //save changes to database
                     await Context.SaveChangesAsync();
-
+                    
                     //Update patients list
                     var patients = new RangeObservableCollection<PatientModel>(Locator.PatientViewModel.Patients)
                     {
                         Mapper.Map<PatientModel>(Mapper.Map<PatientModel>(patient))
                     };
-                    Locator.PatientViewModel.Patients = patients;
+                   
+                    Locator.PatientViewModel.Patients = new RangeObservableCollection<PatientModel>(patients.OrderByDescending(e=>e.Id));
 
                     //Make state free
                     Free();

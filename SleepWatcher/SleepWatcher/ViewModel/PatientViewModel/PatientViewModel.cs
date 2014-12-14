@@ -28,13 +28,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private NotificationModel _notificationModel;
         private RangeObservableCollection<PatientModel> _overDuePatients = new RangeObservableCollection<PatientModel>();
         private Patient _patient = new Patient();
-        private RangeObservableCollection<PatientModel> _patients;
+        private RangeObservableCollection<PatientModel> _patients = new RangeObservableCollection<PatientModel>();
         private string _searchText;
         private bool _showCanceled = true;
         private bool _showCompleted = true;
         private bool _showOngoing = true;
         private bool _showOverDue = true;
-        private string _stepNameFilterString;
+        private string _stepNameFilterString = "All Steps";
 
         #endregion
 
@@ -307,13 +307,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(async () =>
                 {
-                    await Task.Delay(200);
+                    await Task.Delay(500);
                     Busy();
                     BusyMessage = "Loading Patients";
                     Patients =
                         new RangeObservableCollection<PatientModel>(
                             (await
-                                Context.Patients.OrderByDescending(e => e.CurrentStep.AlarmTime)
+                                Context.Patients.OrderByDescending(e => e.Id)
                                     .Include(e => e.CurrentStep)
                                     .ToListAsync()).Select(PatientSelector));
 
@@ -359,14 +359,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                         await Task.Run(async () =>
                         {
-
                             Busy();
                             BusyMessage = "Loading Patients";
 
                             Patients =
                                 new RangeObservableCollection<PatientModel>(
                                     (await
-                                        Context.Patients.OrderByDescending(e => e.CurrentStep.AlarmTime)
+                                        Context.Patients.OrderByDescending(e => e.Id)
                                             .Include(e => e.Steps)
                                             .ToListAsync()).Select(PatientSelector));
                             Free();
@@ -380,7 +379,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(async () =>
                 {
-
                     Busy();
                     BusyMessage = "Applying Filter";
                     OverDuePatients.Clear();
@@ -417,7 +415,29 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 await Task.Run(() =>
                 {
                     Busy();
-                    var patients = new RangeObservableCollection<PatientModel>(Context.Patients.Local.Where(e => e.FirstName.ToLower().Contains(SearchText.ToLower()) || e.LastName.ToLower().Contains(SearchText.ToLower())).Select(PatientSelector));
+                    RangeObservableCollection<PatientModel> patients;
+                    if (StepNameFilter!=null)
+                    {
+                        patients =
+                        new RangeObservableCollection<PatientModel>(
+                            Context.Patients.Local.Where(
+                                e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
+                                    .Contains(SearchText.ToLower()) && e.CurrentStep.StepName == StepNameFilter)
+                                .Select(PatientSelector));
+                    }
+                    else
+                    {
+                        patients =
+                        new RangeObservableCollection<PatientModel>(
+                            Context.Patients.Local.Where(
+                                e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
+                                    .Contains(SearchText.ToLower()))
+                                .Select(PatientSelector));
+                    }
+                    ShowCanceled = true;
+                    ShowCompleted = true;
+                    ShowOngoing = true;
+                    ShowOverDue = true;
                     Patients = patients;
                     Free();
                 });
@@ -435,21 +455,26 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(() =>
                 {
+                    RangeObservableCollection<PatientModel> patients = null;
                     Busy();
                     if (StepNameFilter != null)
                     {
-                        var pateints =
+                        patients =
                             new RangeObservableCollection<PatientModel>(
-                                Patients.OrderByDescending(e => e.CurrentStep.AlarmTime)
+                                Patients.OrderByDescending(e => e.Id)
                                     .Where(e => e.CurrentStep.StepName == StepNameFilter));
                     }
                     else
                     {
-                        var pateints =
+                        patients =
                             new RangeObservableCollection<PatientModel>(
-                                Context.Patients.OrderByDescending(e => e.CurrentStep.AlarmTime).Select(PatientSelector));
+                                Context.Patients.OrderByDescending(e => e.Id).Select(PatientSelector));
                     }
-                    Patients = Patients;
+                    Patients = patients;
+                    ShowCanceled = true;
+                    ShowCompleted = true;
+                    ShowOngoing = true;
+                    ShowOverDue = true;
                     Free();
                 });
             });
@@ -459,13 +484,12 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                 await Task.Run(() =>
                 {
-
                     Busy();
 
                     if (obj is int)
                     {
                         BusyMessage = "Loading Patient";
-                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
+                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int) obj));
                     }
                     else
                     {
@@ -473,7 +497,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                         ShowOngoing = false;
                         ShowCanceled = false;
                         ShowCompleted = false;
-                        patients.AddRange(OverDuePatients.OrderBy(e => e.CurrentStep.AlarmTime));
+                        patients.AddRange(OverDuePatients.OrderBy(e => e.Id));
                         Patients = patients;
                     }
 
@@ -486,7 +510,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                 await Task.Run(() =>
                 {
-
                     Busy();
                     BusyMessage = "Applying Filter";
                     if (ShowCanceled)
@@ -496,7 +519,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                             Context.Patients.Local.Where(e => e.CurrentStep.IsCancled).Select(PatientSelector));
                         patients =
                             new RangeObservableCollection<PatientModel>(
-                                patients.OrderByDescending(e => e.CurrentStep.AlarmTime));
+                                patients.OrderByDescending(e => e.Id));
                     }
                     else
                     {
@@ -519,7 +542,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                 await Task.Run(() =>
                 {
-
                     Busy();
                     BusyMessage = "Applying Filter";
                     if (ShowCompleted)
@@ -529,7 +551,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                             Context.Patients.Local.Where(e => e.CurrentStep.IsCompleted).Select(PatientSelector));
                         patients =
                             new RangeObservableCollection<PatientModel>(
-                                patients.OrderByDescending(e => e.CurrentStep.AlarmTime));
+                                patients.OrderByDescending(e => e.Id));
                     }
                     else
                     {
@@ -552,7 +574,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                 await Task.Run(() =>
                 {
-
                     Busy();
                     BusyMessage = "Applying Filter";
                     if (ShowOngoing)
@@ -563,7 +584,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                                 .Select(PatientSelector));
                         patients =
                             new RangeObservableCollection<PatientModel>(
-                                patients.OrderByDescending(e => e.CurrentStep.AlarmTime));
+                                patients.OrderByDescending(e => e.Id));
                     }
                     else
                     {
@@ -586,7 +607,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 var patients = new RangeObservableCollection<PatientModel>();
                 await Task.Run(() =>
                 {
-
                     Busy();
                     BusyMessage = "Applying Filter";
                     if (ShowOverDue)
@@ -597,7 +617,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                                 .Select(PatientSelector));
                         patients =
                             new RangeObservableCollection<PatientModel>(
-                                patients.OrderByDescending(e => e.CurrentStep.AlarmTime));
+                                patients.OrderByDescending(e => e.Id));
                     }
                     else
                     {
