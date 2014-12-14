@@ -89,10 +89,7 @@
             </Expander>
             <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" DataContext="{DynamicResource Locator}"
                         Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-                <Button Content="New Note"
-                        Style="{DynamicResource AddNewNoteButtonStyle}" Margin="5,5,5,0" HorizontalAlignment="Right"
-                        Command="{Binding SinglePatientViewModel.AddNewNoteCommand, Mode=OneWay}"
-                         />
+               
                 <Button x:Name="btnCancled" Grid.Column="2" Content="Mark Canceled" Margin="5,5,5,0"
                         Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right"
                         Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}" />

@@ -475,8 +475,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                         patients =
                             new RangeObservableCollection<PatientModel>(
-                                Patients.OrderByDescending(e => e.Id)
-                                    .Where(e => e.CurrentStep.StepName == StepNameFilter));
+                                Context.Patients.OrderByDescending(e => e.Id)
+                                    .Where(e => e.CurrentStep.StepName == StepNameFilter).Select(PatientSelector));
                     }
                     else
                     {
