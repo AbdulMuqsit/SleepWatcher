@@ -1,4 +1,3 @@
-﻿<Model:NotificationModel xmlns:Model="clr-namespace:SleepWatcher.Model" xmlns:EF="clr-namespace:SleepWatcher.EF;assembly=SleepWatcher.EF" xmlns:Infrastructure="clr-namespace:System.Data.Entity.Infrastructure;assembly=EntityFramework" xmlns:Entity="clr-namespace:System.Data.Entity;assembly=EntityFramework"
-                         Id="46" Message="Aliquam nam integer sed" Title="Cras nam">
+﻿<Model:NotificationModel xmlns:Model="clr-namespace:SleepWatcher.Model" xmlns:EF="clr-namespace:SleepWatcher.EF;assembly=SleepWatcher.EF" xmlns:Infrastructure="clr-namespace:System.Data.Entity.Infrastructure;assembly=EntityFramework" xmlns:Entity="clr-namespace:System.Data.Entity;assembly=EntityFramework" xmlns:Common="clr-namespace:System.Data.Common;assembly=System.Data" Id="46" Message="Aliquam nam integer sed" Title="Cras nam">
 	
 </Model:NotificationModel>
