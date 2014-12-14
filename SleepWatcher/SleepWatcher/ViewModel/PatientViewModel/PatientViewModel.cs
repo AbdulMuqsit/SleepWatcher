@@ -424,38 +424,44 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         {
             SearchCommand = new ActionCommand(async () =>
             {
-                if (!String.IsNullOrWhiteSpace(SearchText))
+                await Task.Run(() =>
                 {
-                    await Task.Run(() =>
+
+                    Busy();
+                    RangeObservableCollection<PatientModel> patients = null;
+                    if (String.IsNullOrWhiteSpace(SearchText))
                     {
-                        Busy();
-                        RangeObservableCollection<PatientModel> patients;
-                        if (StepNameFilter != null)
-                        {
-                            patients =
-                            new RangeObservableCollection<PatientModel>(
-                                Context.Patients.Local.Where(
-                                    e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
-                                        .Contains(SearchText.ToLower()) && e.CurrentStep.StepName == StepNameFilter)
-                                    .Select(PatientSelector));
-                        }
-                        else
-                        {
-                            patients =
-                            new RangeObservableCollection<PatientModel>(
-                                Context.Patients.Local.Where(
-                                    e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
-                                        .Contains(SearchText.ToLower()))
-                                    .Select(PatientSelector));
-                        }
-                        ShowCanceled = true;
-                        ShowCompleted = true;
-                        ShowOngoing = true;
-                        ShowOverDue = true;
-                        Patients = patients;
-                        Free();
-                    });
-                }
+                        patients =
+                           new RangeObservableCollection<PatientModel>(
+                               Context.Patients.Local.Select(PatientSelector));
+                    }
+                    else if (StepNameFilter != null)
+                    {
+                        patients =
+                        new RangeObservableCollection<PatientModel>(
+                            Context.Patients.Local.Where(
+                                e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
+                                    .Contains(SearchText.ToLower()) && e.CurrentStep.StepName == StepNameFilter)
+                                .Select(PatientSelector));
+                    }
+
+                    else 
+                    {
+                        patients =
+                        new RangeObservableCollection<PatientModel>(
+                            Context.Patients.Local.Where(
+                                e => (e.FirstName.ToLower() + " " + e.LastName.ToLower())
+                                    .Contains(SearchText.ToLower()))
+                                .Select(PatientSelector));
+                    }
+                    ShowCanceled = true;
+                    ShowCompleted = true;
+                    ShowOngoing = true;
+                    ShowOverDue = true;
+                    Patients = patients;
+                    Free();
+
+                });
             });
             ReverseSortCommand = new ActionCommand(async () =>
             {
@@ -505,7 +511,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     if (obj is int)
                     {
                         BusyMessage = "Loading Patient";
-                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
+                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == (int)obj);
                     }
                     else
                     {

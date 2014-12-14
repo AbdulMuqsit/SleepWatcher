@@ -66,7 +66,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             Patient = new PatientModel();
             AddPatinetCommand = new ActionCommand(async () =>
             {
-                if (!String.IsNullOrWhiteSpace(Patient.FullName))
+                if (!String.IsNullOrWhiteSpace(Patient.FirstName+Patient.LastName))
                 {
                     await Task.Run(async () =>
                     {
@@ -98,13 +98,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
                         //Update patients list
                         var patients = new RangeObservableCollection<PatientModel>(Locator.PatientViewModel.Patients)
-                        {
+                    {
                         Mapper.Map<PatientModel>(Mapper.Map<PatientModel>(patient))
-                        };
+                    };
 
                         Locator.PatientViewModel.Patients = new RangeObservableCollection<PatientModel>(patients.OrderByDescending(e => e.Id));
-                        patient.FirstName = "";
-                        patient.LastName = "";
+                        Patient.FirstName = "";
+                        Patient.LastName = "";
                         //Make state free
                         Free();
                         Locator.PatientViewModel.IsBusy = false;
