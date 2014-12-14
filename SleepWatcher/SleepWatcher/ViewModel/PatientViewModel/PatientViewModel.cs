@@ -502,7 +502,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     if (obj is int)
                     {
                         BusyMessage = "Loading Patient";
-                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
+                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == (int)obj);
                     }
                     else
                     {
