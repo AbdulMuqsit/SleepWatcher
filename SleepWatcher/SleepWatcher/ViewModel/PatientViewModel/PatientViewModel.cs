@@ -109,7 +109,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 if (Equals(value, ShowCanceled)) return;
                 _showCanceled = value;
-                FilterCnacled.Execute(null);
                 OnPropertyChanged();
             }
         }
@@ -131,7 +130,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             set
             {
                 if (Equals(value, ShowOngoing)) return;
-                ;
                 _showOngoing = value;
                 OnPropertyChanged();
             }
