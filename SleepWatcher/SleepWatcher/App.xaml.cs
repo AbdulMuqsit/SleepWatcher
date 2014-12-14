@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using SleepWatcher.Infrastructure;
 
 namespace SleepWatcher
@@ -12,7 +13,9 @@ namespace SleepWatcher
         {
             base.OnStartup(e);
             AutoMapperConfiguration.Configure();
-            DispatcherUnhandledException += (sender, args) => MessageBox.Show("Something went wrong!\nApplication will close now...");
+            DispatcherUnhandledException += (sender, args) => MessageBox.Show("Something went wrong!\nApplication will close now.");
+            AppDomain.CurrentDomain.UnhandledException += (sender, args) => MessageBox.Show("Something went wrong!\nApplication will close now.");
+
         }
     }
 }
