@@ -13,7 +13,9 @@ namespace SleepWatcher
         {
             base.OnStartup(e);
             AutoMapperConfiguration.Configure();
-          
+            AppDomain.CurrentDomain.UnhandledException += (s,k)=>MessageBox.Show("Something went wrong!");
         }
+
+        
     }
 }
