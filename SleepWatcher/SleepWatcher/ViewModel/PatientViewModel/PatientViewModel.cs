@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Media;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -18,7 +19,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     internal class PatientViewModel : ViewModelBase, IPatientViewModel
     {
         #region Fields
-
+        private SoundPlayer _player = new SoundPlayer(@"Resources\Alarm.wav");
         private const double TopOffset = 20;
         private const double LeftOffset = 350;
         private readonly GrowlNotifiactions _growlNotificaitons = new GrowlNotifiactions();
@@ -39,7 +40,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         #endregion
 
         #region Properties
-
+        public bool IsAlarming { get; set; }
+        public SoundPlayer Player { get { return _player; } }
+        public ActionCommand StopAlarmCommand
+        {
+            get;
+            set;
+        }
         public StepName? StepNameFilter
         {
             get
@@ -285,9 +292,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             _growlNotificaitons.Top = SystemParameters.WorkArea.Top + TopOffset;
             _growlNotificaitons.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - LeftOffset;
             InitializeCommands();
-
             SubscribeNotificationsCommand.Execute(null);
-           
+
         }
 
         private void InitializeCommands()
@@ -297,6 +303,11 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             SwitchToAddPatientViewCommmand = new ActionCommand(() => { CurrentViewModel = Locator.AddPatientViewModel; });
             //initiate get all patients command
             InitializeGetCommands();
+            StopAlarmCommand = new ActionCommand(() =>
+            {
+                IsAlarming = false;
+                Player.Stop();
+            });
             ShowWindowCommand = new ActionCommand(() =>
             {
                 Application.Current.MainWindow.Show();
@@ -332,8 +343,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                             .ObserveOn(DispatcherScheduler.Current);
                     PatientModel patientModel = item;
                     singlePatientTimer.Subscribe(
-                        k =>
+                        async k =>
                         {
+                            await Alarm();
                             NotificationModel = new PatientNotificaitonModel
                             {
                                 PatientId = patientModel.Id,
@@ -344,12 +356,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 IObservable<long> interval = Observable.Interval(new TimeSpan(0, 10, 0), DispatcherScheduler.Current);
 
                 interval.Subscribe(
-                    e => { Notify(); });
+                  async e => { await Notify(); });
                 Free();
-                Notify();
+                await Notify();
                 await interval;
             });
         }
+
+
 
         private void InitializeGetCommands()
         {
@@ -416,7 +430,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 {
                     Busy();
                     RangeObservableCollection<PatientModel> patients;
-                    if (StepNameFilter!=null)
+                    if (StepNameFilter != null)
                     {
                         patients =
                         new RangeObservableCollection<PatientModel>(
@@ -482,14 +496,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 ShowWindowCommand.Execute(null);
                 await Task.Run(() =>
-                {   var patients = new RangeObservableCollection<PatientModel>();
+                {
+                    var patients = new RangeObservableCollection<PatientModel>();
 
                     Busy();
 
                     if (obj is int)
                     {
                         BusyMessage = "Loading Patient";
-                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int) obj));
+                        Locator.SinglePatientViewModel.Patient = Patients.First(e => e.Id == ((int)obj));
                     }
                     else
                     {
@@ -637,12 +652,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
 
 
-        private void Notify()
+        private async Task Notify()
         {
             int overDuePatientCount =
                 OverDuePatients.Count();
             if (overDuePatientCount > 1)
             {
+                await Alarm();
                 NotificationModel =
                     new NotificationModel
                     {
@@ -651,11 +667,21 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
             else if (overDuePatientCount == 1)
             {
+                await Alarm();
                 NotificationModel = new PatientNotificaitonModel
                 {
                     PatientId = OverDuePatients[0].Id,
                     Name = OverDuePatients[0].FullName
                 };
+            }
+        }
+
+        private async Task Alarm()
+        {
+            if (!IsAlarming)
+            {
+                IsAlarming = true;
+                await Task.Run(() => Player.PlayLooping());
             }
         }
 

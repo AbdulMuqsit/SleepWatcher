@@ -264,7 +264,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Alarm.mp3" />
-    <Resource Include="Resources\Alarm.wav" />
+    <Content Include="Resources\Alarm.wav">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
