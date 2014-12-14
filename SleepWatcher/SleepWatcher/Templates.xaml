@@ -248,7 +248,7 @@
             </Setter.Value>
         </Setter>
         <Setter Property="MinHeight" Value="40" />
-        <Setter Property="MinWidth" Value="80" />
+        <Setter Property="MinWidth" Value="90" />
         <Setter Property="Margin" Value="5" />
 
 

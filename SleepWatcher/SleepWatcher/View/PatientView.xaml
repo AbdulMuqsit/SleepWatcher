@@ -13,7 +13,10 @@
     d:DesignHeight="696" d:DesignWidth="893" Template="{DynamicResource PatientViewTemplate}">
     <UserControl.Resources>
         <ControlTemplate x:Key="PatientViewTemplate" TargetType="{x:Type UserControl}">
-            <Grid x:Name="grid" FocusManager.FocusedElement="{Binding ElementName=SearchTextBox}">
+        	<ControlTemplate.Resources>
+        		
+        	</ControlTemplate.Resources>
+                   <Grid x:Name="grid" FocusManager.FocusedElement="{Binding ElementName=SearchTextBox}">
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="BusyStates">
                         <VisualStateGroup.Transitions>
@@ -306,14 +309,11 @@
                                 Command="{Binding PatientViewModel.ReverseSortCommand}" Content="Reverse" />
                     </Grid>
                 </Grid>
-                <MediaElement Grid.Row="0" Grid.Column="0" x:Name="Alarm" Stretch="Fill" Volume="1"
-                              LoadedBehavior="Play" UnloadedBehavior="Play" />
+               
 
 
             </Grid>
-            <ControlTemplate.Triggers>
-                <Trigger Property="IsEnabled" Value="True" SourceName="SearchTextBox" />
-            </ControlTemplate.Triggers>
+
         </ControlTemplate>
     </UserControl.Resources>
     <UserControl.DataContext>
