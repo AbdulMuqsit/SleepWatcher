@@ -39,6 +39,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_21A98ABBB7774CCE846954DFB8DA62C5"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_29D5DB02007F7A0C6DF62B300510C8FC"
         "OwnerKey" = "8:_0B0D174F24EF44D38AFE0A71D6102E6B"
         "MsmSig" = "8:_UNDEFINED"
@@ -135,8 +141,20 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_7BD00FC255384EF8A60C999432ECD5C2"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_93F90373F3F723C1FE82846B47F887C8"
         "OwnerKey" = "8:_0B0D174F24EF44D38AFE0A71D6102E6B"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_98649283488541529260AE817AE08266"
+        "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -195,6 +213,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_E2A343E08D544C53B5DFEC265029C916"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_ECE4BA668B00D9803A500BF312D688D5"
         "OwnerKey" = "8:_4EBDC289E9D5632E45963E0EC09BFF34"
         "MsmSig" = "8:_UNDEFINED"
@@ -245,12 +269,6 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_44BEC9E22498CB9F36FB846534237FB1"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_UNDEFINED"
-        "OwnerKey" = "8:_3554689D39E612EF397E193449E07F58"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -329,6 +347,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_CEF53C86B85C9E6767FA3ED42B20FF9F"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_3554689D39E612EF397E193449E07F58"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -498,6 +522,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_21A98ABBB7774CCE846954DFB8DA62C5"
+            {
+            "SourcePath" = "8:..\\..\\..\\SleepWatcher\\SleepWatcher\\packages\\Microsoft.SqlServer.Compact.4.0.8854.1\\NativeBinaries\\x86\\sqlceqp40.dll"
+            "TargetName" = "8:sqlceqp40.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_54A23D0EF60E46F99ABAEB6093B03942"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_29D5DB02007F7A0C6DF62B300510C8FC"
@@ -768,6 +812,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_7BD00FC255384EF8A60C999432ECD5C2"
+            {
+            "SourcePath" = "8:..\\..\\..\\SleepWatcher\\SleepWatcher\\packages\\Microsoft.SqlServer.Compact.4.0.8854.1\\NativeBinaries\\x86\\sqlcese40.dll"
+            "TargetName" = "8:sqlcese40.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_54A23D0EF60E46F99ABAEB6093B03942"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_93F90373F3F723C1FE82846B47F887C8"
             {
             "AssemblyRegister" = "3:1"
@@ -797,6 +861,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_98649283488541529260AE817AE08266"
+            {
+            "SourcePath" = "8:..\\..\\..\\SleepWatcher\\SleepWatcher\\packages\\Microsoft.SqlServer.Compact.4.0.8854.1\\NativeBinaries\\x86\\sqlceme40.dll"
+            "TargetName" = "8:sqlceme40.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_54A23D0EF60E46F99ABAEB6093B03942"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_A54D72BF14A819DBC404CC610663DDD6"
@@ -952,6 +1036,26 @@
             "Register" = "3:1"
             "Exclude" = "11:FALSE"
             "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E2A343E08D544C53B5DFEC265029C916"
+            {
+            "SourcePath" = "8:..\\..\\..\\SleepWatcher\\SleepWatcher\\packages\\Microsoft.SqlServer.Compact.4.0.8854.1\\NativeBinaries\\x86\\sqlceer40EN.dll"
+            "TargetName" = "8:sqlceer40EN.dll"
+            "Tag" = "8:"
+            "Folder" = "8:_54A23D0EF60E46F99ABAEB6093B03942"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
             "IsolateTo" = "8:"
             }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_ECE4BA668B00D9803A500BF312D688D5"
@@ -1117,7 +1221,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Sleep Wathcer "
         "ProductCode" = "8:{7A87F83D-8B66-42EF-8415-35C9B1066712}"
-        "PackageCode" = "8:{18424FA7-E35D-43E9-8605-DECF52A495E6}"
+        "PackageCode" = "8:{71817728-68BF-493D-BD49-9149E9AC9C5D}"
         "UpgradeCode" = "8:{2A38810B-797A-4082-A248-A6122D0FF6D4}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1686,34 +1790,6 @@
             "ProjectOutputGroupRegister" = "3:1"
             "OutputConfiguration" = "8:"
             "OutputGroupCanonicalName" = "8:Built"
-            "OutputProjectGuid" = "8:{D22644CD-807F-44D6-AD24-ECE643E9AEB5}"
-            "ShowKeyOutput" = "11:TRUE"
-                "ExcludeFilters"
-                {
-                }
-            }
-            "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_25EEE261B39F4F1F8BCD64BAA257EAC1"
-            {
-            "SourcePath" = "8:"
-            "TargetName" = "8:"
-            "Tag" = "8:"
-            "Folder" = "8:_54A23D0EF60E46F99ABAEB6093B03942"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            "ProjectOutputGroupRegister" = "3:1"
-            "OutputConfiguration" = "8:"
-            "OutputGroupCanonicalName" = "8:ContentFiles"
             "OutputProjectGuid" = "8:{D22644CD-807F-44D6-AD24-ECE643E9AEB5}"
             "ShowKeyOutput" = "11:TRUE"
                 "ExcludeFilters"
