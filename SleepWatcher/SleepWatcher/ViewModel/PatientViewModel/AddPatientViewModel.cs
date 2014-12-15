@@ -133,7 +133,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             return new Step
             {
                 DateAdded = DateTime.Now,
-                StepName = StepName.Approved,
+                StepName = StepName.PaperWorkDone,
                 AlarmTime = DateTime.Now + new TimeSpan(14, 0, 0, 0)
             };
         }

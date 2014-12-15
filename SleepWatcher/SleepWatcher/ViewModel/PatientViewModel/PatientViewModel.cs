@@ -288,8 +288,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public PatientViewModel()
         {
-            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
-               @"SleepWatcher\Rsources\Alarm.wav");
+           
             _player = new SoundPlayer(@"Resources\Alarm.wav");
             CurrentViewModel = new SinglePatientViewModel();
             _growlNotificaitons.Top = SystemParameters.WorkArea.Top + TopOffset;
