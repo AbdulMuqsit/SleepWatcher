@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Reactive.Concurrency;
@@ -19,7 +20,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     internal class PatientViewModel : ViewModelBase, IPatientViewModel
     {
         #region Fields
-        private SoundPlayer _player = new SoundPlayer(@"Resources\Alarm.wav");
+
+        private SoundPlayer _player;
         private const double TopOffset = 20;
         private const double LeftOffset = 350;
         private readonly GrowlNotifiactions _growlNotificaitons = new GrowlNotifiactions();
@@ -286,6 +288,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public PatientViewModel()
         {
+            var path = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+               @"SleepWatcher\Rsources\Alarm.wav");
+            _player = new SoundPlayer(@"Resources\Alarm.wav");
             CurrentViewModel = new SinglePatientViewModel();
             _growlNotificaitons.Top = SystemParameters.WorkArea.Top + TopOffset;
             _growlNotificaitons.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - LeftOffset;
@@ -445,7 +450,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                                 .Select(PatientSelector));
                     }
 
-                    else 
+                    else
                     {
                         patients =
                         new RangeObservableCollection<PatientModel>(

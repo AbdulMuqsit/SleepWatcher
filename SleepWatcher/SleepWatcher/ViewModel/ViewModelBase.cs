@@ -14,6 +14,8 @@ namespace SleepWatcher.ViewModel
     {
         static ViewModelBase()
         {
+            AppDomain.CurrentDomain.SetData("DataDirectory",
+                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             Context = new SleepWatcherDbContext();
         }
 
@@ -47,7 +49,7 @@ namespace SleepWatcher.ViewModel
                 catch (Exception exception)
                 {
                     MessageBox.Show(exception.Message);
-                    
+
                 }
             }
         }
