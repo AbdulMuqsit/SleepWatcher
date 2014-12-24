@@ -15,15 +15,15 @@
                  MinWidth="200"
                  MinHeight="70"
                  Title="MainWindow"
-                 Height="500"
-                 Width="900"
+                 Height="600"
+                 Width="1000"
                  WindowStyle="None"
                  AllowsTransparency="True">
     <cc:CustomWindow.Resources>
         <SolidColorBrush x:Key="Lines"
                          Color="LightGray" />
     </cc:CustomWindow.Resources>
-    <Grid>
+    <Grid Margin="0,0,0,-1">
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto" />
@@ -43,7 +43,8 @@
         <Rectangle Height="10"
                    Fill="#FFE3640A"
                    HorizontalAlignment="Stretch"
-                   Grid.Row="1" />
+                   Grid.Row="1"
+                   Margin="0,0,0,-1" />
         <Path Data="M890,490 L890,10"
               Fill="{DynamicResource Lines}"
               HorizontalAlignment="Right"

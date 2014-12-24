@@ -10,6 +10,7 @@
              d:DesignHeight="506"
              d:DesignWidth="748"
              x:Name="SinglePatient"
+             DataContext="{Binding Mode=OneWay, Source={StaticResource Locator}}"
              Template="{DynamicResource SinplePatientControlTemplate}">
     <UserControl.Resources>
 
@@ -349,7 +350,7 @@
                                FontSize="32"
                                Margin="5,5,0,0" />
                     <Button Grid.Row="0"
-                            Style="{StaticResource ButtonStyle}"
+                            Style="{DynamicResource CloseButtonStyle}"
                             Command="{Binding SinglePatientViewModel.ClearView}"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
@@ -507,8 +508,4 @@
 
     </UserControl.Resources>
 
-    <UserControl.DataContext>
-        <Binding Mode="OneWay"
-                 Source="{StaticResource Locator}" />
-    </UserControl.DataContext>
 </UserControl>

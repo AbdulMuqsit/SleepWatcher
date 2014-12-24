@@ -239,6 +239,28 @@
     </Style>
     <!-- Steps list box datatemplate!-->
     <DataTemplate x:Key="StepsListBoxTemplate">
+        <DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard1">
+                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Cursor)"
+                                               Storyboard.TargetName="grid">
+                    <DiscreteObjectKeyFrame KeyTime="0">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Cursor>Hand</Cursor>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.2">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Cursor>AppStarting</Cursor>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                    <DiscreteObjectKeyFrame KeyTime="0:0:0.7">
+                        <DiscreteObjectKeyFrame.Value>
+                            <Cursor>Arrow</Cursor>
+                        </DiscreteObjectKeyFrame.Value>
+                    </DiscreteObjectKeyFrame>
+                </ObjectAnimationUsingKeyFrames>
+            </Storyboard>
+        </DataTemplate.Resources>
         <Grid Margin="0,5,0,0">
             <Grid.Resources>
                 <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
@@ -248,8 +270,8 @@
                                      StartPoint="0.5,0">
                     <GradientStop Color="Black"
                                   Offset="1" />
-                    <GradientStop Color="#26D8D8D8"
-                                  Offset="0.972" />
+                    <GradientStop Offset="0.972"
+                                  Color="White" />
                 </LinearGradientBrush>
             </Grid.Background>
             <Grid.RowDefinitions>
@@ -272,6 +294,102 @@
             <StackPanel Orientation="Horizontal"
                         Grid.Row="0"
                         Grid.Column="1">
+                <StackPanel.Resources>
+                    <Style x:Key="TooltipPopupStyle"
+                           TargetType="Popup">
+                        <Style.Resources>
+                            <Storyboard BeginTime="0:0:0"
+                                        x:Key="Storyboard1"
+                                        FillBehavior="HoldEnd">
+                                <BooleanAnimationUsingKeyFrames  Storyboard.TargetProperty="(Popup.IsOpen)"
+                                                                 Storyboard.TargetName="{x:Null}">
+                                    <DiscreteBooleanKeyFrame  KeyTime="0:0:0.7"
+                                                              Value="True" />
+
+                                </BooleanAnimationUsingKeyFrames>
+
+                            </Storyboard>
+                            <Storyboard x:Key="Storyboard2" />
+                        </Style.Resources>
+                        <Style.Triggers>
+
+                            <DataTrigger Binding="{Binding ElementName=grid, Path=IsMouseOver}"
+                                         Value="True">
+
+                                <DataTrigger.EnterActions>
+                                    <BeginStoryboard  x:Name="OpenPopupStoryBoard"
+                                                      Storyboard="{StaticResource Storyboard1}">
+
+                                    </BeginStoryboard>
+                                </DataTrigger.EnterActions>
+                                <DataTrigger.ExitActions>
+                                    <PauseStoryboard BeginStoryboardName="OpenPopupStoryBoard" />
+                                    <BeginStoryboard  Storyboard="{StaticResource Storyboard2}"
+                                                      x:Name="ClosePopupStoryBoard">
+
+                                    </BeginStoryboard>
+                                </DataTrigger.ExitActions>
+                            </DataTrigger>
+
+                            <Trigger Property="IsMouseOver"
+                                     Value="True">
+                                <Trigger.EnterActions>
+                                    <PauseStoryboard BeginStoryboardName="ClosePopupStoryBoard" />
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <StopStoryboard BeginStoryboardName="OpenPopupStoryBoard" />
+                                    <ResumeStoryboard BeginStoryboardName="ClosePopupStoryBoard" />
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </StackPanel.Resources>
+
+                <Popup  Style="{StaticResource TooltipPopupStyle}"
+                        DataContext="{Binding Source={StaticResource NotesSampleData}}"
+                        AllowsTransparency="True"
+                        x:Name="popup"
+                        StaysOpen="False">
+                    <Border Background="#CCFFFFFF"
+                            BorderThickness="1"
+                            BorderBrush="Black"
+                            Margin="20">
+                        <Border.Effect>
+                            <DropShadowEffect Opacity="0.5"
+                                              BlurRadius="10"
+                                              Direction="360" />
+                        </Border.Effect>
+                        <Grid Height="Auto"
+                              Width="Auto">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <TextBlock HorizontalAlignment="Left"
+                                       Margin="5"
+                                       Text="Notes"
+                                       Foreground="#FFDC5700"
+                                       FontSize="26.667"></TextBlock>
+                            <Button Grid.Row="1"
+                                    Style="{StaticResource AddNewNoteButtonStyle}"
+                                    HorizontalAlignment="Left">New Note</Button>
+                            <Button Grid.Row="0"
+                                    HorizontalAlignment="Right"
+                                    Style="{StaticResource AddNewNoteButtonStyle}"
+                                    Content="X" />
+                            <ListBox Grid.Row="2"
+                                     HorizontalContentAlignment="Stretch"
+                                     Height="Auto"
+                                     ItemTemplate="{DynamicResource NoteTemplate}"
+                                     ItemsSource="{Binding Notes}"
+                                     DataContext="{Binding}"
+                                     MaxHeight="300"
+                                     Background="{x:Null}" />
+                        </Grid>
+                    </Border>
+                </Popup>
+
                 <TextBlock Margin="10,5,0,0"
                            FontWeight="Bold"
                            Text="Status: "
@@ -301,8 +419,10 @@
                 <TextBlock Style="{DynamicResource TextBlockStyle}"
                            Text="{Binding DueDate, Mode=OneWay}" />
             </StackPanel>
-            <Grid Grid.Row="0" Grid.Column="2"
-                  Margin="5,5,0,0"
+            <Grid x:Name="grid"
+                  Grid.Row="0"
+                  Grid.Column="2"
+                  Margin="5,5,5,0"
                   DataContext="{Binding Source={StaticResource NotesSampleData}}">
                 <TextBlock TextWrapping="Wrap"
                            TextAlignment="Center"
@@ -310,29 +430,15 @@
                            FontSize="18.667"
                            Grid.Column="0"
                            Margin="0"
-                           Cursor="Wait"><Run Foreground="#FF707070"
-                                              FontWeight="Bold"
-                                              FontSize="21.333"
-                                              Text="Notes"
-                                              TextDecorations="Underline" /><Run Foreground="#FF707070"
-                                                                                 FontWeight="Bold"
-                                                                                 FontSize="21.333"
-                                                                                 Text=":" /><Run Text=" " /><Run Foreground="#FFFF9C00"
-                                                                                                                 Text="0" /><InlineUIContainer /></TextBlock>
-                <Popup IsOpen="True">
-                    <Popup.Effect>
-                        <DropShadowEffect />
-                    </Popup.Effect>
-                    <Grid Height="Auto"
-                          Width="Auto">
-                        <ListBox HorizontalContentAlignment="Stretch"
-                                 Height="Auto"
-                                 ItemTemplate="{DynamicResource NoteTemplate}"
-                                 ItemsSource="{Binding Notes}"
-                                 DataContext="{Binding}"
-                                 MaxHeight="300" />
-                    </Grid>
-                </Popup>
+                           LineHeight="26.667"><Run Foreground="#FF707070"
+                                                    FontWeight="Bold"
+                                                    FontSize="21.333"
+                                                    Text="Notes"
+                                                    TextDecorations="Underline" /><Run Foreground="#FF707070"
+                                                                                       FontWeight="Bold"
+                                                                                       FontSize="21.333"
+                                                                                       Text=":" /><Run Text=" " /><Run Foreground="#FFFF9C00"
+                                                                                                                       Text="{Binding Count}" /><InlineUIContainer /></TextBlock>
             </Grid>
             <Button x:Name="btnCancled"
                     Content="Mark Canceled"
@@ -341,7 +447,8 @@
                     Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}"
                     MinWidth="100"
                     Margin="5,8,5,5"
-                    Grid.Row="0" Grid.Column="3"
+                    Grid.Row="0"
+                    Grid.Column="3"
                     Height="Auto"
                     VerticalAlignment="Center" />
             <Button x:Name="btnCompleted"
@@ -357,14 +464,26 @@
                     VerticalAlignment="Center" />
             <Button Content="New Note"
                     Grid.Column="2"
-                    HorizontalAlignment="Center"
-                    Margin="0"
+                    HorizontalAlignment="Stretch"
                     Grid.Row="1"
                     VerticalAlignment="Center"
                     Style="{DynamicResource AddNewNote}"
-                    Width="70" />
+                    HorizontalContentAlignment="Center"
+                    Margin="5" />
         </Grid>
         <DataTemplate.Triggers>
+            <Trigger Property="IsMouseOver"
+                     Value="True"
+                     SourceName="grid">
+                <Trigger.EnterActions>
+                    <BeginStoryboard x:Name="Storyboard1_BeginStoryboard"
+                                     Storyboard="{StaticResource Storyboard1}" />
+                </Trigger.EnterActions>
+                <Trigger.ExitActions>
+                    <StopStoryboard BeginStoryboardName="Storyboard1_BeginStoryboard"></StopStoryboard>
+                </Trigger.ExitActions>
+            </Trigger>
+
             <DataTrigger Binding="{Binding IsCompleted}"
                          Value="True">
                 <Setter TargetName="textBlock"
@@ -401,6 +520,7 @@
                         Property="Content"
                         Value="Uncancel" />
             </DataTrigger>
+
         </DataTemplate.Triggers>
     </DataTemplate>
     <!-- list of patients datatemplate !-->
@@ -953,21 +1073,28 @@
         </Setter>
     </Style>
     <DataTemplate x:Key="NoteTemplate">
-        <Button Style="{DynamicResource NotesPopupButtons}"
-                HorizontalContentAlignment="Left"
-                MinWidth="200"
-                MaxWidth="300">
-            <StackPanel>
-                <TextBlock TextTrimming="CharacterEllipsis"
-                           HorizontalAlignment="Left"><Run Foreground="Gray"
-                                                           FontSize="12"
-                                                           Text="{Binding Date}" /></TextBlock>
-                <TextBlock Foreground="White"
-                           FontSize="18"
-                           FontFamily="Cambria"
-                           Text="{Binding Title}" />
-            </StackPanel>
-        </Button>
+
+        <StackPanel MinWidth="200"
+                    MaxWidth="300">
+            <StackPanel.Background>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <GradientStop Color="Black"
+                                  Offset="1" />
+                    <GradientStop Color="White"
+                                  Offset="0.98" />
+                </LinearGradientBrush>
+            </StackPanel.Background>
+            <TextBlock TextTrimming="CharacterEllipsis"
+                       HorizontalAlignment="Left"
+                       Foreground="#FF9B9B9B"><Run FontSize="12"
+                                                   Text="{Binding Date}" /></TextBlock>
+            <TextBlock HorizontalAlignment="Left"
+                       Foreground="#FF4B4B4B"
+                       FontSize="18"
+                       FontFamily="Cambria"
+                       Text="{Binding Title}" />
+        </StackPanel>
     </DataTemplate>
     <Style x:Key="NotesPopupButtons"
            TargetType="{x:Type Button}">
@@ -1043,8 +1170,17 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="Background"
-                Value="#FF484848" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <LinearGradientBrush EndPoint="0.5,1"
+                                     StartPoint="0.5,0">
+                    <GradientStop Color="Black"
+                                  Offset="1" />
+                    <GradientStop Color="White"
+                                  Offset="0.983" />
+                </LinearGradientBrush>
+            </Setter.Value>
+        </Setter>
     </Style>
     <Style x:Key="AddNewNote"
            TargetType="{x:Type Button}">
@@ -1118,5 +1254,190 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+    <Style x:Key="CloseButtonStyle"
+           TargetType="{x:Type Button}">
+        <Setter Property="Foreground"
+                Value="#FFE4E4E4" />
+        <Setter Property="FontSize"
+                Value="10.667" />
+        <Setter Property="BorderBrush"
+                Value="{x:Null}" />
+        <Setter Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFEE7A19"
+                                  Offset="0.008" />
+                    <GradientStop Color="#FFDC5700"
+                                  Offset="0.984" />
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Margin"
+                Value="5" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Padding"
+                Value="1" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="border"
+                            CornerRadius="3"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="true">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFEE7A19"
+                                              Offset="0.008" />
+                                <GradientStop Color="#FFDC5700"
+                                              Offset="0.984" />
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal" />
+                                <VisualState x:Name="MouseOver" />
+                                <VisualState x:Name="Pressed" />
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                                                      Storyboard.TargetName="border">
+                                            <EasingColorKeyFrame KeyTime="0:0:0.1"
+                                                                 Value="#FFCDCDCD" />
+                                        </ColorAnimationUsingKeyFrames>
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter x:Name="contentPresenter"
+                                          Focusable="False"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          RecognizesAccessKey="True"
+                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#FFF1872D"
+                                                      Offset="0.008" />
+                                        <GradientStop Color="#FFEC782C"
+                                                      Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter Property="Background"
+                                    TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop Color="#FFCA5F06"
+                                                      Offset="0.012" />
+                                        <GradientStop Color="#FFBE4D04"
+                                                      Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+    </Style>
+    <SolidColorBrush x:Key="ListBoxesFocus"
+                     Color="#4FC6C5"
+                     Opacity="0.3" />
+    <SolidColorBrush x:Key="ListBoxesSelected"
+                     Color="#0AB9B4"
+                     Opacity="0.5" />
+    <Style TargetType="{x:Type ListBoxItem}">
+        <Setter Property="OverridesDefaultStyle"
+                Value="True" />
+
+        <Setter Property="FontFamily"
+                Value="{DynamicResource {x:Static SystemFonts.MessageFontFamilyKey}}" />
+        <Setter Property="FontSize"
+                Value="{DynamicResource {x:Static SystemFonts.MessageFontSizeKey}}" />
+        <Setter Property="FontWeight"
+                Value="{DynamicResource {x:Static SystemFonts.MessageFontWeightKey}}" />
+
+        <Setter Property="Background"
+                Value="Transparent" />
+
+        <Setter Property="Padding"
+                Value="4,2" />
+        <Setter Property="MinHeight"
+                Value="20" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                    <Border x:Name="ListBoxItemRoot"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            Uid="ListBoxItemRoot">
+                        <ContentPresenter x:Name="ListBoxItemContent"
+                                          ContentTemplate="{TemplateBinding ContentTemplate}"
+                                          Content="{TemplateBinding Content}"
+                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                          Margin="{TemplateBinding Padding}"
+                                          Uid="ListBoxItemContent"
+                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.BasedOn>
+            <Style TargetType="{x:Type ListBoxItem}">
+                <Setter Property="AutomationProperties.AutomationId"
+                        Value="{Binding FullName}" />
+                <Setter Property="AutomationProperties.Name"
+                        Value="{Binding DisplayName}" />
+                <Setter Property="Margin" Value="3"></Setter>
+            </Style>
+        </Style.BasedOn>
+        <Style.Triggers>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="IsMouseOver"
+                               Value="True" />
+                    <Condition Property="IsSelected"
+                               Value="False" />
+                </MultiTrigger.Conditions>
+                <Setter Property="Background"
+                        Value="{StaticResource ListBoxesFocus}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ListBoxesFocus}" />
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource ListBoxesFocus}" />
+            </MultiTrigger>
+            <Trigger Property="IsSelected"
+                     Value="True">
+                <Setter Property="Background"
+                        Value="{StaticResource ListBoxesSelected}" />
+                <Setter Property="Foreground"
+                        Value="{StaticResource ListBoxesSelected}" />
+                <Setter Property="BorderBrush"
+                        Value="{StaticResource ListBoxesSelected}" />
+            </Trigger>
+            
+        </Style.Triggers>
     </Style>
 </ResourceDictionary>

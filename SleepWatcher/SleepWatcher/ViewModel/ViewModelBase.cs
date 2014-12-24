@@ -25,8 +25,8 @@ namespace SleepWatcher.ViewModel
         {
             get
             {
-                var _loator = Application.Current.Resources["Locator"];
-                return _loator as ViewModelLocator;
+                var loator = Application.Current.Resources["Locator"];
+                return loator as ViewModelLocator;
             }
         }
 

@@ -153,13 +153,15 @@
                                             TargetObject="{Binding ElementName=grid}" />
                     </ei:DataTrigger>
                 </i:Interaction.Triggers>
-                <TextBlock Foreground="#FFE05F06"
-                           FontSize="40"
-                           FontFamily="Cambria"
-                           FontWeight="Bold"
-                           Margin="10,10,0,2"
-                           IsHitTestVisible="False">
+                <Grid IsHitTestVisible="False">
+                    <TextBlock Foreground="#FFE05F06"
+                               FontSize="40"
+                               FontFamily="Cambria"
+                               FontWeight="Bold"
+                               Margin="10,10,0,2"
+                               IsHitTestVisible="False">
                     <Run Text="Patients" /></TextBlock>
+                </Grid>
                 <!--Patients list box-->
                 <ListBox x:Name="listBox"
                          Grid.Row="2"
@@ -410,13 +412,6 @@
                                 Content="Reverse" />
                     </Grid>
                 </Grid>
-                <MediaElement Grid.Row="0"
-                              Grid.Column="0"
-                              x:Name="Alarm"
-                              Stretch="Fill"
-                              Volume="1"
-                              LoadedBehavior="Play"
-                              UnloadedBehavior="Play" />
             </Grid>
             <ControlTemplate.Triggers>
                 <Trigger Property="IsEnabled"
