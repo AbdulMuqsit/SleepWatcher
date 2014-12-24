@@ -121,6 +121,9 @@
     <Compile Include="Model\PatientModel.cs" />
     <Compile Include="Model\PatientNotificaitonModel.cs" />
     <Compile Include="Model\StepModel.cs" />
+    <Compile Include="SampleData\NotesSampleData\NotesSampleData.xaml.cs">
+      <DependentUpon>NotesSampleData.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\PatientViewModel\OverDuePatientsViewModel.cs" />
     <Compile Include="View\Notifications\GrowlNotifiactions.xaml.cs">
       <DependentUpon>GrowlNotifiactions.xaml</DependentUpon>
@@ -162,6 +165,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
+    <Page Include="SampleData\NotesSampleData\NotesSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="View\Notifications\DesignTimeNotificationData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -206,6 +213,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Design\projectGuides.guides" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -236,6 +244,7 @@
     <Resource Include="dentist.ico" />
   </ItemGroup>
   <ItemGroup>
+    <DesignTimeOnly Include="SampleData\NotesSampleData\NotesSampleData.xsd" />
     <Resource Include="View\Notifications\close.png" />
   </ItemGroup>
   <ItemGroup>
@@ -249,6 +258,9 @@
     <Content Include="Resources\Alarm.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataStore\NotesSampleData\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>

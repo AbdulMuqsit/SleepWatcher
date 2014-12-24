@@ -14,7 +14,6 @@
         <Style x:Key="AddNewPatientButtonStyle" TargetType="{x:Type Button}">
             <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}" />
             <Setter Property="Background" Value="#FFBFBEBE" />
-            <Setter Property="BorderBrush" Value="{StaticResource Button.Static.Border}" />
             <Setter Property="Foreground" Value="#FF7F7F80" />
             <Setter Property="BorderThickness" Value="1" />
             <Setter Property="HorizontalContentAlignment" Value="Center" />
@@ -273,7 +272,7 @@
                     </Button>
                     <ListBox Grid.Row="1" ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}"
                              ItemTemplate="{StaticResource StepsListBoxTemplate}" HorizontalContentAlignment="Stretch"
-                             SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}" />
+                             SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}" FocusVisualStyle="{DynamicResource PatientsFocusVisualStyle}" />
                     <Rectangle x:Name="rectangle" HorizontalAlignment="Stretch" Grid.Row="1" StrokeThickness="6"
                                VerticalAlignment="Stretch" Fill="Gray" Margin="5" Visibility="Collapsed" Opacity="0" />
                     <StackPanel x:Name="stackPanel" VerticalAlignment="Center" HorizontalAlignment="Center"

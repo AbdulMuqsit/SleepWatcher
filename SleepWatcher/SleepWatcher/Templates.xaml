@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:l="clr-namespace:SleepWatcher.Converters"
     xmlns:patientViewModels="clr-namespace:SleepWatcher.ViewModel.PatientViewModel"
     xmlns:view="clr-namespace:SleepWatcher.View"
@@ -9,297 +10,296 @@
     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
     xmlns:viewModel="clr-namespace:SleepWatcher.ViewModel"
+    xmlns:notesSampleData="clr-namespace:Expression.Blend.SampleData.NotesSampleData"
     mc:Ignorable="d">
-    <viewModel:ViewModelLocator x:Key="Locator"/>
-    <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <viewModel:ViewModelLocator
+        x:Key="Locator" />
+    <BooleanToVisibilityConverter
+        x:Key="BooleanToVisibilityConverter" />
+    <notesSampleData:NotesSampleData
+        x:Key="NotesSampleData"
+        d:IsDataSource="True" />
     <!--Single Patient view datatype triggers !-->
-    <DataTemplate DataType="{x:Type patientViewModels:SinglePatientViewModel}">
+    <DataTemplate
+        DataType="{x:Type patientViewModels:SinglePatientViewModel}">
         <view:SinglePatinetView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type design:DesignSinglePatientViewModel}">
+    <DataTemplate
+        DataType="{x:Type design:DesignSinglePatientViewModel}">
         <view:SinglePatinetView />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type patientViewModels:AddPatientViewModel}">
+    <DataTemplate
+        DataType="{x:Type patientViewModels:AddPatientViewModel}">
         <view:AddPatientView />
     </DataTemplate>
     <!-- Resource dictionary entries should be defined here. -->
     <!--Datatemplate for notes list box!-->
-    <DataTemplate x:Key="NotesListBoxTemplate">
+    <DataTemplate
+        x:Key="NotesListBoxTemplate">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition
+                    Width="Auto" />
             </Grid.ColumnDefinitions>
-            <TextBox Text="{Binding Text}" Margin="5,5,0,0" IsReadOnly="{Binding IsChecked, ElementName=IsReadOnly}"
-                     AcceptsReturn="True" AcceptsTab="True" />
-            <ToggleButton x:Name="IsReadOnly" IsChecked="False" Grid.Column="1" Margin="5,5,0,0" MinWidth="20" />
+            <TextBox
+                Text="{Binding Text}"
+                Margin="5,5,0,0"
+                IsReadOnly="{Binding IsChecked, ElementName=IsReadOnly}"
+                AcceptsReturn="True"
+                AcceptsTab="True" />
+            <ToggleButton
+                x:Name="IsReadOnly"
+                IsChecked="False"
+                Grid.Column="1"
+                Margin="5,5,0,0"
+                MinWidth="20" />
         </Grid>
     </DataTemplate>
-    <!-- Steps list box datatemplate!-->
-    <DataTemplate x:Key="StepsListBoxTemplate">
-
-        <Grid Margin="0,5,0,0">
-            <Grid.Resources>
-                <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
-            </Grid.Resources>
-            <Grid.Background>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="1" />
-                    <GradientStop Color="#26D8D8D8" Offset="0.972" />
-                </LinearGradientBrush>
-            </Grid.Background>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,5,0,0" Text="Step: "
-                           Style="{DynamicResource TextBlockStyle}" FontWeight="Bold" />
-                <TextBlock Grid.Row="0" Grid.Column="0" Margin="5,5,0,0"
-                           Text="{Binding StepName, Converter={StaticResource EnumConverter}}"
-                           Style="{DynamicResource TextBlockStyle}" />
-
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
-                <TextBlock Margin="5,5,0,0" FontWeight="Bold" Text="Status: " Style="{DynamicResource TextBlockStyle}" />
-                <TextBlock x:Name="textBlock" Grid.Row="0" Grid.Column="2" Margin="5,5,0,0" Text="{Binding Status}"
-                           Style="{DynamicResource TextBlockStyle}" />
-
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="0">
-                <TextBlock FontWeight="Bold" Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
-                           Text="Start Date: " />
-                <TextBlock Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
-                           Text="{Binding DateStarted, Mode=OneWay}" />
-            </StackPanel>
-            <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                <TextBlock FontWeight="Bold" Margin="10,5,0,0" Style="{DynamicResource TextBlockStyle}"
-                           Text="Due Date: " />
-                <TextBlock Margin="5,5,0,0" Style="{DynamicResource TextBlockStyle}"
-                           Text="{Binding DueDate, Mode=OneWay}" />
-            </StackPanel>
-            <Expander DataContext="{Binding SinglePatientViewModel, Source={StaticResource Locator}}" Grid.Row="1" Grid.Column="1" Margin="5,5,0,0"
-                      IsExpanded="True" Header="Notes" Visibility="Collapsed">
-                <ListBox ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NotesListBoxTemplate}" />
-            </Expander>
-            <StackPanel Grid.Row="0" Grid.Column="2" Grid.RowSpan="2" DataContext="{DynamicResource Locator}"
-                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}">
-               
-                <Button x:Name="btnCancled" Grid.Column="2" Content="Mark Canceled" Margin="5,5,5,0"
-                        Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right"
-                        Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}" />
-                <Button x:Name="btnCompleted" Grid.Column="2" Content="Mark Completed" Margin="5,5,5,5"
-                        Style="{DynamicResource AddNewNoteButtonStyle}" HorizontalAlignment="Right"
-                        Command="{Binding SinglePatientViewModel.MarkCompleteCommand, Mode=OneWay}" />
-            </StackPanel>
-        </Grid>
-
-        <DataTemplate.Triggers>
-
-            <DataTrigger Binding="{Binding IsCompleted}" Value="True">
-                <Setter TargetName="textBlock" Property="Foreground" Value="Green" />
-                <Setter TargetName="btnCompleted" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="btnCancled" Property="Visibility" Value="Collapsed" />
-
-            </DataTrigger>
-             <DataTrigger Binding="{Binding Status}" Value="Ongoing">
-                <Setter TargetName="textBlock" Property="Foreground" Value="DarkOrange" />
-                
-            </DataTrigger>
-             <DataTrigger Binding="{Binding Status}" Value="Overdue">
-                <Setter TargetName="textBlock" Property="Foreground" Value="Red" />
-                
-            </DataTrigger>
-            <DataTrigger Binding="{Binding IsCancled}" Value="True">
-                <Setter TargetName="textBlock" Property="Foreground" Value="Black" />
-                <Setter TargetName="btnCompleted" Property="Visibility" Value="Collapsed" />
-                <Setter TargetName="btnCancled" Property="Content" Value="Uncancel" />
-            </DataTrigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-
-    <!-- list of patients datatemplate !-->
-    <DataTemplate x:Key="ListBoxItemsTemplate">
-        <Grid x:Name="grid" Background="#FFDADADA" d:DesignWidth="200.667" d:DesignHeight="100" MaxHeight="100"
-              Height="Auto" Width="Auto" Margin="5,5,5,0">
-            <Grid.Resources>
-                <l:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
-            </Grid.Resources>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <TextBlock Text="{Binding FullName, Mode=OneWay}" MinHeight="0" Foreground="#FF645A53" FontSize="26.667"
-                       VerticalAlignment="Top" Padding="0" FontFamily="Javanese Text" Grid.ColumnSpan="2"
-                       Margin="5,0,0,0" Height="40" FontWeight="Bold" />
-            <TextBlock x:Name="textBlock" Grid.Row="1" Margin="5,0,5,1" Text="Step:" Foreground="#FF614736"
-                       FontSize="13.333" FontWeight="Bold" FontFamily="Sitka Text" />
-            <TextBlock x:Name="textBlock2" Grid.ColumnSpan="1" Height="Auto" Grid.Row="1"
-                       Text="{Binding CurrentStep.StepName, Converter={StaticResource EnumConverter}}" Width="Auto"
-                       Grid.Column="1" Margin="5,0,5,1" Foreground="#FF513A29" FontSize="13.333"
-                       FontFamily="Mongolian Baiti" />
-            <TextBlock x:Name="textBlock_Copy" Grid.Row="2" Margin="5,0,5,1" Text="Status:" Foreground="#FF614736"
-                       FontSize="13.333" FontWeight="Bold" FontFamily="Sitka Text" />
-            <TextBlock x:Name="textBlock1" Grid.ColumnSpan="1" Height="Auto" Grid.Row="2"
-                       Text="{Binding CurrentStep.Status, Mode=OneWay}" Width="Auto" Grid.Column="1" Margin="5,0,5,1"
-                       Foreground="#FF513A29" FontSize="13.333" FontFamily="Mongolian Baiti" />
-
-        </Grid>
-        <DataTemplate.Triggers>
-            <Trigger Property="Text" Value="Ongoing" SourceName="textBlock1">
-                <Setter Property="Background" TargetName="grid">
-                    <Setter.Value>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="DarkOrange" Offset="1" />
-                            <GradientStop Color="White" Offset="0.96" />
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-                        <Trigger Property="Text" Value="Overdue" SourceName="textBlock1">
-                <Setter Property="Background" TargetName="grid">
-                    <Setter.Value>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="White" Offset="0.96" />
-                            <GradientStop Color="Red" Offset="1" />
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-            <Trigger Property="Text" Value="Canceled" SourceName="textBlock1">
-                <Setter Property="Background" TargetName="grid">
-                    <Setter.Value>
-                        <LinearGradientBrush EndPoint="0.5,1" MappingMode="RelativeToBoundingBox" StartPoint="0.5,0">
-                            <GradientStop Color="White" Offset="0.96"/>
-                            <GradientStop Color="Black" Offset="1"/>
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-
-            <Trigger Property="Text" Value="Completed" SourceName="textBlock1">
-                <Setter Property="Background" TargetName="grid">
-                    <Setter.Value>
-                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                            <GradientStop Color="Green" Offset="1" />
-                            <GradientStop Color="White" Offset="0.96" />
-                        </LinearGradientBrush>
-                    </Setter.Value>
-                </Setter>
-            </Trigger>
-        </DataTemplate.Triggers>
-    </DataTemplate>
-    <Style x:Key="CheckBoxStyle" TargetType="{x:Type CheckBox}">
-        <Setter Property="VerticalAlignment" Value="Center" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="Foreground" Value="#FF707070" />
-        <Setter Property="Margin" Value="5,5,5,0" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-    </Style>
-    <Style x:Key="TextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF707070" />
-        <Setter Property="FontFamily" Value="Cambria" />
-        <Setter Property="FontSize" Value="21.333" />
-        <Setter Property="Margin" Value="5,5,0,0" />
-    </Style>
-    <Style x:Key="FocusVisual">
-        <Setter Property="Control.Template">
-            <Setter.Value>
-                <ControlTemplate>
-                    <Rectangle Margin="2" SnapsToDevicePixels="true"
-                               Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
-                               StrokeThickness="1" StrokeDashArray="1 2" />
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
-    <SolidColorBrush x:Key="Button.Static.Background" Color="#FFDDDDDD" />
-    <SolidColorBrush x:Key="Button.Static.Border" Color="#FF707070" />
-    <SolidColorBrush x:Key="Button.MouseOver.Background" Color="#FFBEE6FD" />
-    <SolidColorBrush x:Key="Button.MouseOver.Border" Color="#FF3C7FB1" />
-    <SolidColorBrush x:Key="Button.Pressed.Background" Color="#FFC4E5F6" />
-    <SolidColorBrush x:Key="Button.Pressed.Border" Color="#FF2C628B" />
-    <SolidColorBrush x:Key="Button.Disabled.Background" Color="#FFF4F4F4" />
-    <SolidColorBrush x:Key="Button.Disabled.Border" Color="#FFADB2B5" />
-    <SolidColorBrush x:Key="Button.Disabled.Foreground" Color="#FF838383" />
-    <Style x:Key="ButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="#FFE4E4E4" />
-        <Setter Property="FontSize" Value="18.667" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="Background">
+    <Style
+        x:Key="AddNewNoteButtonStyle"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="Foreground"
+            Value="#FFE4E4E4" />
+        <Setter
+            Property="FontSize"
+            Value="12" />
+        <Setter
+            Property="BorderBrush"
+            Value="{x:Null}" />
+        <Setter
+            Property="Background">
             <Setter.Value>
                 <RadialGradientBrush>
-                    <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                    <GradientStop Color="#FFDC5700" Offset="0.984" />
+                    <GradientStop
+                        Color="#FFEE7A19"
+                        Offset="0.008" />
+                    <GradientStop
+                        Color="#FFDC5700"
+                        Offset="0.984" />
                 </RadialGradientBrush>
             </Setter.Value>
         </Setter>
-        <Setter Property="MinHeight" Value="40" />
-        <Setter Property="MinWidth" Value="80" />
-        <Setter Property="Margin" Value="5" />
-
-
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="1" />
-        <Setter Property="Template">
+        <Setter
+            Property="Margin"
+            Value="5" />
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="Padding"
+            Value="5,1" />
+        <Setter
+            Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}"
-                		BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="3"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
                         <Border.Background>
                             <RadialGradientBrush>
-                                <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                                <GradientStop Color="#FFDC5700" Offset="0.984" />
+                                <GradientStop
+                                    Color="#FFEE7A19"
+                                    Offset="0.008" />
+                                <GradientStop
+                                    Color="#FFDC5700"
+                                    Offset="0.984" />
+                            </RadialGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop
+                                            Color="#FFF1872D"
+                                            Offset="0.008" />
+                                        <GradientStop
+                                            Color="#FFEC782C"
+                                            Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger
+                            Property="IsPressed"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop
+                                            Color="#FFCA5F06"
+                                            Offset="0.012" />
+                                        <GradientStop
+                                            Color="#FFBE4D04"
+                                            Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter
+            Property="MaxHeight"
+            Value="50" />
+        <Setter
+            Property="Height"
+            Value="20" />
+    </Style>
+    <Style
+        x:Key="ButtonStyle"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="Foreground"
+            Value="#FFE4E4E4" />
+        <Setter
+            Property="FontSize"
+            Value="18.667" />
+        <Setter
+            Property="BorderBrush"
+            Value="{x:Null}" />
+        <Setter
+            Property="Background">
+            <Setter.Value>
+                <RadialGradientBrush>
+                    <GradientStop
+                        Color="#FFEE7A19"
+                        Offset="0.008" />
+                    <GradientStop
+                        Color="#FFDC5700"
+                        Offset="0.984" />
+                </RadialGradientBrush>
+            </Setter.Value>
+        </Setter>
+        <Setter
+            Property="MinHeight"
+            Value="40" />
+        <Setter
+            Property="MinWidth"
+            Value="80" />
+        <Setter
+            Property="Margin"
+            Value="5" />
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="Padding"
+            Value="1" />
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="3"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
+                        <Border.Background>
+                            <RadialGradientBrush>
+                                <GradientStop
+                                    Color="#FFEE7A19"
+                                    Offset="0.008" />
+                                <GradientStop
+                                    Color="#FFDC5700"
+                                    Offset="0.984" />
                             </RadialGradientBrush>
                         </Border.Background>
                         <VisualStateManager.VisualStateGroups>
-                            <VisualStateGroup x:Name="CommonStates">
-                                <VisualState x:Name="Normal"/>
-                                <VisualState x:Name="MouseOver"/>
-                                <VisualState x:Name="Pressed"/>
-                                <VisualState x:Name="Disabled">
+                            <VisualStateGroup
+                                x:Name="CommonStates">
+                                <VisualState
+                                    x:Name="Normal" />
+                                <VisualState
+                                    x:Name="MouseOver" />
+                                <VisualState
+                                    x:Name="Pressed" />
+                                <VisualState
+                                    x:Name="Disabled">
                                     <Storyboard>
-                                        <ColorAnimationUsingKeyFrames Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)" Storyboard.TargetName="border">
-                                            <EasingColorKeyFrame KeyTime="0:0:0.1" Value="#FFCDCDCD"/>
+                                        <ColorAnimationUsingKeyFrames
+                                            Storyboard.TargetProperty="(Panel.Background).(GradientBrush.GradientStops)[1].(GradientStop.Color)"
+                                            Storyboard.TargetName="border">
+                                            <EasingColorKeyFrame
+                                                KeyTime="0:0:0.1"
+                                                Value="#FFCDCDCD" />
                                         </ColorAnimationUsingKeyFrames>
                                     </Storyboard>
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <ContentPresenter x:Name="contentPresenter" Focusable="False"
-                			HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                			Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-                			SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                			VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border">
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
                                 <Setter.Value>
                                     <RadialGradientBrush>
-                                        <GradientStop Color="#FFF1872D" Offset="0.008" />
-                                        <GradientStop Color="#FFEC782C" Offset="0.984" />
+                                        <GradientStop
+                                            Color="#FFF1872D"
+                                            Offset="0.008" />
+                                        <GradientStop
+                                            Color="#FFEC782C"
+                                            Offset="0.984" />
                                     </RadialGradientBrush>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border">
+                        <Trigger
+                            Property="IsPressed"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
                                 <Setter.Value>
                                     <RadialGradientBrush>
-                                        <GradientStop Color="#FFCA5F06" Offset="0.012" />
-                                        <GradientStop Color="#FFBE4D04" Offset="0.984" />
+                                        <GradientStop
+                                            Color="#FFCA5F06"
+                                            Offset="0.012" />
+                                        <GradientStop
+                                            Color="#FFBE4D04"
+                                            Offset="0.984" />
                                     </RadialGradientBrush>
                                 </Setter.Value>
                             </Setter>
@@ -309,264 +309,1155 @@
             </Setter.Value>
         </Setter>
     </Style>
-    <Style x:Key="AddNewNoteButtonStyle" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="#FFE4E4E4" />
-        <Setter Property="FontSize" Value="12" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="Background">
-            <Setter.Value>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                    <GradientStop Color="#FFDC5700" Offset="0.984" />
-                </RadialGradientBrush>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="Margin" Value="5" />
-
-
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="5,1" />
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}"
-                            BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
-                        <Border.Background>
-                            <RadialGradientBrush>
-                                <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                                <GradientStop Color="#FFDC5700" Offset="0.984" />
-                            </RadialGradientBrush>
-                        </Border.Background>
-                        <ContentPresenter x:Name="contentPresenter" Focusable="False"
-                                          HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                          Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-                                          SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                          VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                    </Border>
-                    <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border">
-                                <Setter.Value>
-                                    <RadialGradientBrush>
-                                        <GradientStop Color="#FFF1872D" Offset="0.008" />
-                                        <GradientStop Color="#FFEC782C" Offset="0.984" />
-                                    </RadialGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border">
-                                <Setter.Value>
-                                    <RadialGradientBrush>
-                                        <GradientStop Color="#FFCA5F06" Offset="0.012" />
-                                        <GradientStop Color="#FFBE4D04" Offset="0.984" />
-                                    </RadialGradientBrush>
-                                </Setter.Value>
-                            </Setter>
-                        </Trigger>
-                    </ControlTemplate.Triggers>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-        <Setter Property="MaxHeight" Value="50" />
-        <Setter Property="Height" Value="20" />
+    <!-- Steps list box datatemplate!-->
+    <DataTemplate
+        x:Key="StepsListBoxTemplate">
+        <Grid
+            Margin="0,5,0,0">
+            <Grid.Resources>
+                <l:EnumStringToFriendlyNameConverter
+                    x:Key="EnumConverter" />
+            </Grid.Resources>
+            <Grid.Background>
+                <LinearGradientBrush
+                    EndPoint="0.5,1"
+                    StartPoint="0.5,0">
+                    <GradientStop
+                        Color="Black"
+                        Offset="1" />
+                    <GradientStop
+                        Color="#26D8D8D8"
+                        Offset="0.972" />
+                </LinearGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <StackPanel
+                Orientation="Horizontal">
+                <TextBlock
+                    Text="Step: "
+                    Style="{DynamicResource TextBlockStyle}"
+                    FontWeight="Bold" />
+                <TextBlock
+                    Text="{Binding StepName, Converter={StaticResource EnumConverter}}"
+                    Style="{DynamicResource TextBlockStyle}" />
+            </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="0"
+                Grid.Column="1">
+                <TextBlock
+                    Margin="10,5,0,0"
+                    FontWeight="Bold"
+                    Text="Status: "
+                    Style="{DynamicResource TextBlockStyle}" />
+                <TextBlock
+                    x:Name="textBlock"
+                    Text="{Binding Status}"
+                    Style="{DynamicResource TextBlockStyle}" />
+            </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="1"
+                Grid.Column="0"
+                Margin="0,0,0,5">
+                <TextBlock
+                    FontWeight="Bold"
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="Start Date: " />
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding DateStarted, Mode=OneWay}" />
+            </StackPanel>
+            <StackPanel
+                Orientation="Horizontal"
+                Grid.Row="1"
+                Grid.Column="1"
+                Margin="0,0,0,5">
+                <TextBlock
+                    FontWeight="Bold"
+                    Margin="10,5,0,0"
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="Due Date: " />
+                <TextBlock
+                    Style="{DynamicResource TextBlockStyle}"
+                    Text="{Binding DueDate, Mode=OneWay}" />
+            </StackPanel>
+            <Grid
+                Grid.Column="2"
+                Margin="5,5,0,0"
+                DataContext="{Binding Source={StaticResource NotesSampleData}}">
+                <TextBlock
+                    TextWrapping="Wrap"
+                    TextAlignment="Center"
+                    FontFamily="Cambria"
+                    FontSize="18.667"
+                    Grid.Column="0"
+                    Margin="0"
+                    Cursor="Wait"><Run
+                        Foreground="#FF707070"
+                        FontWeight="Bold"
+                        FontSize="21.333"
+                        Text="Notes"
+                        TextDecorations="Underline" /><Run
+                        Foreground="#FF707070"
+                        FontWeight="Bold"
+                        FontSize="21.333"
+                        Text=":" /><Run
+                        Text=" " /><Run
+                        Foreground="#FFFF9C00"
+                        Text="0" /><InlineUIContainer /></TextBlock>
+                <Popup
+                    IsOpen="True">
+                    <Popup.Effect>
+                        <DropShadowEffect />
+                    </Popup.Effect>
+                    <Grid
+                        Height="Auto"
+                        Width="Auto">
+                        <ListBox
+                            HorizontalContentAlignment="Stretch"
+                            Height="Auto"
+                            ItemTemplate="{DynamicResource NoteTemplate}"
+                            ItemsSource="{Binding Notes}"
+                            DataContext="{Binding}"
+                            MaxHeight="300" />
+                    </Grid>
+                </Popup>
+            </Grid>
+            <Button
+                x:Name="btnCancled"
+                Content="Mark Canceled"
+                Style="{DynamicResource AddNewNoteButtonStyle}"
+                HorizontalAlignment="Right"
+                Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}"
+                MinWidth="100"
+                Margin="5,8,5,5"
+                Grid.Column="3"
+                Height="Auto"
+                VerticalAlignment="Center" />
+            <Button
+                x:Name="btnCompleted"
+                Content="Mark Completed"
+                Style="{DynamicResource AddNewNoteButtonStyle}"
+                HorizontalAlignment="Right"
+                Command="{Binding SinglePatientViewModel.MarkCompleteCommand, Mode=OneWay}"
+                MinWidth="100"
+                Margin="5,2,5,5"
+                Grid.Column="3"
+                Height="Auto"
+                Grid.Row="1"
+                VerticalAlignment="Center" />
+            <Button
+                Content="New Note"
+                Grid.Column="2"
+                HorizontalAlignment="Center"
+                Margin="0"
+                Grid.Row="1"
+                VerticalAlignment="Center"
+                Style="{DynamicResource AddNewNote}"
+                Width="70" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <DataTrigger
+                Binding="{Binding IsCompleted}"
+                Value="True">
+                <Setter
+                    TargetName="textBlock"
+                    Property="Foreground"
+                    Value="Green" />
+                <Setter
+                    TargetName="btnCompleted"
+                    Property="Visibility"
+                    Value="Collapsed" />
+                <Setter
+                    TargetName="btnCancled"
+                    Property="Visibility"
+                    Value="Collapsed" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Status}"
+                Value="Ongoing">
+                <Setter
+                    TargetName="textBlock"
+                    Property="Foreground"
+                    Value="DarkOrange" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding Status}"
+                Value="Overdue">
+                <Setter
+                    TargetName="textBlock"
+                    Property="Foreground"
+                    Value="Red" />
+            </DataTrigger>
+            <DataTrigger
+                Binding="{Binding IsCancled}"
+                Value="True">
+                <Setter
+                    TargetName="textBlock"
+                    Property="Foreground"
+                    Value="Black" />
+                <Setter
+                    TargetName="btnCompleted"
+                    Property="Visibility"
+                    Value="Collapsed" />
+                <Setter
+                    TargetName="btnCancled"
+                    Property="Content"
+                    Value="Uncancel" />
+            </DataTrigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <!-- list of patients datatemplate !-->
+    <DataTemplate
+        x:Key="ListBoxItemsTemplate">
+        <Grid
+            x:Name="grid"
+            Background="#FFDADADA"
+            d:DesignWidth="200.667"
+            d:DesignHeight="100"
+            MaxHeight="100"
+            Height="Auto"
+            Width="Auto"
+            Margin="5,5,5,0">
+            <Grid.Resources>
+                <l:EnumStringToFriendlyNameConverter
+                    x:Key="EnumConverter" />
+            </Grid.Resources>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition
+                    Height="Auto" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <TextBlock
+                Text="{Binding FullName, Mode=OneWay}"
+                MinHeight="0"
+                Foreground="#FF645A53"
+                FontSize="26.667"
+                VerticalAlignment="Top"
+                Padding="0"
+                FontFamily="Javanese Text"
+                Grid.ColumnSpan="2"
+                Margin="5,0,0,0"
+                Height="40"
+                FontWeight="Bold" />
+            <TextBlock
+                x:Name="textBlock"
+                Grid.Row="1"
+                Margin="5,0,5,1"
+                Text="Step:"
+                Foreground="#FF614736"
+                FontSize="13.333"
+                FontWeight="Bold"
+                FontFamily="Sitka Text" />
+            <TextBlock
+                x:Name="textBlock2"
+                Height="Auto"
+                Grid.Row="1"
+                Text="{Binding CurrentStep.StepName, Converter={StaticResource EnumConverter}}"
+                Width="Auto"
+                Grid.Column="1"
+                Margin="5,0,5,1"
+                Foreground="#FF513A29"
+                FontSize="13.333"
+                FontFamily="Mongolian Baiti" />
+            <TextBlock
+                x:Name="textBlock_Copy"
+                Grid.Row="2"
+                Margin="5,0,5,1"
+                Text="Status:"
+                Foreground="#FF614736"
+                FontSize="13.333"
+                FontWeight="Bold"
+                FontFamily="Sitka Text" />
+            <TextBlock
+                x:Name="textBlock1"
+                Height="Auto"
+                Grid.Row="2"
+                Text="{Binding CurrentStep.Status, Mode=OneWay}"
+                Width="Auto"
+                Grid.Column="1"
+                Margin="5,0,5,1"
+                Foreground="#FF513A29"
+                FontSize="13.333"
+                FontFamily="Mongolian Baiti" />
+        </Grid>
+        <DataTemplate.Triggers>
+            <Trigger
+                Property="Text"
+                Value="Ongoing"
+                SourceName="textBlock1">
+                <Setter
+                    Property="Background"
+                    TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush
+                            EndPoint="0.5,1"
+                            MappingMode="RelativeToBoundingBox"
+                            StartPoint="0.5,0">
+                            <GradientStop
+                                Color="DarkOrange"
+                                Offset="1" />
+                            <GradientStop
+                                Color="White"
+                                Offset="0.96" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger
+                Property="Text"
+                Value="Overdue"
+                SourceName="textBlock1">
+                <Setter
+                    Property="Background"
+                    TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush
+                            EndPoint="0.5,1"
+                            MappingMode="RelativeToBoundingBox"
+                            StartPoint="0.5,0">
+                            <GradientStop
+                                Color="White"
+                                Offset="0.96" />
+                            <GradientStop
+                                Color="Red"
+                                Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger
+                Property="Text"
+                Value="Canceled"
+                SourceName="textBlock1">
+                <Setter
+                    Property="Background"
+                    TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush
+                            EndPoint="0.5,1"
+                            MappingMode="RelativeToBoundingBox"
+                            StartPoint="0.5,0">
+                            <GradientStop
+                                Color="White"
+                                Offset="0.96" />
+                            <GradientStop
+                                Color="Black"
+                                Offset="1" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+            <Trigger
+                Property="Text"
+                Value="Completed"
+                SourceName="textBlock1">
+                <Setter
+                    Property="Background"
+                    TargetName="grid">
+                    <Setter.Value>
+                        <LinearGradientBrush
+                            EndPoint="0.5,1"
+                            StartPoint="0.5,0">
+                            <GradientStop
+                                Color="Green"
+                                Offset="1" />
+                            <GradientStop
+                                Color="White"
+                                Offset="0.96" />
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </DataTemplate.Triggers>
+    </DataTemplate>
+    <Style
+        x:Key="CheckBoxStyle"
+        TargetType="{x:Type CheckBox}">
+        <Setter
+            Property="VerticalAlignment"
+            Value="Center" />
+        <Setter
+            Property="HorizontalAlignment"
+            Value="Right" />
+        <Setter
+            Property="Foreground"
+            Value="#FF707070" />
+        <Setter
+            Property="Margin"
+            Value="5,5,5,0" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
     </Style>
-    <SolidColorBrush x:Key="OptionMark.Static.Background" Color="#FFFFFFFF"/>
-    <SolidColorBrush x:Key="OptionMark.Static.Border" Color="#FF707070"/>
-    <Style x:Key="OptionMarkFocusVisual">
-        <Setter Property="Control.Template">
+    <Style
+        x:Key="TextBlockStyle"
+        TargetType="{x:Type TextBlock}">
+        <Setter
+            Property="Foreground"
+            Value="#FF707070" />
+        <Setter
+            Property="FontFamily"
+            Value="Cambria" />
+        <Setter
+            Property="FontSize"
+            Value="21.333" />
+        <Setter
+            Property="Margin"
+            Value="5,5,0,0" />
+    </Style>
+    <Style
+        x:Key="FocusVisual">
+        <Setter
+            Property="Control.Template">
             <Setter.Value>
                 <ControlTemplate>
-                    <Rectangle Margin="14,0,0,0" SnapsToDevicePixels="true" Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" StrokeThickness="1" StrokeDashArray="1 2"/>
+                    <Rectangle
+                        Margin="2"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeThickness="1"
+                        StrokeDashArray="1 2" />
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    <SolidColorBrush x:Key="OptionMark.MouseOver.Background" Color="#FFF3F9FF"/>
-    <SolidColorBrush x:Key="OptionMark.MouseOver.Border" Color="#FF5593FF"/>
-    <SolidColorBrush x:Key="OptionMark.MouseOver.Glyph" Color="#FF212121"/>
-    <SolidColorBrush x:Key="OptionMark.Disabled.Background" Color="#FFE6E6E6"/>
-    <SolidColorBrush x:Key="OptionMark.Disabled.Border" Color="#FFBCBCBC"/>
-    <SolidColorBrush x:Key="OptionMark.Disabled.Glyph" Color="#FF707070"/>
-    <SolidColorBrush x:Key="OptionMark.Pressed.Background" Color="#FFD9ECFF"/>
-    <SolidColorBrush x:Key="OptionMark.Pressed.Border" Color="#FF3C77DD"/>
-    <SolidColorBrush x:Key="OptionMark.Pressed.Glyph" Color="#FF212121"/>
-    <SolidColorBrush x:Key="OptionMark.Static.Glyph" Color="#FF212121"/>
-    <Style x:Key="FilterCheckBoxStyle" TargetType="{x:Type CheckBox}">
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual}"/>
-        <Setter Property="Background" Value="{StaticResource OptionMark.Static.Background}"/>
-        <Setter Property="BorderBrush" Value="#FFB4B4B4"/>
-        <Setter Property="Foreground" Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="Template">
+    <SolidColorBrush
+        x:Key="Button.Static.Background"
+        Color="#FFACACAC" />
+    <SolidColorBrush
+        x:Key="Button.MouseOver.Background"
+        Color="#FFCDCDCD" />
+    <SolidColorBrush
+        x:Key="Button.Pressed.Background"
+        Color="#FF686868" />
+    <SolidColorBrush
+        x:Key="Button.Disabled.Background"
+        Color="#FFF4F4F4" />
+    <SolidColorBrush
+        x:Key="Button.Disabled.Foreground"
+        Color="#FF838383" />
+    <SolidColorBrush
+        x:Key="OptionMark.Static.Background"
+        Color="#FFFFFFFF" />
+    <Style
+        x:Key="OptionMarkFocusVisual">
+        <Setter
+            Property="Control.Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type CheckBox}">
-                    <Grid x:Name="templateRoot" Background="Transparent" SnapsToDevicePixels="True">
+                <ControlTemplate>
+                    <Rectangle
+                        Margin="14,0,0,0"
+                        SnapsToDevicePixels="true"
+                        Stroke="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}"
+                        StrokeThickness="1"
+                        StrokeDashArray="1 2" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <SolidColorBrush
+        x:Key="OptionMark.MouseOver.Background"
+        Color="#FFF3F9FF" />
+    <SolidColorBrush
+        x:Key="OptionMark.MouseOver.Border"
+        Color="#FF5593FF" />
+    <SolidColorBrush
+        x:Key="OptionMark.MouseOver.Glyph"
+        Color="#FF212121" />
+    <SolidColorBrush
+        x:Key="OptionMark.Disabled.Background"
+        Color="#FFE6E6E6" />
+    <SolidColorBrush
+        x:Key="OptionMark.Disabled.Border"
+        Color="#FFBCBCBC" />
+    <SolidColorBrush
+        x:Key="OptionMark.Disabled.Glyph"
+        Color="#FF707070" />
+    <SolidColorBrush
+        x:Key="OptionMark.Pressed.Background"
+        Color="#FFD9ECFF" />
+    <SolidColorBrush
+        x:Key="OptionMark.Pressed.Border"
+        Color="#FF3C77DD" />
+    <SolidColorBrush
+        x:Key="OptionMark.Pressed.Glyph"
+        Color="#FF212121" />
+    <SolidColorBrush
+        x:Key="OptionMark.Static.Glyph"
+        Color="#FF212121" />
+    <Style
+        x:Key="FilterCheckBoxStyle"
+        TargetType="{x:Type CheckBox}">
+        <Setter
+            Property="FocusVisualStyle"
+            Value="{StaticResource FocusVisual}" />
+        <Setter
+            Property="Background"
+            Value="{StaticResource OptionMark.Static.Background}" />
+        <Setter
+            Property="BorderBrush"
+            Value="#FFB4B4B4" />
+        <Setter
+            Property="Foreground"
+            Value="{DynamicResource {x:Static SystemColors.ControlTextBrushKey}}" />
+        <Setter
+            Property="BorderThickness"
+            Value="1" />
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type CheckBox}">
+                    <Grid
+                        x:Name="templateRoot"
+                        Background="Transparent"
+                        SnapsToDevicePixels="True">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="Auto"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition
+                                Width="Auto" />
+                            <ColumnDefinition
+                                Width="*" />
                         </Grid.ColumnDefinitions>
-                        <Border x:Name="checkBoxBorder" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="1" VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
-                            <Grid x:Name="markGrid">
-                                <Path x:Name="optionMark" Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z " Fill="#FF834903" Margin="1" Opacity="0" Stretch="None"/>
-                                <Rectangle x:Name="indeterminateMark" Fill="{StaticResource OptionMark.Static.Glyph}" Margin="2" Opacity="0"/>
+                        <Border
+                            x:Name="checkBoxBorder"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Background="{TemplateBinding Background}"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="1"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                            <Grid
+                                x:Name="markGrid">
+                                <Path
+                                    x:Name="optionMark"
+                                    Data="F1 M 9.97498,1.22334L 4.6983,9.09834L 4.52164,9.09834L 0,5.19331L 1.27664,3.52165L 4.255,6.08833L 8.33331,1.52588e-005L 9.97498,1.22334 Z "
+                                    Fill="#FF834903"
+                                    Margin="1"
+                                    Opacity="0"
+                                    Stretch="None" />
+                                <Rectangle
+                                    x:Name="indeterminateMark"
+                                    Fill="{StaticResource OptionMark.Static.Glyph}"
+                                    Margin="2"
+                                    Opacity="0" />
                             </Grid>
                         </Border>
-                        <ContentPresenter x:Name="contentPresenter" Grid.Column="1" Focusable="False" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" RecognizesAccessKey="True" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Grid.Column="1"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Grid>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="HasContent" Value="true">
-                            <Setter Property="FocusVisualStyle" Value="{StaticResource OptionMarkFocusVisual}"/>
-                            <Setter Property="Padding" Value="4,-1,0,0"/>
+                        <Trigger
+                            Property="HasContent"
+                            Value="true">
+                            <Setter
+                                Property="FocusVisualStyle"
+                                Value="{StaticResource OptionMarkFocusVisual}" />
+                            <Setter
+                                Property="Padding"
+                                Value="4,-1,0,0" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.MouseOver.Background}"/>
-                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.MouseOver.Border}"/>
-                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.MouseOver.Glyph}"/>
-                            <Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.MouseOver.Glyph}"/>
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="true">
+                            <Setter
+                                Property="Background"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.MouseOver.Background}" />
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.MouseOver.Border}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="optionMark"
+                                Value="{StaticResource OptionMark.MouseOver.Glyph}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="indeterminateMark"
+                                Value="{StaticResource OptionMark.MouseOver.Glyph}" />
                         </Trigger>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Disabled.Background}"/>
-                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Disabled.Border}"/>
-                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.Disabled.Glyph}"/>
-                            <Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.Disabled.Glyph}"/>
+                        <Trigger
+                            Property="IsEnabled"
+                            Value="false">
+                            <Setter
+                                Property="Background"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.Disabled.Background}" />
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.Disabled.Border}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="optionMark"
+                                Value="{StaticResource OptionMark.Disabled.Glyph}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="indeterminateMark"
+                                Value="{StaticResource OptionMark.Disabled.Glyph}" />
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="true">
-                            <Setter Property="Background" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Pressed.Background}"/>
-                            <Setter Property="BorderBrush" TargetName="checkBoxBorder" Value="{StaticResource OptionMark.Pressed.Border}"/>
-                            <Setter Property="Fill" TargetName="optionMark" Value="{StaticResource OptionMark.Pressed.Glyph}"/>
-                            <Setter Property="Fill" TargetName="indeterminateMark" Value="{StaticResource OptionMark.Pressed.Glyph}"/>
+                        <Trigger
+                            Property="IsPressed"
+                            Value="true">
+                            <Setter
+                                Property="Background"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.Pressed.Background}" />
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="checkBoxBorder"
+                                Value="{StaticResource OptionMark.Pressed.Border}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="optionMark"
+                                Value="{StaticResource OptionMark.Pressed.Glyph}" />
+                            <Setter
+                                Property="Fill"
+                                TargetName="indeterminateMark"
+                                Value="{StaticResource OptionMark.Pressed.Glyph}" />
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="true">
-                            <Setter Property="Opacity" TargetName="optionMark" Value="1"/>
-                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="0"/>
+                        <Trigger
+                            Property="IsChecked"
+                            Value="true">
+                            <Setter
+                                Property="Opacity"
+                                TargetName="optionMark"
+                                Value="1" />
+                            <Setter
+                                Property="Opacity"
+                                TargetName="indeterminateMark"
+                                Value="0" />
                         </Trigger>
-                        <Trigger Property="IsChecked" Value="{x:Null}">
-                            <Setter Property="Opacity" TargetName="optionMark" Value="0"/>
-                            <Setter Property="Opacity" TargetName="indeterminateMark" Value="1"/>
+                        <Trigger
+                            Property="IsChecked"
+                            Value="{x:Null}">
+                            <Setter
+                                Property="Opacity"
+                                TargetName="optionMark"
+                                Value="0" />
+                            <Setter
+                                Property="Opacity"
+                                TargetName="indeterminateMark"
+                                Value="1" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="FontFamily" Value="Cambria"/>
-        <Setter Property="FontWeight" Value="Normal"/>
-        <Setter Property="FontSize" Value="13.333"/>
+        <Setter
+            Property="FontFamily"
+            Value="Cambria" />
+        <Setter
+            Property="FontWeight"
+            Value="Normal" />
+        <Setter
+            Property="FontSize"
+            Value="13.333" />
     </Style>
-    <SolidColorBrush x:Key="TextBox.Static.Border" Color="#FFABAdB3"/>
-    <SolidColorBrush x:Key="TextBox.MouseOver.Border" Color="#FF7EB4EA"/>
-    <SolidColorBrush x:Key="TextBox.Focus.Border" Color="#FF569DE5"/>
-    <Style x:Key="TextBoxStyle" TargetType="{x:Type TextBox}">
-        <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
-        <Setter Property="BorderBrush" Value="{StaticResource TextBox.Static.Border}"/>
-        <Setter Property="Foreground" Value="#FF646464"/>
-        <Setter Property="BorderThickness" Value="1"/>
-        <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
-        <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
-        <Setter Property="AllowDrop" Value="true"/>
-        <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
-        <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="Height" Value="30"/>
-        <Setter Property="Margin" Value="5"/>
-        <Setter Property="BorderBrush" Value="#FFBFBEBE"/>
-        <Setter Property="Template">
+    <SolidColorBrush
+        x:Key="TextBox.Static.Border"
+        Color="#FFABAdB3" />
+    <SolidColorBrush
+        x:Key="TextBox.MouseOver.Border"
+        Color="#FF7EB4EA" />
+    <SolidColorBrush
+        x:Key="TextBox.Focus.Border"
+        Color="#FF569DE5" />
+    <Style
+        x:Key="TextBoxStyle"
+        TargetType="{x:Type TextBox}">
+        <Setter
+            Property="Background"
+            Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
+        <Setter
+            Property="BorderBrush"
+            Value="{StaticResource TextBox.Static.Border}" />
+        <Setter
+            Property="Foreground"
+            Value="#FF646464" />
+        <Setter
+            Property="BorderThickness"
+            Value="1" />
+        <Setter
+            Property="KeyboardNavigation.TabNavigation"
+            Value="None" />
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Left" />
+        <Setter
+            Property="FocusVisualStyle"
+            Value="{x:Null}" />
+        <Setter
+            Property="AllowDrop"
+            Value="true" />
+        <Setter
+            Property="ScrollViewer.PanningMode"
+            Value="VerticalFirst" />
+        <Setter
+            Property="Stylus.IsFlicksEnabled"
+            Value="False" />
+        <Setter
+            Property="Height"
+            Value="30" />
+        <Setter
+            Property="Margin"
+            Value="5" />
+        <Setter
+            Property="BorderBrush"
+            Value="#FFBFBEBE" />
+        <Setter
+            Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type TextBox}">
-                    <Border x:Name="border" CornerRadius="4" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" SnapsToDevicePixels="True">
-                        <ScrollViewer x:Name="PART_ContentHost" Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                <ControlTemplate
+                    TargetType="{x:Type TextBox}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="4"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        SnapsToDevicePixels="True">
+                        <ScrollViewer
+                            x:Name="PART_ContentHost"
+                            Focusable="false"
+                            HorizontalScrollBarVisibility="Hidden"
+                            VerticalScrollBarVisibility="Hidden" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Opacity" TargetName="border" Value="0.56"/>
+                        <Trigger
+                            Property="IsEnabled"
+                            Value="false">
+                            <Setter
+                                Property="Opacity"
+                                TargetName="border"
+                                Value="0.56" />
                         </Trigger>
-                        <Trigger Property="IsMouseOver" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.MouseOver.Border}"/>
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="true">
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="border"
+                                Value="{StaticResource TextBox.MouseOver.Border}" />
                         </Trigger>
-                        <Trigger Property="IsKeyboardFocused" Value="true">
-                            <Setter Property="BorderBrush" TargetName="border" Value="{StaticResource TextBox.Focus.Border}"/>
+                        <Trigger
+                            Property="IsKeyboardFocused"
+                            Value="true">
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="border"
+                                Value="{StaticResource TextBox.Focus.Border}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-        <Setter Property="FontSize" Value="16"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter
+            Property="FontSize"
+            Value="16" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
         <Style.Triggers>
             <MultiTrigger>
                 <MultiTrigger.Conditions>
-                    <Condition Property="IsInactiveSelectionHighlightEnabled" Value="true"/>
-                    <Condition Property="IsSelectionActive" Value="false"/>
+                    <Condition
+                        Property="IsInactiveSelectionHighlightEnabled"
+                        Value="true" />
+                    <Condition
+                        Property="IsSelectionActive"
+                        Value="false" />
                 </MultiTrigger.Conditions>
-                <Setter Property="SelectionBrush" Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}"/>
+                <Setter
+                    Property="SelectionBrush"
+                    Value="{DynamicResource {x:Static SystemColors.InactiveSelectionHighlightBrushKey}}" />
             </MultiTrigger>
         </Style.Triggers>
     </Style>
-    <Style x:Key="AddViewTextBlockStyle" TargetType="{x:Type TextBlock}">
-        <Setter Property="Foreground" Value="#FF707070" />
-        <Setter Property="FontFamily" Value="Cambria" />
-        <Setter Property="FontSize" Value="21.333" />
-        <Setter Property="Margin" Value="5,5,0,0" />
-
-
+    <Style
+        x:Key="AddViewTextBlockStyle"
+        TargetType="{x:Type TextBlock}">
+        <Setter
+            Property="Foreground"
+            Value="#FF707070" />
+        <Setter
+            Property="FontFamily"
+            Value="Cambria" />
+        <Setter
+            Property="FontSize"
+            Value="21.333" />
+        <Setter
+            Property="Margin"
+            Value="5,5,0,0" />
     </Style>
-    <Style x:Key="BackButton" TargetType="{x:Type Button}">
-        <Setter Property="Foreground" Value="#FFE4E4E4" />
-        <Setter Property="FontSize" Value="18.667" />
-        <Setter Property="BorderBrush" Value="{x:Null}" />
-        <Setter Property="Background">
+    <Style
+        x:Key="BackButton"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="Foreground"
+            Value="#FFE4E4E4" />
+        <Setter
+            Property="FontSize"
+            Value="18.667" />
+        <Setter
+            Property="BorderBrush"
+            Value="{x:Null}" />
+        <Setter
+            Property="Background">
             <Setter.Value>
                 <RadialGradientBrush>
-                    <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                    <GradientStop Color="#FFDC5700" Offset="0.984" />
+                    <GradientStop
+                        Color="#FFEE7A19"
+                        Offset="0.008" />
+                    <GradientStop
+                        Color="#FFDC5700"
+                        Offset="0.984" />
                 </RadialGradientBrush>
             </Setter.Value>
         </Setter>
-       
-        <Setter Property="Margin" Value="5" />
-
-
-        <Setter Property="HorizontalContentAlignment" Value="Center" />
-        <Setter Property="VerticalContentAlignment" Value="Center" />
-        <Setter Property="Padding" Value="1" />
-        <Setter Property="Template">
+        <Setter
+            Property="Margin"
+            Value="5" />
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="Padding"
+            Value="1" />
+        <Setter
+            Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="{x:Type Button}">
-                    <Border x:Name="border" CornerRadius="3" BorderBrush="{TemplateBinding BorderBrush}"
-    					BorderThickness="{TemplateBinding BorderThickness}" SnapsToDevicePixels="true">
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="3"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true">
                         <Border.Background>
                             <RadialGradientBrush>
-                                <GradientStop Color="#FFEE7A19" Offset="0.008" />
-                                <GradientStop Color="#FFDC5700" Offset="0.984" />
+                                <GradientStop
+                                    Color="#FFEE7A19"
+                                    Offset="0.008" />
+                                <GradientStop
+                                    Color="#FFDC5700"
+                                    Offset="0.984" />
                             </RadialGradientBrush>
                         </Border.Background>
-                        <ContentPresenter x:Name="contentPresenter" Focusable="False"
-    						HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-    						Margin="{TemplateBinding Padding}" RecognizesAccessKey="True"
-    						SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-    						VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
                     </Border>
                     <ControlTemplate.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" TargetName="border">
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
                                 <Setter.Value>
                                     <RadialGradientBrush>
-                                        <GradientStop Color="#FFF1872D" Offset="0.008" />
-                                        <GradientStop Color="#FFEC782C" Offset="0.984" />
+                                        <GradientStop
+                                            Color="#FFF1872D"
+                                            Offset="0.008" />
+                                        <GradientStop
+                                            Color="#FFEC782C"
+                                            Offset="0.984" />
                                     </RadialGradientBrush>
                                 </Setter.Value>
                             </Setter>
                         </Trigger>
-                        <Trigger Property="IsPressed" Value="True">
-                            <Setter Property="Background" TargetName="border">
+                        <Trigger
+                            Property="IsPressed"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
                                 <Setter.Value>
                                     <RadialGradientBrush>
-                                        <GradientStop Color="#FFCA5F06" Offset="0.012" />
-                                        <GradientStop Color="#FFBE4D04" Offset="0.984" />
+                                        <GradientStop
+                                            Color="#FFCA5F06"
+                                            Offset="0.012" />
+                                        <GradientStop
+                                            Color="#FFBE4D04"
+                                            Offset="0.984" />
                                     </RadialGradientBrush>
                                 </Setter.Value>
                             </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <Style
+        x:Key="PatientsFocusVisualStyle"
+        TargetType="{x:Type Control}">
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type Control}">
+                    <Grid
+                        Background="#FFFF7604"
+                        Opacity="0.5" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    <DataTemplate
+        x:Key="NoteTemplate">
+        <Button
+            Style="{DynamicResource NotesPopupButtons}"
+            HorizontalContentAlignment="Left"
+            MinWidth="200"
+            MaxWidth="300">
+            <StackPanel>
+                <TextBlock
+                    TextTrimming="CharacterEllipsis"
+                    HorizontalAlignment="Left"><Run
+                        Foreground="Gray"
+                        FontSize="12"
+                        Text="{Binding Date}" /></TextBlock>
+                <TextBlock
+                    Foreground="White"
+                    FontSize="18"
+                    FontFamily="Cambria"
+                    Text="{Binding Title}" />
+            </StackPanel>
+        </Button>
+    </DataTemplate>
+    <Style
+        x:Key="NotesPopupButtons"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="Foreground"
+            Value="#FFE4E4E4" />
+        <Setter
+            Property="BorderBrush"
+            Value="{x:Null}" />
+        <Setter
+            Property="MinHeight"
+            Value="40" />
+        <Setter
+            Property="MinWidth"
+            Value="80" />
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="Padding"
+            Value="4,2,1,1" />
+        <Setter
+            Property="Template">
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="3"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        SnapsToDevicePixels="true"
+                        Background="{TemplateBinding Background}">
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup
+                                x:Name="CommonStates">
+                                <VisualState
+                                    x:Name="Normal" />
+                                <VisualState
+                                    x:Name="MouseOver" />
+                                <VisualState
+                                    x:Name="Pressed" />
+                                <VisualState
+                                    x:Name="Disabled" />
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop
+                                            Color="#FFF1872D"
+                                            Offset="0.008" />
+                                        <GradientStop
+                                            Color="#FFEC782C"
+                                            Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                        <Trigger
+                            Property="IsPressed"
+                            Value="True">
+                            <Setter
+                                Property="Background"
+                                TargetName="border">
+                                <Setter.Value>
+                                    <RadialGradientBrush>
+                                        <GradientStop
+                                            Color="#FFCA5F06"
+                                            Offset="0.012" />
+                                        <GradientStop
+                                            Color="#FFBE4D04"
+                                            Offset="0.984" />
+                                    </RadialGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter
+            Property="Background"
+            Value="#FF484848" />
+    </Style>
+    <Style
+        x:Key="AddNewNote"
+        TargetType="{x:Type Button}">
+        <Setter
+            Property="FocusVisualStyle"
+            Value="{StaticResource FocusVisual}" />
+        <Setter
+            Property="Background"
+            Value="{StaticResource Button.Static.Background}" />
+
+        <Setter
+            Property="Foreground"
+            Value="White" />
+        <Setter
+            Property="BorderThickness"
+            Value="0" />
+
+        <Setter
+            Property="HorizontalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="VerticalContentAlignment"
+            Value="Center" />
+        <Setter
+            Property="Padding"
+            Value="1" />
+        
+
+        <Setter
+            Property="Template">
+
+            <Setter.Value>
+                <ControlTemplate
+                    TargetType="{x:Type Button}">
+                    <Border
+                        x:Name="border"
+                        CornerRadius="4"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        Background="{TemplateBinding Background}"
+                        SnapsToDevicePixels="true">
+                        <ContentPresenter
+                            x:Name="contentPresenter"
+                            Focusable="False"
+                            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            Margin="{TemplateBinding Padding}"
+                            RecognizesAccessKey="True"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                            VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger
+                            Property="IsDefaulted"
+                            Value="true">
+                            <Setter
+                                Property="BorderBrush"
+                                TargetName="border"
+                                Value="{DynamicResource {x:Static SystemColors.HighlightBrushKey}}" />
+                        </Trigger>
+                        <Trigger
+                            Property="IsMouseOver"
+                            Value="true">
+                            <Setter
+                                Property="Background"
+                                TargetName="border"
+                                Value="{StaticResource Button.MouseOver.Background}" />
+
+                        </Trigger>
+                        <Trigger
+                            Property="IsPressed"
+                            Value="true">
+                            <Setter
+                                Property="Background"
+                                TargetName="border"
+                                Value="{StaticResource Button.Pressed.Background}" />
+
+                        </Trigger>
+                        <Trigger
+                            Property="IsEnabled"
+                            Value="false">
+                            <Setter
+                                Property="Background"
+                                TargetName="border"
+                                Value="{StaticResource Button.Disabled.Background}" />
+
+                            <Setter
+                                Property="TextElement.Foreground"
+                                TargetName="contentPresenter"
+                                Value="{StaticResource Button.Disabled.Foreground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
