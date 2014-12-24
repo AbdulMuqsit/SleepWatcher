@@ -1,23 +1,16 @@
-﻿<Application
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+﻿<Application xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-
-             xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.NotesSampleData" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d"
-
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
              x:Class="SleepWatcher.App"
-
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
         <ResourceDictionary>
-            
             <ResourceDictionary.MergedDictionaries>
-            	<ResourceDictionary Source="Templates.xaml"/>
-            	<ResourceDictionary Source="Resource.xaml"/>
-                
+                <ResourceDictionary Source="Templates.xaml" />
+                <ResourceDictionary Source="Resource.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-
     </Application.Resources>
-    
 </Application>
