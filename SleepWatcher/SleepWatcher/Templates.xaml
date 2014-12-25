@@ -15,17 +15,66 @@
   
     <!--Single Patient view datatype triggers !-->
     <DataTemplate DataType="{x:Type patientViewModels:SinglePatientViewModel}">
-        <view:SinglePatinetView />
+        <view:SinglePatinetView x:Name="SinglePatinetView"/>
+        <DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard"
+                        TargetName="SinglePatinetView"
+                        TargetProperty="Opacity">
+
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                               Storyboard.TargetName="SinglePatinetView">
+                    <EasingDoubleKeyFrame KeyTime="0"
+                                          Value="0" />
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                          Value="1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </DataTemplate.Resources>
+
+        <DataTemplate.Triggers>
+            <EventTrigger SourceName="SinglePatinetView"
+                          RoutedEvent="UserControl.Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource Storyboard}"></BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate DataType="{x:Type design:DesignSinglePatientViewModel}">
         <view:SinglePatinetView />
+        
     </DataTemplate>
     <DataTemplate DataType="{x:Type patientViewModels:AddPatientViewModel}">
         
-        <view:AddPatientView />
+        <view:AddPatientView x:Name="AddPatientView"/>
+        <DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard"
+                        TargetName="AddPatientView"
+                        TargetProperty="Opacity">
+
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                               Storyboard.TargetName="AddPatientView">
+                    <EasingDoubleKeyFrame KeyTime="0"
+                                          Value="0" />
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                          Value="1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+            
+        </DataTemplate.Resources>
+
+        <DataTemplate.Triggers>
+            <EventTrigger SourceName="AddPatientView"
+                          RoutedEvent="UserControl.Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource Storyboard}"></BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
     </DataTemplate>
     <DataTemplate DataType="{x:Type patientViewModels:NotesViewModel}">
-        <view:NotesView x:Name="NotesView"/><DataTemplate.Resources>
+        <view:NotesView x:Name="NotesView"/>
+        <DataTemplate.Resources>
             <Storyboard x:Key="Storyboard"
                         TargetName="NotesView"
                         TargetProperty="Opacity">
