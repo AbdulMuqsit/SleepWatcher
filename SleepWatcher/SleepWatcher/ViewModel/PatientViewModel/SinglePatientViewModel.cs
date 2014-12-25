@@ -44,6 +44,29 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public SinglePatientViewModel()
         {
+            InitializeCommands();
+        }
+
+        private void InitializeCommands()
+        {
+
+            //Initialize Command for loading notes
+            LoadNotes = new ActionCommand(async (id) =>
+            {
+                await Task.Run(async () =>
+                {
+                    if(id is int)
+                    {
+                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>(Context.Steps.First(e => e.Id == (int)id).Notes.Select(Mapper.Map<NoteModel>));
+
+                    }
+                    else
+                    {
+                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>(Context.Steps.First(e => e.Id == SelectedStep.Id).Notes.Select(Mapper.Map<NoteModel>));
+
+                    }
+                });
+            });
             //Initializing command which adds a new note for selected step
             AddNewNoteCommand = new ActionCommand(async () =>
             {
@@ -71,7 +94,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     await Context.SaveChangesAsync();
                     Free();
                 });
-
             });
             //Initializing command which marks a step as completed
             MarkCompleteCommand = new ActionCommand(async () =>
@@ -90,7 +112,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                         var steps = new RangeObservableCollection<StepModel>(Patient.StepModels);
                         StepModel nextStep = GetNextStep();
                         Patient.CurrentStep = nextStep;
-                        
+
                         patient.Steps.Add(Mapper.Map<StepModel, Step>(nextStep));
                         patient.CurrentStep = Mapper.Map<CurrentStep>(nextStep);
                         await Context.SaveChangesAsync();
@@ -197,7 +219,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         public ActionCommand MarkCompleteCommand { get; set; }
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }
-
+        public ActionCommand LoadNotes { get; set; }
+        public ActionCommand SaveNote { get; set; }
         private StepModel GetNextStep()
         {
             return new StepModel

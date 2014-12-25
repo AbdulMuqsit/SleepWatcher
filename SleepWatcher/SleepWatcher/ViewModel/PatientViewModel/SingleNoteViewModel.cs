@@ -7,7 +7,7 @@ using SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
-    class SingleNoteViewModel:ViewModelBase
+    public class SingleNoteViewModel:ViewModelBase
     {
         private NoteModel _note;
         private int _stepId;

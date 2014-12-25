@@ -9,7 +9,7 @@ using SleepWatcher.Model;
 
 namespace SleepWatcher.ViewModel.PatientViewModel
 {
-    class NotesViewModel : ViewModelBase
+    public class NotesViewModel : ViewModelBase
     {
         private RangeObservableCollection<NoteModel> _notes;
         private PatientModel _patient;

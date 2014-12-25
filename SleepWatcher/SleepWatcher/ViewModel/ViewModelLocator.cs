@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Windows;
+using Expression.Blend.SampleData.SingleNoteViewSample;
 using SleepWatcher.Design;
 using SleepWatcher.ViewModel.PatientViewModel;
 
@@ -11,6 +12,8 @@ namespace SleepWatcher.ViewModel
         public IAddPatientViewModel AddPatientViewModel { get; set; }
         public ISinglePatientViewModel SinglePatientViewModel { get; set; }
         public OverDuePatientsViewModel OverDuePatientsViewModel { get;set; }
+        public NotesViewModel NotesViewModel { get; set; }
+        public SingleNoteViewModel SingleNoteViewModel { get; set; }
 
         public ViewModelLocator()
         {
@@ -26,6 +29,8 @@ namespace SleepWatcher.ViewModel
                 AddPatientViewModel = new AddPatientViewModel();
                 SinglePatientViewModel = new SinglePatientViewModel();
                 OverDuePatientsViewModel = new OverDuePatientsViewModel();
+                SingleNoteViewModel = new SingleNoteViewModel();
+                NotesViewModel = new NotesViewModel();
             }
           
         }
