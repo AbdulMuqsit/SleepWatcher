@@ -21,8 +21,59 @@
         <view:SinglePatinetView />
     </DataTemplate>
     <DataTemplate DataType="{x:Type patientViewModels:AddPatientViewModel}">
+        
         <view:AddPatientView />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type patientViewModels:NotesViewModel}">
+        <view:NotesView x:Name="NotesView"/><DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard"
+                        TargetName="NotesView"
+                        TargetProperty="Opacity">
+
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                               Storyboard.TargetName="NotesView">
+                    <EasingDoubleKeyFrame KeyTime="0"
+                                          Value="0" />
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                          Value="1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </DataTemplate.Resources>
+
+        <DataTemplate.Triggers>
+            <EventTrigger SourceName="NotesView"
+                          RoutedEvent="UserControl.Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource Storyboard}"></BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+        
+    </DataTemplate>
+   
+    <DataTemplate DataType="{x:Type patientViewModels:SingleNoteViewModel}"> 
+        <view:SingleNoteView x:Name="SingleNoteView"/>
+        <DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard"
+                        TargetName="SingleNoteView" TargetProperty="Opacity" >
+                
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="SingleNoteView">
+                	<EasingDoubleKeyFrame KeyTime="0" Value="0"/>
+                	<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="1"/>
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </DataTemplate.Resources>
+        
+        <DataTemplate.Triggers>
+            <EventTrigger SourceName="SingleNoteView" RoutedEvent="UserControl.Loaded">
+                <EventTrigger.Actions>
+                   <BeginStoryboard Storyboard="{StaticResource Storyboard}"></BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+        
+    </DataTemplate>
+
     <!-- Resource dictionary entries should be defined here. -->
     <!--Datatemplate for notes list box!-->
     <DataTemplate x:Key="NotesListBoxTemplate">
