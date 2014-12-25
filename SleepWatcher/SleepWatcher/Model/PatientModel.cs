@@ -15,8 +15,7 @@ namespace SleepWatcher.Model
     {
         private string _firstName;
         private string _lastName;
-        private ICollection<Step> _steps;
-        private ICollection<Note> _notes;
+
         private RangeObservableCollection<StepModel> _stepModels = new RangeObservableCollection<StepModel>();
         private StepModel _currentStep;
 
@@ -79,36 +78,6 @@ namespace SleepWatcher.Model
                 OnPropertyChanged();
             } 
         }
-
-        public virtual ICollection<Step> Steps
-        {
-            get { return _steps; }
-            set
-            {
-                if(Equals(value,Steps))return;
-                _steps = value;
-              
-                OnPropertyChanged();
-                StepModels.Clear();
-                if (DesignerProperties.GetIsInDesignMode(new DependencyObject()))
-                {
-                    Mapper.CreateMap<Step, StepModel>();
-                }
-                StepModels.AddRange(Steps.Select(Mapper.Map<StepModel>));
-
-            }
-        }
-
-        public virtual ICollection<Note> Notes
-        {
-            get { return _notes; }
-            set
-            {
-                if (Equals(value, Notes)) return;
-                _notes = value;
-                
-                OnPropertyChanged();
-            }
-        }
+       
     }
 }

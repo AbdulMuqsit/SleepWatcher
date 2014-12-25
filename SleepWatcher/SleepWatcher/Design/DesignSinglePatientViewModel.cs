@@ -29,11 +29,7 @@ namespace SleepWatcher.Design
                             StepName = StepName.PaperWorkDone,
                             AlarmTime = DateTime.Now,
                             DateAdded = DateTime.Now,
-                            Notes = new List<Note>
-                            {
-                                new Note {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"},
-                                new Note {Text = "lorem ipsum adfhijkjsdkfjkajkfjiasdfjksjdfkjdskfjkajfsdiwejfiskjdkfj"}
-                            }
+                           
                         },
                         new StepModel
                         {

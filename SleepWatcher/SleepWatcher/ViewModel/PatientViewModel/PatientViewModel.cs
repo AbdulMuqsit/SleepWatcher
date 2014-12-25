@@ -419,8 +419,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 CurrentStep = Mapper.Map<StepModel>(patient.CurrentStep),
                 LastName = patient.LastName,
                 Id = patient.Id,
-                Notes = patient.Notes,
-                Steps = patient.Steps
+               
             };
         }
 

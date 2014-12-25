@@ -128,7 +128,6 @@ namespace SleepWatcher.Model
         [NotMapped]
         public string DueDate { get { return AlarmTime.ToShortDateString(); } }
         public string DateStarted { get { return DateAdded.ToShortDateString(); } }
-        public virtual ICollection<Note> Notes { get; set; }
-
+        public int Count { get; set; }
     }
 }

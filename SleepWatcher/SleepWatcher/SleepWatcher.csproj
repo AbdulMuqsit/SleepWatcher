@@ -132,7 +132,9 @@
     <Compile Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml.cs">
       <DependentUpon>SingleNoteViewSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\PatientViewModel\NotesViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\OverDuePatientsViewModel.cs" />
+    <Compile Include="ViewModel\PatientViewModel\SingleNoteViewModel.cs" />
     <Compile Include="View\NotesView.xaml.cs">
       <DependentUpon>NotesView.xaml</DependentUpon>
     </Compile>

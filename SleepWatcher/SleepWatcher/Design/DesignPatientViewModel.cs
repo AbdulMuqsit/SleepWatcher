@@ -149,37 +149,31 @@ namespace SleepWatcher.Design
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved,AlarmTime = DateTime.MaxValue}}
                 },
                  new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, AlarmTime = DateTime.MinValue}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved, IsCompleted = true}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved, AlarmTime = DateTime.MaxValue}}
                 },
                  new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Delivery, IsCancled=true}}
                 },
                   new PatientModel
                 {
                     FirstName = "Patient",
                     LastName = "Kzam",
-                    Steps = new List<Step> {new Step {StepName = StepName.Approved, IsCompleted = true}}
                 }
             };
 
