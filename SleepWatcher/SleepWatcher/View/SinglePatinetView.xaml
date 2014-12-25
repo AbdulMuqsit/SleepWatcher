@@ -237,13 +237,15 @@
     				Content="Mark Canceled"
     				Style="{DynamicResource AddNewNoteButtonStyle}"
     				HorizontalAlignment="Right"
-    				Command="{Binding SinglePatientViewModel.MarkCanceledCommand, Mode=OneWay}"
+    				Command="{Binding SinglePatientViewModel.MarkCanceledCommand,  Mode=OneWay}"
     				MinWidth="100"
     				Margin="5,8,5,5"
     				Grid.Row="0"
     				Grid.Column="3"
     				Height="Auto"
-    				VerticalAlignment="Center"/>
+    				VerticalAlignment="Center"
+                        DataContext="{DynamicResource Locator}"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
     			<Button x:Name="btnCompleted"
     				Content="Mark Completed"
     				Style="{DynamicResource AddNewNoteButtonStyle}"
@@ -254,7 +256,9 @@
     				Grid.Column="3"
     				Height="Auto"
     				Grid.Row="1"
-    				VerticalAlignment="Center"/>
+    				VerticalAlignment="Center"
+                        DataContext="{DynamicResource Locator}"
+                        Visibility="{Binding IsSelected, Converter={StaticResource BooleanToVisibilityConverter}, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}" />
     			<Button Content="New Note"
     				Grid.Column="2"
     				HorizontalAlignment="Stretch"
