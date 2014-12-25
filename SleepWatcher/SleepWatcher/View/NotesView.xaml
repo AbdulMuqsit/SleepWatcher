@@ -1,0 +1,56 @@
+﻿<UserControl x:Class="SleepWatcher.View.NotesView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             mc:Ignorable="d"
+             d:DesignHeight="600"
+             d:DesignWidth="700"
+             Template="{DynamicResource NotesTemplate}">
+    <UserControl.Resources>
+        <ControlTemplate x:Key="NotesTemplate">
+            <Grid DataContext="{Binding Source={StaticResource NotesViewModelSample}}" >
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <TextBlock Grid.Row="0" Margin="5"
+                           Style="{DynamicResource TitleTextBlockStyle}"
+                           Text="Notes"></TextBlock>
+                <Button Grid.Row="0"
+                        Style="{DynamicResource BackButton}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="5">
+                    <Image Height="20"
+                           Width="20"
+                           Margin="5"
+                           Source="../Resources/back.png" />
+                </Button>
+
+                <TextBlock Grid.Row="1"
+                           HorizontalAlignment="Left"
+                           Margin="5"
+                           Style="{StaticResource TextBlockStyle}"
+                           Text="{Binding Patient.FullName}"></TextBlock>
+                <TextBlock Grid.Row="1"
+                	HorizontalAlignment="Right"
+                	Margin="5"
+                	Style="{StaticResource TextBlockStyle}" ><Run Text="Step: " FontWeight="Bold"/><Run  Text="{Binding Step.StepName}"/></TextBlock>
+                <ListBox Grid.Row="2" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource  NoteTemplate}"></ListBox>
+            </Grid>
+        </ControlTemplate>
+        <Style x:Key="TitleTextBlockStyle"
+               TargetType="{x:Type TextBlock}">
+            <Setter Property="Foreground"
+                    Value="#FFFF8001" />
+            <Setter Property="FontFamily"
+                    Value="Cambria" />
+            <Setter Property="FontSize"
+                    Value="26.667" />
+            <Setter Property="Margin"
+                    Value="5,5,0,0" />
+        </Style>
+    </UserControl.Resources>
+</UserControl>

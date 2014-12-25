@@ -137,6 +137,7 @@
     				<Popup  Style="{StaticResource TooltipPopupStyle}"
     					DataContext="{Binding Source={StaticResource NotesSampleData}}"
     					AllowsTransparency="True"
+                            MaxWidth="300"
     					x:Name="popup"
     					StaysOpen="False">
     					<Border Background="#CCFFFFFF"
@@ -265,7 +266,6 @@
     				Grid.Row="1"
     				VerticalAlignment="Center"
     				Style="{DynamicResource AddNewNote}"
-    				HorizontalContentAlignment="Center"
     				Margin="5" />
     		</Grid>
     		<DataTemplate.Triggers>

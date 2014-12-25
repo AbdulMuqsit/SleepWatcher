@@ -2,6 +2,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:SampleData="clr-namespace:Expression.Blend.SampleData.NotesViewModelSample"
+             xmlns:SampleData1="clr-namespace:Expression.Blend.SampleData.SingleNoteViewSample"
              mc:Ignorable="d"
              x:Class="SleepWatcher.App"
              StartupUri="MainWindow.xaml">
@@ -11,6 +13,8 @@
                 <ResourceDictionary Source="Templates.xaml" />
                 <ResourceDictionary Source="Resource.xaml" />
             </ResourceDictionary.MergedDictionaries>
+        	<SampleData1:SingleNoteViewSample x:Key="SingleNoteViewSample" d:IsDataSource="True"/>
+        	<SampleData:NotesViewModelSample x:Key="NotesViewModelSample" d:IsDataSource="True"/>
         </ResourceDictionary>
     </Application.Resources>
 </Application>

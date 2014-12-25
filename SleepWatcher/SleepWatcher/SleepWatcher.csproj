@@ -13,7 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
-    <ExpressionBlendVersion>12.0.50716.0</ExpressionBlendVersion>
+    <ExpressionBlendVersion>12.0.51020.0</ExpressionBlendVersion>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
@@ -74,6 +74,7 @@
       <Private>True</Private>
       <HintPath>..\packages\Microsoft.SqlServer.Compact.4.0.8854.1\lib\net40\System.Data.SqlServerCe.Entity.dll</HintPath>
     </Reference>
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Reactive.Core">
       <HintPath>..\packages\Rx-Core.2.2.5\lib\net45\System.Reactive.Core.dll</HintPath>
     </Reference>
@@ -91,6 +92,7 @@
       <HintPath>..\packages\Rx-XAML.2.2.5\lib\net45\System.Reactive.Windows.Threading.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
@@ -124,7 +126,16 @@
     <Compile Include="SampleData\NotesSampleData\NotesSampleData.xaml.cs">
       <DependentUpon>NotesSampleData.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml.cs">
+      <DependentUpon>NotesViewModelSample.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml.cs">
+      <DependentUpon>SingleNoteViewSample.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\PatientViewModel\OverDuePatientsViewModel.cs" />
+    <Compile Include="View\NotesView.xaml.cs">
+      <DependentUpon>NotesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Notifications\GrowlNotifiactions.xaml.cs">
       <DependentUpon>GrowlNotifiactions.xaml</DependentUpon>
     </Compile>
@@ -141,6 +152,9 @@
     </Compile>
     <Compile Include="View\PatientView.xaml.cs">
       <DependentUpon>PatientView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\SingleNoteView.xaml.cs">
+      <DependentUpon>SingleNoteView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\SinglePatinetView.xaml.cs">
       <DependentUpon>SinglePatinetView.xaml</DependentUpon>
@@ -169,6 +183,18 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\NotesView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Notifications\DesignTimeNotificationData.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -190,6 +216,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\PatientView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\SingleNoteView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -245,6 +275,8 @@
   </ItemGroup>
   <ItemGroup>
     <DesignTimeOnly Include="SampleData\NotesSampleData\NotesSampleData.xsd" />
+    <DesignTimeOnly Include="SampleData\NotesViewModelSample\NotesViewModelSample.xsd" />
+    <DesignTimeOnly Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xsd" />
     <Resource Include="View\Notifications\close.png" />
   </ItemGroup>
   <ItemGroup>
