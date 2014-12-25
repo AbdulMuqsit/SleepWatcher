@@ -67,6 +67,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     }
                 });
             });
+        
             //Initializing command which adds a new note for selected step
             AddNewNoteCommand = new ActionCommand(async () =>
             {
@@ -220,7 +221,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }
         public ActionCommand LoadNotes { get; set; }
-        public ActionCommand SaveNote { get; set; }
         private StepModel GetNextStep()
         {
             return new StepModel
