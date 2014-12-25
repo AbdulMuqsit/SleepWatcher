@@ -50,23 +50,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private void InitializeCommands()
         {
 
-            //Initialize Command for loading notes
-            LoadNotes = new ActionCommand(async (id) =>
-            {
-                await Task.Run(async () =>
-                {
-                    if (id is int)
-                    {
-                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>((await Context.Steps.FirstAsync(e => e.Id == (int)id)).Notes.Select(Mapper.Map<NoteModel>));
-
-                    }
-                    else
-                    {
-                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>((await Context.Steps.FirstAsync(e => e.Id == SelectedStep.Id)).Notes.Select(Mapper.Map<NoteModel>));
-
-                    }
-                });
-            });
 
             //Initializing command which adds a new note for selected step
 
@@ -230,7 +213,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         public ActionCommand MarkCompleteCommand { get; set; }
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }
-        public ActionCommand LoadNotes { get; set; }
         private StepModel GetNextStep()
         {
             return new StepModel

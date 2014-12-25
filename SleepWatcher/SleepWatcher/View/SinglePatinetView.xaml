@@ -42,6 +42,14 @@
                 <Grid.Resources>
                     <Converters:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
                 </Grid.Resources>
+            	<i:Interaction.Triggers>
+            		<i:EventTrigger EventName="MouseMove" SourceName="grid" SourceObject="{Binding ElementName=grid}">
+            			<i:InvokeCommandAction Command="{Binding NotesViewModel.LoadNotes, Source={StaticResource Locator}}" CommandParameter="{Binding Id}"/>
+            		</i:EventTrigger>
+            		<i:EventTrigger EventName="MouseDown" SourceName="grid" SourceObject="{Binding ElementName=grid}">
+            			<i:InvokeCommandAction Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Id}"/>
+            		</i:EventTrigger>
+            	</i:Interaction.Triggers>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="Notes">
                         <VisualState x:Name="Zero">

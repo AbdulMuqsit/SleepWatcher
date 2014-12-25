@@ -178,14 +178,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml">
+    <DesignTimeOnly Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
-    <Page Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml">
+    </DesignTimeOnly>
+    <DesignTimeOnly Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
-    </Page>
+    </DesignTimeOnly>
     <Page Include="View\NotesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

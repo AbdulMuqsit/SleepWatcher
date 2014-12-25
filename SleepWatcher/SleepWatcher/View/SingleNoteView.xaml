@@ -13,7 +13,7 @@
                          TargetType="{x:Type UserControl}">
 
             <Grid HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch" DataContext="{Binding Source={StaticResource SingleNoteViewSample}}">
+                  VerticalAlignment="Stretch" d:DataContext="{Binding Source={StaticResource SingleNoteViewSample}}" DataContext="{Binding SingleNoteViewModel, Source={StaticResource Locator}}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />

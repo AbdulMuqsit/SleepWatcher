@@ -81,7 +81,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand SwitchToNotesViewCommand { get; set; }
         public ActionCommand FilterCompleted { get; set; }
 
         public ActionCommand FilterOngoing { get; set; }
@@ -301,13 +300,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private void InitializeCommands()
         {
-            SwitchToNotesViewCommand = new ActionCommand(async () =>
-            {
-                await Task.Run(() =>
-                {
-                    Locator.PatientViewModel.CurrentViewModel = new NotesViewModel();
-                });
-            });
+           
             InitializeFilterCommands();
             //initiate switch to add pateint view model command
             SwitchToAddPatientViewCommmand = new ActionCommand(
