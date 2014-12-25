@@ -55,28 +55,21 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(async () =>
                 {
-                    if(id is int)
+                    if (id is int)
                     {
-                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>(Context.Steps.First(e => e.Id == (int)id).Notes.Select(Mapper.Map<NoteModel>));
+                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>((await Context.Steps.FirstAsync(e => e.Id == (int)id)).Notes.Select(Mapper.Map<NoteModel>));
 
                     }
                     else
                     {
-                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>(Context.Steps.First(e => e.Id == SelectedStep.Id).Notes.Select(Mapper.Map<NoteModel>));
+                        Locator.NotesViewModel.Notes = new RangeObservableCollection<NoteModel>((await Context.Steps.FirstAsync(e => e.Id == SelectedStep.Id)).Notes.Select(Mapper.Map<NoteModel>));
 
                     }
                 });
             });
-        
-            //Initializing command which adds a new note for selected step
-            AddNewNoteCommand = new ActionCommand(async () =>
-            {
-                Busy();
-                BusyMessage = "Saving Changes";
 
-                await Context.SaveChangesAsync();
-                Free();
-            });
+            //Initializing command which adds a new note for selected step
+
             //initiating command which clears the data of current selected patient and shows the add new patient option
             ClearView = new ActionCommand(() => { Patient = null; });
             // initializing command which marks a step as canceled
@@ -216,7 +209,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         }
 
         public ActionCommand SwitchToAddPatientViewModelCommand { get; set; }
-        public ActionCommand AddNewNoteCommand { get; set; }
         public ActionCommand MarkCompleteCommand { get; set; }
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }

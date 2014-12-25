@@ -38,11 +38,11 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 OnPropertyChanged();
             }
         }
-        public ActionCommand SaveNote { get; set; }
+        public ActionCommand SaveNoteCommand { get; set; }
 
         public SingleNoteViewModel()
         {
-            SaveNote = new ActionCommand(async() =>
+            SaveNoteCommand = new ActionCommand(async() =>
             {
                 await Task.Run(async () =>
                 {

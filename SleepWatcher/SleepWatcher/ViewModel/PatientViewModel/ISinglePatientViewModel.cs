@@ -12,7 +12,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         StepModel SelectedStep { get; set; }
         NoteModel SelectedNote { get; set; }
         ActionCommand SwitchToAddPatientViewModelCommand { get; }
-        ActionCommand AddNewNoteCommand { get; }
         ActionCommand MarkCompleteCommand { get; }
         ActionCommand MarkCanceledCommand { get; }
         ActionCommand ClearView { get; }
