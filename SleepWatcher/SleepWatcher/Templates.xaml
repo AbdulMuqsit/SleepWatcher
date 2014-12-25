@@ -9,12 +9,10 @@
                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                     xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
                     xmlns:viewModel="clr-namespace:SleepWatcher.ViewModel"
-                    xmlns:notesSampleData="clr-namespace:Expression.Blend.SampleData.NotesSampleData"
                     mc:Ignorable="d">
     <viewModel:ViewModelLocator x:Key="Locator" />
     <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    <notesSampleData:NotesSampleData x:Key="NotesSampleData"
-                                     d:IsDataSource="True" />
+  
     <!--Single Patient view datatype triggers !-->
     <DataTemplate DataType="{x:Type patientViewModels:SinglePatientViewModel}">
         <view:SinglePatinetView />

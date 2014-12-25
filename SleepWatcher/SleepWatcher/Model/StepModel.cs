@@ -14,6 +14,7 @@ namespace SleepWatcher.Model
         private byte[] _modifiedOn;
         private bool _isCompleted;
         private bool _isCancled;
+        private int _count;
 
         public int Id { get; set; }
 
@@ -128,6 +129,16 @@ namespace SleepWatcher.Model
         [NotMapped]
         public string DueDate { get { return AlarmTime.ToShortDateString(); } }
         public string DateStarted { get { return DateAdded.ToShortDateString(); } }
-        public int Count { get; set; }
+
+        public int Count
+        {
+            get { return _count; }
+            set
+            {
+                if (Equals(value, _count)) return;
+                _count = value;
+                OnPropertyChanged();
+            }
+        }
     }
 }

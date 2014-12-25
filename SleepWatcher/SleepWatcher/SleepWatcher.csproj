@@ -123,9 +123,6 @@
     <Compile Include="Model\PatientModel.cs" />
     <Compile Include="Model\PatientNotificaitonModel.cs" />
     <Compile Include="Model\StepModel.cs" />
-    <Compile Include="SampleData\NotesSampleData\NotesSampleData.xaml.cs">
-      <DependentUpon>NotesSampleData.xaml</DependentUpon>
-    </Compile>
     <Compile Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml.cs">
       <DependentUpon>NotesViewModelSample.xaml</DependentUpon>
     </Compile>
@@ -181,10 +178,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignData>
-    <Page Include="SampleData\NotesSampleData\NotesSampleData.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Page Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -276,7 +269,6 @@
     <Resource Include="dentist.ico" />
   </ItemGroup>
   <ItemGroup>
-    <DesignTimeOnly Include="SampleData\NotesSampleData\NotesSampleData.xsd" />
     <DesignTimeOnly Include="SampleData\NotesViewModelSample\NotesViewModelSample.xsd" />
     <DesignTimeOnly Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xsd" />
     <Resource Include="View\Notifications\close.png" />
