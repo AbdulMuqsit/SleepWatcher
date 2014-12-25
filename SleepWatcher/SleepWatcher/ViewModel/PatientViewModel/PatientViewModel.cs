@@ -81,6 +81,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
+        public ActionCommand SwitchToNotesViewCommand { get; set; }
         public ActionCommand FilterCompleted { get; set; }
 
         public ActionCommand FilterOngoing { get; set; }
@@ -288,7 +289,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public PatientViewModel()
         {
-           
+
             _player = new SoundPlayer(@"Resources\Alarm.wav");
             CurrentViewModel = new SinglePatientViewModel();
             _growlNotificaitons.Top = SystemParameters.WorkArea.Top + TopOffset;
@@ -300,9 +301,17 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private void InitializeCommands()
         {
+            SwitchToNotesViewCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(() =>
+                {
+                    Locator.PatientViewModel.CurrentViewModel = new NotesViewModel();
+                });
+            });
             InitializeFilterCommands();
             //initiate switch to add pateint view model command
-            SwitchToAddPatientViewCommmand = new ActionCommand(() => { CurrentViewModel = Locator.AddPatientViewModel; });
+            SwitchToAddPatientViewCommmand = new ActionCommand(
+                async () => { await Task.Run(() => CurrentViewModel = Locator.AddPatientViewModel); });
             //initiate get all patients command
             InitializeGetCommands();
             StopAlarmCommand = new ActionCommand(() =>
@@ -419,7 +428,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 CurrentStep = Mapper.Map<StepModel>(patient.CurrentStep),
                 LastName = patient.LastName,
                 Id = patient.Id,
-               
+
             };
         }
 
