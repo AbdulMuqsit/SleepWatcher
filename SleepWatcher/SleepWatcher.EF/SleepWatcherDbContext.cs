@@ -12,7 +12,7 @@ namespace SleepWatcher.EF
     {
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Step> Steps { get; set; }
-
+        public DbSet<Note> Notes { get; set; }
         public SleepWatcherDbContext()
             : base(nameOrConnectionString:"SleepWatcher")
         {

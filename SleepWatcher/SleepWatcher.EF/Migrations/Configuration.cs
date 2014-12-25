@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using SleepWatcher.Entites;
 
@@ -14,7 +15,7 @@ namespace SleepWatcher.EF.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-           
+
         }
 
         protected override void Seed(SleepWatcherDbContext context)
@@ -34,7 +35,7 @@ namespace SleepWatcher.EF.Migrations
                 bool canceled = rand.Next(0, 9) == 0;
                 patient.Steps = new List<Step>();
                 Step step = new Step();
-                DateTime alarmTime = rand.Next(0, 5)==1?DateTime.Now - TimeSpan.FromDays(30) : DateTime.Now + TimeSpan.FromDays(30);
+                DateTime alarmTime = rand.Next(0, 5) == 1 ? DateTime.Now - TimeSpan.FromDays(30) : DateTime.Now + TimeSpan.FromDays(30);
                 for (int j = 0; j < totalSteps; j++)
                 {
 
@@ -45,8 +46,14 @@ namespace SleepWatcher.EF.Migrations
                         StepName = (StepName)j,
                         IsCompleted = true,
                         IsCancled = false,
-                        Notes = new List<Note>() { new Note() { Text = "abc" } }
+
                     };
+                    int totalNotes = rand.Next(10);
+                    step.Notes = new Collection<Note>();
+                    for (int k = 0; k < totalNotes; k++)
+                    {
+                        step.Notes.Add(new Note() { Title = Ipsum.GetPhrase(rand.Next(10)), Date = DateTime.Now, Text = Ipsum.GetPhrase(rand.Next(100)) });
+                    }
                     patient.Steps.Add(step);
                     if (canceled)
                     {
@@ -70,8 +77,7 @@ namespace SleepWatcher.EF.Migrations
 
             context.Patients.AddRange(patients);
             base.Seed(context);
-            var p = context.Patients.ToList();
-            Debug.WriteLine("Total Patients:" + p.Count);
+
         }
 
 

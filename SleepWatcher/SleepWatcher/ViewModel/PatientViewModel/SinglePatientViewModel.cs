@@ -163,6 +163,22 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
+        private async void LoadNotesCount()
+        {
+            await Task.Run(async() =>
+            {
+                foreach (var step in Patient.StepModels)
+                {
+                    StepModel localStep = step;
+                    var entity = await Context.Steps.FirstAsync(e => e.Id == localStep.Id);
+                    step.Count = Context.Entry(entity)
+                           .Collection(b => b.Notes)
+                           .Query()
+                           .Count(); 
+                }
+            });
+        }
+
         private async void LoadSteps()
         {
             await Task.Run(() =>
@@ -173,6 +189,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 var steps = new RangeObservableCollection<StepModel>(Context.Steps.Where(e => e.PatientId == Patient.Id).Select(Mapper.Map<StepModel>));
                 Patient.StepModels = steps;
                 Free();
+                LoadNotesCount();
+
             });
         }
 

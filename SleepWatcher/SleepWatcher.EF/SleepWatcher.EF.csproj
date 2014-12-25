@@ -66,6 +66,7 @@
       <DependentUpon>201412112030189_init.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="netfx\Testing\Ipsum.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SleepWatcherDbContext.cs" />
   </ItemGroup>
