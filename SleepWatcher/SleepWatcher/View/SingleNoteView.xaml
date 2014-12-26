@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              mc:Ignorable="d"
              d:DesignHeight="500"
              d:DesignWidth="700"
@@ -47,7 +48,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}"
                            Text="Note: "></TextBlock>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" Text="Date:"></TextBlock>
-                <DatePicker Height="30" VerticalAlignment="Center" Text="" SelectedDate="{Binding Note.Date}" Grid.Row="1" Grid.Column="1"></DatePicker>
+                <DatePicker Height="30" VerticalAlignment="Center" Text="" SelectedDate="{Binding Note.Date, FallbackValue={x:Static system:DateTime.Now}}" Grid.Row="1" Grid.Column="1"></DatePicker>
                 <TextBox Grid.Column="0"
                          Grid.ColumnSpan="2"
                          Style="{StaticResource TextBoxStyle}"

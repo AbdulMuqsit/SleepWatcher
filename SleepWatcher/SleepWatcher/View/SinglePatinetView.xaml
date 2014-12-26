@@ -171,7 +171,8 @@
                                 <Button Grid.Row="1"
                                         Style="{StaticResource AddNewNoteButtonStyle}"
                                         HorizontalAlignment="Left"
-                                        Content="New Note" />
+                                        Content="New Note"
+                                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
                                 <Button Grid.Row="0"
                                         HorizontalAlignment="Right"
                                         Style="{StaticResource AddNewNoteButtonStyle}"
@@ -279,7 +280,8 @@
                         Grid.Row="1"
                         VerticalAlignment="Center"
                         Style="{DynamicResource AddNewNote}"
-                        Margin="5" />
+                        Margin="5"
+                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
             </Grid>
             <DataTemplate.Triggers>
                 <Trigger Property="IsMouseOver"

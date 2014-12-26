@@ -23,6 +23,9 @@
         <SolidColorBrush x:Key="Lines"
                          Color="LightGray" />
     </cc:CustomWindow.Resources>
+	<cc:CustomWindow.Effect>
+		<DropShadowEffect Opacity="0.47" BlurRadius="10" Direction="360"/>
+	</cc:CustomWindow.Effect>
     <Grid Margin="0,0,0,-1">
         <Grid.RowDefinitions>
             <RowDefinition />
