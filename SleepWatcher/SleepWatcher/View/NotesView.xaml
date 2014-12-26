@@ -39,7 +39,8 @@
     				HorizontalAlignment="Right"
     				Margin="5"
     				Style="{StaticResource TextBlockStyle}" ><Run Text="Step: " FontWeight="Bold"/><Run  Text="{Binding Step.StepName}"/></TextBlock>
-    			<ListBox Grid.Row="2" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NoteTemplate}"/>
+    			<ListBox Grid.Row="2" ItemsSource="{Binding Notes}" ItemTemplate="{StaticResource NoteTemplate}"
+                         SelectedItem="{Binding SingleNoteViewModel.Note, Mode=OneWayToSource, Source={StaticResource Locator}}" />
     		</Grid>
     	</ControlTemplate>
     	<Style x:Key="TitleTextBlockStyle"

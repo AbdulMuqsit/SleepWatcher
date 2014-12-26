@@ -143,7 +143,8 @@
                     <Popup  Style="{StaticResource TooltipPopupStyle}"
                             DataContext="{Binding NotesViewModel, Source={StaticResource Locator}}"
                             AllowsTransparency="True"
-                            MaxWidth="300"
+                            Placement="Top"
+                           
                             x:Name="popup"
                             StaysOpen="False">
                         <Border Background="#CCFFFFFF"
@@ -176,13 +177,15 @@
                                         Style="{StaticResource AddNewNoteButtonStyle}"
                                         Content="X" />
                                 <ListBox Grid.Row="2"
-                                         HorizontalContentAlignment="Stretch"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled"
+                                         HorizontalContentAlignment="Left"
                                          Height="Auto"
                                          ItemTemplate="{DynamicResource NoteTemplate}"
                                          ItemsSource="{Binding Notes}"
                                          DataContext="{Binding}"
                                          MaxHeight="300"
-                                         Background="{x:Null}" />
+                                         Background="{x:Null}"
+                                         SelectedItem="{Binding SingleNoteViewModel.Note, Mode=OneWayToSource, Source={StaticResource Locator}}" />
                             </Grid>
                         </Border>
                     </Popup>
@@ -667,6 +670,7 @@
                                FontSize="32"
                                Margin="5,5,0,0" />
                     <ListBox Grid.Row="1"
+                             ScrollViewer.CanContentScroll="False"
                              ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}"
                              ItemTemplate="{StaticResource StepsListBoxItemsTemplate}"
                              HorizontalContentAlignment="Stretch"

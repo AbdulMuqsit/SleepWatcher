@@ -16,6 +16,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     {
         private NoteModel _note;
         private int _stepId;
+        public ActionCommand SwitchToSingleNoteViewCommand { get; set; }
 
         public NoteModel Note
         {
@@ -25,6 +26,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (Equals(value, _note)) return;
                 _note = value;
                 OnPropertyChanged();
+                SwitchToSingleNoteViewCommand.Execute(null);
             }
         }
 
@@ -42,6 +44,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public SingleNoteViewModel()
         {
+            SwitchToSingleNoteViewCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(() =>
+                {
+                    Locator.PatientViewModel.CurrentViewModel = Locator.SingleNoteViewModel;
+                });
+            });
             SaveNoteCommand = new ActionCommand(async() =>
             {
                 await Task.Run(async () =>
