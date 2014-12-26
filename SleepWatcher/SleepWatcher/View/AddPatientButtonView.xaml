@@ -67,6 +67,10 @@
         </Style>
 
     </UserControl.Resources>
+    <UserControl.DataContext>
+        <Binding Mode="OneWay"
+                 Source="{StaticResource Locator}" />
+    </UserControl.DataContext>
     <Grid x:Name="AddPatient"
          >
 
@@ -91,7 +95,7 @@
                 BorderBrush="{x:Null}"
                 Margin="0,20,0,0"
                 Style="{DynamicResource AddNewPatientButtonStyle}"
-                Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}" />
+                Command="{Binding PatientViewModel.SwitchToAddPatientViewCommmand, Mode=OneWay}" />
     </Grid>
 
 </UserControl>

@@ -141,7 +141,7 @@
                         <Button x:Name="button" Style="{DynamicResource ButtonStyle}"
                                 Command="{Binding AddPatientViewModel.AddPatinetCommand, Mode=OneWay}" MinWidth="90"  Content="Add New" />
                         <Button MinWidth="90"  Style="{DynamicResource ButtonStyle}"
-                                Command="{Binding AddPatientViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay}"
+                                Command="{Binding AddPatientButtonViewModel.SwitchToAddPatientButtonViewModelCommand, Mode=OneWay}"
                                 Content="Back" />
                     </StackPanel>
                 </StackPanel>
