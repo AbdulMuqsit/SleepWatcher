@@ -24,9 +24,9 @@
     				HorizontalAlignment="Right"
     				VerticalAlignment="Center"
     				Margin="5"
-                        Command="{Binding AddPatientViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}">
-    				<Image Height="20"
-    					Width="20"
+                        Command="{Binding AddPatientViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}" Height="25">
+    				<Image Height="15"
+    					Width="15"
     					Margin="5"
     					Source="../Resources/back.png" />
     			</Button>

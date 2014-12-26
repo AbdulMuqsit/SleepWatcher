@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.Expression.Interactivity.Core;
@@ -16,20 +13,63 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     {
         private NoteModel _note;
         private int _stepId;
+
+        public SingleNoteViewModel()
+        {
+
+            Notechanged += (() => SaveNoteCommand.Execute(null));
+            SwitchToSingleNoteViewCommand = new ActionCommand(async (id) =>
+            {
+                await Task.Run(() => { Locator.PatientViewModel.CurrentViewModel = Locator.SingleNoteViewModel; });
+                if (id is int)
+                {
+                    _stepId = (int)id;
+                    _note = new NoteModel() { StepId = _stepId, Date = DateTime.Now };
+                }
+            });
+            SaveNoteCommand = new ActionCommand(async id =>
+            {
+                await Task.Run(async () =>
+                {
+                    if (IsContextBusy) return;
+                    IsContextBusy = true;
+                    Note newNote=null;
+                    if (Note.Id == 0 && !String.IsNullOrWhiteSpace(Note.Text))
+                    {
+                        var step = (await Context.Steps.Include(e=>e.Notes).FirstAsync(e => e.Id == StepId));
+                        newNote = Mapper.Map<Note>(Note);
+                        step.Notes.Add(newNote);
+                        
+                    }
+                    else if (Note.Id != 0)
+                    {
+                        Note entry = await Context.Notes.FirstAsync(note => note.Id == Note.Id);
+                        entry.Date = Note.Date;
+                        entry.Text = Note.Text;
+                        entry.Title = Note.Title;
+                        Context.Entry(entry).State = EntityState.Modified;
+                    }
+                    await Context.SaveChangesAsync();
+                    if (Note.Id == 0) if (newNote != null) Note.Id = newNote.Id;
+                    IsContextBusy = false;
+                });
+            });
+        }
+
         public ActionCommand SwitchToSingleNoteViewCommand { get; set; }
+
         public NoteModel Note
         {
             get { return _note; }
             set
             {
-                if (value!=null) SwitchToSingleNoteViewCommand.Execute(null);
+                if (value != null) SwitchToSingleNoteViewCommand.Execute(null);
                 if (Equals(value, _note)) return;
                 _note = value;
                 OnPropertyChanged();
-                
-
             }
         }
+
 
         public int StepId
         {
@@ -41,34 +81,16 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 OnPropertyChanged();
             }
         }
+
         public ActionCommand SaveNoteCommand { get; set; }
 
-        public SingleNoteViewModel()
+        public bool IsBusy { get; set; }
+        public event Action Notechanged;
+
+        public void OnNoteChanged()
         {
-           
-            SwitchToSingleNoteViewCommand = new ActionCommand(async () =>
-            {
-                await Task.Run(() =>
-                {
-                    Locator.PatientViewModel.CurrentViewModel = Locator.SingleNoteViewModel;
-                });
-            });
-            SaveNoteCommand = new ActionCommand(async() =>
-            {
-                await Task.Run(async () =>
-                {
-                    DbEntityEntry entity = Context.Entry(Note);
-                    if (entity.State == EntityState.Detached)
-                    {
-                        (await Context.Steps.FirstAsync(e => e.Id == StepId)).Notes.Add(Mapper.Map<Note>(Note));
-                    }
-                    else
-                    {
-                        entity.State = EntityState.Modified;
-                    }
-                    await Context.SaveChangesAsync();
-                });
-            });
+            Action hacdler = Notechanged;
+            if (hacdler != null) hacdler();
         }
     }
 }

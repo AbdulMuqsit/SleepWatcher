@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using SleepWatcher.ViewModel;
 
 namespace SleepWatcher.Model
 {
@@ -11,6 +13,14 @@ namespace SleepWatcher.Model
         {
             PropertyChangedEventHandler handler = PropertyChanged;
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
+        }
+        protected ViewModelLocator Locator
+        {
+            get
+            {
+                var loator = Application.Current.Resources["Locator"];
+                return loator as ViewModelLocator;
+            }
         }
     }
 }

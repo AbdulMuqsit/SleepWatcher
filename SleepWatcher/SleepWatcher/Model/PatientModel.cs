@@ -18,6 +18,7 @@ namespace SleepWatcher.Model
 
         private RangeObservableCollection<StepModel> _stepModels = new RangeObservableCollection<StepModel>();
         private StepModel _currentStep;
+        private int _id;
 
         public RangeObservableCollection<StepModel> StepModels
         {
@@ -31,7 +32,16 @@ namespace SleepWatcher.Model
             }
         }
 
-        public int Id { get; set; }
+        public int Id
+        {
+            get { return _id; }
+            set
+            {
+                if (Equals(value, _id)) return;
+                _id = value;
+                OnPropertyChanged();
+            }
+        }
 
         [Required]
         public string FirstName

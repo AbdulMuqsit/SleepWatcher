@@ -12,6 +12,7 @@ namespace SleepWatcher.ViewModel
 
     public class ViewModelBase : INotifyPropertyChanged, IViewModelBase
     {
+        public static bool IsContextBusy { get; set; }
         static ViewModelBase()
         {
             AppDomain.CurrentDomain.SetData("DataDirectory",
@@ -31,7 +32,7 @@ namespace SleepWatcher.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         protected virtual void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
             try

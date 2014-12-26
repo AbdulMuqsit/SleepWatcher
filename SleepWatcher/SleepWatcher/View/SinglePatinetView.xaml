@@ -172,7 +172,8 @@
                                         Style="{StaticResource AddNewNoteButtonStyle}"
                                         HorizontalAlignment="Left"
                                         Content="New Note"
-                                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
+                                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}"
+                                        CommandParameter="{Binding Step.Id}" />
                                 <Button Grid.Row="0"
                                         HorizontalAlignment="Right"
                                         Style="{StaticResource AddNewNoteButtonStyle}"
@@ -281,7 +282,9 @@
                         VerticalAlignment="Center"
                         Style="{DynamicResource AddNewNote}"
                         Margin="5"
-                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
+                        CommandParameter="{Binding Id}"
+                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}"
+                         />
             </Grid>
             <DataTemplate.Triggers>
                 <Trigger Property="IsMouseOver"
@@ -682,9 +685,9 @@
                             Command="{Binding SinglePatientViewModel.ClearView}"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Margin="0,5,5,5">
-                        <Image Height="20"
-                               Width="20"
+                            Margin="0,5,5,5" Height="25">
+                        <Image Height="15"
+                               Width="15"
                                Margin="5"
                                Source="../Resources/back.png" />
                     </Button>

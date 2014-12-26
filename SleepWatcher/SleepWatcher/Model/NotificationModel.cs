@@ -29,7 +29,7 @@ namespace SleepWatcher.Model
             {
                 if (_id == value) return;
                 _id = value;
-                OnPropertyChanged("Id");
+                OnPropertyChanged();
             }
         }
         public string Title

@@ -59,13 +59,13 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             //Initialize Command for loading notes
             LoadNotes = new ActionCommand(async (id) =>
             {
-                if (IsBusy)
+                if (IsContextBusy)
                 {
                     return;
                 }
                 await Task.Run(async () =>
                 {
-                    IsBusy = true;
+                    IsContextBusy = true;
                     if (id is int)
                     { var s = await Context.Steps.FirstAsync(e => e.Id == (int)id);
                         Step = Mapper.Map<StepModel>(s);
@@ -74,7 +74,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                         await Context.Entry(s).Reference(e => e.Patient).LoadAsync();
                         Patient = Mapper.Map<PatientModel>(s.Patient);
                     }
-                    IsBusy = false;
+                    IsContextBusy = false;
                 });
             });
             SwitchToNotesViewCommand = new ActionCommand(async (id) =>

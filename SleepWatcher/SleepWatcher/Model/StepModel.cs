@@ -15,6 +15,7 @@ namespace SleepWatcher.Model
         private bool _isCompleted;
         private bool _isCancled;
         private int _count;
+        private int _patientId;
 
         public int Id { get; set; }
 
@@ -104,7 +105,17 @@ namespace SleepWatcher.Model
             }
         }
 
-        public int PatientId { get; set; }
+        public int PatientId
+        {
+            get { return _patientId; }
+            set
+            {
+                if (Equals(value, _patientId)) return;
+                _patientId = value;
+                OnPropertyChanged();
+            }
+        }
+
         public Patient Patient { get; set; }
         [NotMapped]
         public Status Status
