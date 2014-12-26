@@ -25,6 +25,17 @@
                     <ColumnDefinition />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
+                <Button Grid.Row="0"
+                        Style="{DynamicResource BackButton}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Center"
+                        Margin="5"
+                        Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}">
+                    <Image Height="20"
+                           Width="20"
+                           Margin="5"
+                           Source="../Resources/back.png" />
+                </Button>
                 <TextBlock HorizontalAlignment="Left"
                            Style="{StaticResource TextBlockStyle}"
                            Text="Title: " />
@@ -36,7 +47,7 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}"
                            Text="Note: "></TextBlock>
                 <TextBlock Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" Style="{StaticResource TextBlockStyle}" Text="Date:"></TextBlock>
-                <DatePicker Text="" SelectedDate="{Binding Note.Date}" Grid.Row="1" Grid.Column="1"></DatePicker>
+                <DatePicker Height="30" VerticalAlignment="Center" Text="" SelectedDate="{Binding Note.Date}" Grid.Row="1" Grid.Column="1"></DatePicker>
                 <TextBox Grid.Column="0"
                          Grid.ColumnSpan="2"
                          Style="{StaticResource TextBoxStyle}"

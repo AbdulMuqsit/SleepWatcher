@@ -23,7 +23,8 @@
     				Style="{DynamicResource BackButton}"
     				HorizontalAlignment="Right"
     				VerticalAlignment="Center"
-    				Margin="5">
+    				Margin="5"
+                        Command="{Binding AddPatientViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}">
     				<Image Height="20"
     					Width="20"
     					Margin="5"

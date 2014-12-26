@@ -81,8 +81,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             {
                 await Task.Run(() =>
                 {
-                    Locator.PatientViewModel.CurrentViewModel = new NotesViewModel();
-                    LoadNotes.Execute((int)id);
+                    Locator.PatientViewModel.CurrentViewModel = Locator.NotesViewModel;
+                    if(id is int )LoadNotes.Execute((int)id);
                 });
             });
         }
