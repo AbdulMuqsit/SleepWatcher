@@ -34,25 +34,26 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 {
                     if (IsContextBusy) return;
                     IsContextBusy = true;
-                    Note newNote=null;
-                    if (Note.Id == 0 && !String.IsNullOrWhiteSpace(Note.Text))
+                    if (Note != null && Note.Id == 0 && !String.IsNullOrWhiteSpace(Note.Text))
                     {
-                        var step = (await Context.Steps.Include(e=>e.Notes).FirstAsync(e => e.Id == StepId));
-                        if (step.Notes==null) step.Notes = new Collection<Note>();
-                        newNote = Mapper.Map<Note>(Note);
+                        var step = (await Context.Steps.Include(e => e.Notes).FirstAsync(e => e.Id == StepId));
+                        if (step.Notes == null) step.Notes = new Collection<Note>();
+                        var newNote = Mapper.Map<Note>(Note);
                         step.Notes.Add(newNote);
-                        
+                        await Context.SaveChangesAsync();
+                        Note.Id = newNote.Id;
+
                     }
-                    else if (Note.Id != 0)
+                    else if (Note != null && Note.Id != 0)
                     {
                         Note entry = await Context.Notes.FirstAsync(note => note.Id == Note.Id);
                         entry.Date = Note.Date;
                         entry.Text = Note.Text;
                         entry.Title = Note.Title;
                         Context.Entry(entry).State = EntityState.Modified;
+                        await Context.SaveChangesAsync();
                     }
-                    await Context.SaveChangesAsync();
-                    if (Note.Id == 0) if (newNote != null) Note.Id = newNote.Id;
+
                     IsContextBusy = false;
                 });
             });

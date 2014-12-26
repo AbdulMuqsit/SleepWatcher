@@ -588,8 +588,6 @@
            TargetType="{x:Type TextBox}">
         <Setter Property="Background"
                 Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}" />
-        <Setter Property="BorderBrush"
-                Value="{StaticResource TextBox.Static.Border}" />
         <Setter Property="Foreground"
                 Value="#FF646464" />
         <Setter Property="BorderThickness"

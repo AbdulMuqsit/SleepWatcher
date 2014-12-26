@@ -41,14 +41,20 @@
                 <Grid.Resources>
                     <converters:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
                 </Grid.Resources>
-            	<i:Interaction.Triggers>
-            		<i:EventTrigger EventName="MouseMove" SourceName="grid" SourceObject="{Binding ElementName=grid}">
-            			<i:InvokeCommandAction Command="{Binding NotesViewModel.LoadNotes, Source={StaticResource Locator}}" CommandParameter="{Binding Id}"/>
-            		</i:EventTrigger>
-            		<i:EventTrigger EventName="MouseDown" SourceName="grid" SourceObject="{Binding ElementName=grid}">
-            			<i:InvokeCommandAction Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}" CommandParameter="{Binding Id}"/>
-            		</i:EventTrigger>
-            	</i:Interaction.Triggers>
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="MouseMove"
+                                    SourceName="grid"
+                                    SourceObject="{Binding ElementName=grid}">
+                        <i:InvokeCommandAction Command="{Binding NotesViewModel.LoadNotes, Source={StaticResource Locator}}"
+                                               CommandParameter="{Binding Id}" />
+                    </i:EventTrigger>
+                    <i:EventTrigger EventName="MouseDown"
+                                    SourceName="grid"
+                                    SourceObject="{Binding ElementName=grid}">
+                        <i:InvokeCommandAction Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}"
+                                               CommandParameter="{Binding Id}" />
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="Notes">
                         <VisualState x:Name="Zero">
@@ -143,7 +149,6 @@
                             DataContext="{Binding NotesViewModel, Source={StaticResource Locator}}"
                             AllowsTransparency="True"
                             Placement="Top"
-                           
                             x:Name="popup"
                             StaysOpen="False">
                         <Border Background="#CCFFFFFF"
@@ -223,8 +228,7 @@
                 <Grid x:Name="grid"
                       Grid.Row="0"
                       Grid.Column="2"
-                      Margin="5,5,5,0"
-                     >
+                      Margin="5,5,5,0">
                     <i:Interaction.Behaviors>
                         <ei:DataStateBehavior Binding="{Binding Count}"
                                               Value="0"
@@ -282,8 +286,7 @@
                         Style="{DynamicResource AddNewNote}"
                         Margin="5"
                         CommandParameter="{Binding Id}"
-                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}"
-                         />
+                        Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
             </Grid>
             <DataTemplate.Triggers>
                 <Trigger Property="IsMouseOver"
@@ -341,7 +344,6 @@
                          TargetType="{x:Type UserControl}">
 
             <Grid x:Name="RootElement">
-
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="BusyStates">
                         <VisualStateGroup.Transitions>
@@ -446,17 +448,8 @@
                         <ei:GoToStateAction StateName="Busy"
                                             TargetObject="{Binding ElementName=RootElement}" />
                     </ei:DataTrigger>
-                   
-                  
-                    <i:EventTrigger SourceName="ViewPatient">
-                        <ei:GoToStateAction StateName="Busy"
-                                            TargetObject="{Binding ElementName=RootElement}" />
-                    </i:EventTrigger>
-
                 </i:Interaction.Triggers>
-
                 <Grid x:Name="ViewPatient"
-                     
                       Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -475,10 +468,11 @@
                              SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}" />
                     <Button Grid.Row="0"
                             Style="{DynamicResource BackButton}"
-                            Command="{Binding SinglePatientViewModel.ClearView}"
+                            Command="{Binding AddPatientButtonViewModel.SwitchToAddPatientButtonViewModelCommand}"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Center"
-                            Margin="0,5,5,5" Height="25">
+                            Margin="0,5,5,5"
+                            Height="25">
                         <Image Height="15"
                                Width="15"
                                Margin="5"
