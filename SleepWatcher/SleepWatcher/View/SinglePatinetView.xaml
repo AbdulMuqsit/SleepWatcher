@@ -490,7 +490,7 @@
                                Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}"
                                Foreground="#FF636363"
                                FontSize="32"
-                               Margin="5,5,0,0" />
+                               Margin="5,0,0,0" />
                     <ListBox Grid.Row="1"
                              ScrollViewer.CanContentScroll="False"
                              ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}"
@@ -501,7 +501,7 @@
                             Style="{DynamicResource BackButton}"
                             Command="{Binding AddPatientButtonViewModel.SwitchToAddPatientButtonViewModelCommand}"
                             HorizontalAlignment="Right"
-                            VerticalAlignment="Center"
+                            VerticalAlignment="Top"
                             Margin="0,5,5,5"
                             Height="25">
                         <Image Height="15"

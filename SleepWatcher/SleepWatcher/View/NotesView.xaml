@@ -19,14 +19,14 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0"
-                           Margin="5"
+                           Margin="5,0,5,5"
                            Style="{DynamicResource TitleTextBlockStyle}"
                            Text="Notes" />
                 <Button Grid.Row="0"
                         Style="{DynamicResource BackButton}"
                         HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Margin="5"
+                        VerticalAlignment="Top"
+                        Margin="5,5,5,0"
                         Command="{Binding NotesViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}"
                         Height="25">
                     <Image Height="15"
@@ -41,12 +41,12 @@
                            Style="{StaticResource TextBlockStyle}"
                            Foreground="#FF636363"
                            FontSize="32"
-                           Margin="5,5,5,0"
-                           Text="{Binding Patient.FullName}" />
+                           Margin="5,0,5,5"
+                           Text="{Binding Patient.FullName}" VerticalAlignment="Center" />
                 <TextBlock Grid.Row="1"
                            HorizontalAlignment="Right"
-                           Margin="5"
-                           Style="{StaticResource TextBlockStyle}"><Run Text="Step: "
+                           Margin="5,0,5,5"
+                           Style="{StaticResource TextBlockStyle}" VerticalAlignment="Bottom"><Run Text="Step: "
                                                                         FontWeight="Bold" /><Run  Text="{Binding Step.StepName, Converter={StaticResource EnumStringToFriendlyNameConverter}}" /></TextBlock>
                 <ListBox Grid.Row="2"
                          ItemsSource="{Binding Notes}"
@@ -61,7 +61,7 @@
             <Setter Property="FontFamily"
                     Value="Cambria" />
             <Setter Property="FontSize"
-                    Value="26.667" />
+                    Value="29.333" />
             <Setter Property="Margin"
                     Value="5,5,0,0" />
         </Style>
