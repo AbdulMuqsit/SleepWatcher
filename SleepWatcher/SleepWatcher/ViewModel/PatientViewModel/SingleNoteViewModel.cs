@@ -25,7 +25,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (id is int)
                 {
                     _stepId = (int)id;
-                    _note = new NoteModel() { StepId = _stepId, Date = DateTime.Now };
+                    if ((int)id == 0)
+                        _note = new NoteModel() { StepId = _stepId, Date = DateTime.Now };
                 }
             });
             SaveNoteCommand = new ActionCommand(async id =>
@@ -66,7 +67,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             get { return _note; }
             set
             {
-                if (value != null) SwitchToSingleNoteViewCommand.Execute(null);
+                if (value != null) SwitchToSingleNoteViewCommand.Execute(value.StepId);
                 if (Equals(value, _note)) return;
                 _note = value;
                 OnPropertyChanged();

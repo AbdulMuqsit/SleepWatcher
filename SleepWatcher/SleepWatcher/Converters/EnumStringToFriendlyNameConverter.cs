@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 using System.Reflection;
+using System.Windows;
 using System.Windows.Data;
 
 namespace SleepWatcher.Converters
@@ -26,6 +28,7 @@ namespace SleepWatcher.Converters
 
         object IValueConverter.Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
+            if (DesignerProperties.GetIsInDesignMode(new DependencyObject())) return value;
             Enum myEnum = (Enum)value;
             string description = GetEnumDescription(myEnum);
             return description;

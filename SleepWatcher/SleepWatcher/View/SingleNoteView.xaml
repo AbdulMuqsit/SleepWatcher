@@ -30,7 +30,7 @@
                         Style="{DynamicResource BackButton}"
                         HorizontalAlignment="Right"
                         VerticalAlignment="Center"
-                        Margin="5"
+                        
                         Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}" Grid.Column="1" Height="25"
                         CommandParameter="{Binding StepId}">
                     <Image Height="15"

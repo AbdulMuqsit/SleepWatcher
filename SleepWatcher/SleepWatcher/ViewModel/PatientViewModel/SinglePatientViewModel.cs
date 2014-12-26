@@ -179,11 +179,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         private void Free()
         {
             IsBusy = false;
+            IsContextBusy = false;
         }
 
         private void Busy()
         {
+            while (IsContextBusy) { }
             IsBusy = true;
+            IsContextBusy = true;
         }
 
         public StepModel SelectedStep

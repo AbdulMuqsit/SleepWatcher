@@ -271,14 +271,16 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private void Free()
         {
+            IsContextBusy = false;
             IsBusy = false;
         }
 
         private void Busy()
         {
-            while (IsBusy)
+            while (IsContextBusy)
             {
             }
+            IsContextBusy = true;
             IsBusy = true;
         }
 

@@ -36,8 +36,28 @@
                         </DiscreteObjectKeyFrame>
                     </ObjectAnimationUsingKeyFrames>
                 </Storyboard>
+                <Storyboard x:Key="Storyboard"
+                            TargetName="StepGrid"
+                            TargetProperty="Opacity">
+
+                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                                   Storyboard.TargetName="StepGrid">
+                        <EasingDoubleKeyFrame KeyTime="0"
+                                              Value="0" />
+                        <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                              Value="1" />
+                    </DoubleAnimationUsingKeyFrames>
+                </Storyboard>
+                <Storyboard x:Key="popupclose">
+                	<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)" Storyboard.TargetName="border">
+                		<EasingDoubleKeyFrame KeyTime="0:0:0.3" Value="0"/>
+                	</DoubleAnimationUsingKeyFrames>
+                	<BooleanAnimationUsingKeyFrames Storyboard.TargetProperty="(Popup.IsOpen)" Storyboard.TargetName="popup">
+                		<DiscreteBooleanKeyFrame KeyTime="0:0:0.3" Value="False"/>
+                	</BooleanAnimationUsingKeyFrames>
+                </Storyboard>
             </DataTemplate.Resources>
-            <Grid Margin="0,5,0,0">
+            <Grid Margin="0,5,0,0" x:Name="StepGrid">
                 <Grid.Resources>
                     <converters:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
                 </Grid.Resources>
@@ -54,6 +74,12 @@
                         <i:InvokeCommandAction Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}"
                                                CommandParameter="{Binding Id}" />
                     </i:EventTrigger>
+                    <ei:DataTrigger Binding="{Binding Count}" Value="0" Comparison="NotEqual">
+                    	<ei:GoToStateAction StateName="NotZero" TargetObject="{Binding ElementName=StepGrid}" UseTransitions="False"/>
+                    </ei:DataTrigger>
+                    <ei:DataTrigger Binding="{Binding Count}" Value="0" Comparison="Equal">
+                    	<ei:GoToStateAction StateName="Zero" TargetObject="{Binding ElementName=StepGrid}" UseTransitions="False"/>
+                    </ei:DataTrigger>
                 </i:Interaction.Triggers>
                 <VisualStateManager.VisualStateGroups>
                     <VisualStateGroup x:Name="Notes">
@@ -83,8 +109,8 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="2*" />
+                    <ColumnDefinition Width="2*" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
@@ -151,7 +177,7 @@
                             Placement="Top"
                             x:Name="popup"
                             StaysOpen="False">
-                        <Border Background="#CCFFFFFF"
+                        <Border x:Name="border" Background="#CCFFFFFF"
                                 BorderThickness="1"
                                 BorderBrush="Black"
                                 Margin="20">
@@ -178,7 +204,7 @@
                                         Content="New Note"
                                         Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}"
                                         CommandParameter="{Binding Step.Id}" />
-                                <Button Grid.Row="0"
+                                <Button x:Name="button" Grid.Row="0"
                                         HorizontalAlignment="Right"
                                         Style="{StaticResource AddNewNoteButtonStyle}"
                                         Content="X" />
@@ -226,31 +252,25 @@
                                Text="{Binding DueDate, Mode=OneWay}" />
                 </StackPanel>
                 <Grid x:Name="grid"
-                      Grid.Row="0"
-                      Grid.Column="2"
-                      Margin="5,5,5,0">
-                    <i:Interaction.Behaviors>
-                        <ei:DataStateBehavior Binding="{Binding Count}"
-                                              Value="0"
-                                              TrueState="Zero"
-                                              FalseState="NotZero" />
-                    </i:Interaction.Behaviors>
-                    <TextBlock x:Name="textBlock1"
-                               TextWrapping="Wrap"
-                               TextAlignment="Center"
-                               FontFamily="Cambria"
-                               FontSize="18.667"
-                               Grid.Column="0"
-                               Margin="0"
-                               LineHeight="26.667"><Run Foreground="#FF707070"
-                                                        FontWeight="Bold"
-                                                        FontSize="21.333"
-                                                        Text="Notes"
-                                                        TextDecorations="Underline" /><Run Foreground="#FF707070"
-                                                                                           FontWeight="Bold"
-                                                                                           FontSize="21.333"
-                                                                                           Text=":" /><Run Text=" " /><Run Foreground="#FFFF9C00"
-                                                                                                                           Text="{Binding Count}" /><InlineUIContainer /></TextBlock>
+                	Grid.Row="0"
+                	Grid.Column="2"
+                	Margin="5,5,5,0">
+                	<TextBlock x:Name="textBlock1"
+                		TextWrapping="Wrap"
+                		TextAlignment="Center"
+                		FontFamily="Cambria"
+                		FontSize="18.667"
+                		Grid.Column="0"
+                		Margin="0"
+                		LineHeight="26.667"><Run Foreground="#FF707070"
+                			FontWeight="Bold"
+                			FontSize="21.333"
+                			Text="Notes"
+                			TextDecorations="Underline" /><Run Foreground="#FF707070"
+                			FontWeight="Bold"
+                			FontSize="21.333"
+                			Text=":" /><Run Text=" " /><Run Foreground="#FFFF9C00"
+                			Text="{Binding Count}" /><InlineUIContainer /></TextBlock>
                 </Grid>
                 <Button x:Name="btnCancled"
                         Content="Mark Canceled"
@@ -288,57 +308,64 @@
                         CommandParameter="{Binding Id}"
                         Command="{Binding SingleNoteViewModel.SwitchToSingleNoteViewCommand, Source={StaticResource Locator}}" />
             </Grid>
+            
             <DataTemplate.Triggers>
-                <Trigger Property="IsMouseOver"
-                         Value="True"
-                         SourceName="grid">
-                    <Trigger.EnterActions>
-                        <BeginStoryboard x:Name="Storyboard1_BeginStoryboard"
-                                         Storyboard="{StaticResource Storyboard1}" />
-                    </Trigger.EnterActions>
-                    <Trigger.ExitActions>
-                        <StopStoryboard BeginStoryboardName="Storyboard1_BeginStoryboard" />
-                    </Trigger.ExitActions>
-                </Trigger>
+        		<EventTrigger RoutedEvent="ButtonBase.Click" SourceName="button"/>
+        		<EventTrigger SourceName="StepGrid"
+        			RoutedEvent="FrameworkElement.Loaded">
+        			<BeginStoryboard Storyboard="{StaticResource Storyboard}"/>
+        		</EventTrigger>
 
-                <DataTrigger Binding="{Binding IsCompleted}"
-                             Value="True">
-                    <Setter TargetName="textBlock"
-                            Property="Foreground"
-                            Value="Green" />
-                    <Setter TargetName="btnCompleted"
-                            Property="Visibility"
-                            Value="Collapsed" />
-                    <Setter TargetName="btnCancled"
-                            Property="Visibility"
-                            Value="Collapsed" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}"
-                             Value="Ongoing">
-                    <Setter TargetName="textBlock"
-                            Property="Foreground"
-                            Value="DarkOrange" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding Status}"
-                             Value="Overdue">
-                    <Setter TargetName="textBlock"
-                            Property="Foreground"
-                            Value="Red" />
-                </DataTrigger>
-                <DataTrigger Binding="{Binding IsCancled}"
-                             Value="True">
-                    <Setter TargetName="textBlock"
-                            Property="Foreground"
-                            Value="Black" />
-                    <Setter TargetName="btnCompleted"
-                            Property="Visibility"
-                            Value="Collapsed" />
-                    <Setter TargetName="btnCancled"
-                            Property="Content"
-                            Value="Uncancel" />
-                </DataTrigger>
+        		<Trigger Property="IsMouseOver"
+        			Value="True"
+        			SourceName="grid">
+        			<Trigger.EnterActions>
+        				<BeginStoryboard x:Name="Storyboard1_BeginStoryboard"
+        					Storyboard="{StaticResource Storyboard1}" />
+        			</Trigger.EnterActions>
+        			<Trigger.ExitActions>
+        				<StopStoryboard BeginStoryboardName="Storyboard1_BeginStoryboard" />
+        			</Trigger.ExitActions>
+        		</Trigger>
 
-            </DataTemplate.Triggers>
+        		<DataTrigger Binding="{Binding IsCompleted}"
+        			Value="True">
+        			<Setter TargetName="textBlock"
+        				Property="Foreground"
+        				Value="Green" />
+        			<Setter TargetName="btnCompleted"
+        				Property="Visibility"
+        				Value="Collapsed" />
+        			<Setter TargetName="btnCancled"
+        				Property="Visibility"
+        				Value="Collapsed" />
+        		</DataTrigger>
+        		<DataTrigger Binding="{Binding Status}"
+        			Value="Ongoing">
+        			<Setter TargetName="textBlock"
+        				Property="Foreground"
+        				Value="DarkOrange" />
+        		</DataTrigger>
+        		<DataTrigger Binding="{Binding Status}"
+        			Value="Overdue">
+        			<Setter TargetName="textBlock"
+        				Property="Foreground"
+        				Value="Red" />
+        		</DataTrigger>
+        		<DataTrigger Binding="{Binding IsCancled}"
+        			Value="True">
+        			<Setter TargetName="textBlock"
+        				Property="Foreground"
+        				Value="Black" />
+        			<Setter TargetName="btnCompleted"
+        				Property="Visibility"
+        				Value="Collapsed" />
+        			<Setter TargetName="btnCancled"
+        				Property="Content"
+        				Value="Uncancel" />
+        		</DataTrigger>
+
+        	</DataTemplate.Triggers>
         </DataTemplate>
         <ControlTemplate x:Key="SinplePatientControlTemplate"
                          TargetType="{x:Type UserControl}">
@@ -448,6 +475,10 @@
                         <ei:GoToStateAction StateName="Busy"
                                             TargetObject="{Binding ElementName=RootElement}" />
                     </ei:DataTrigger>
+                    <i:EventTrigger SourceName="ViewPatient" >
+                        <ei:GoToStateAction StateName="Free" UseTransitions="False"
+                                            TargetObject="{Binding ElementName=RootElement}" />
+                    </i:EventTrigger>
                 </i:Interaction.Triggers>
                 <Grid x:Name="ViewPatient"
                       Background="White">
