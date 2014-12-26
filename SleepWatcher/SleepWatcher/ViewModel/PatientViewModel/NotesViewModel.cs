@@ -85,7 +85,18 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     if(id is int )LoadNotes.Execute((int)id);
                 });
             });
+            SwitchToSinglePatientViewCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(() =>
+                {
+                    Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel;
+                   
+                });
+
+            });
         }
+
+        public ActionCommand SwitchToSinglePatientViewCommand { get; set; }
         public ActionCommand SwitchToNotesViewCommand { get; set; }
 
         public bool IsBusy { get; set; }

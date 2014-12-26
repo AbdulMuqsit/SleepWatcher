@@ -103,9 +103,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 });
             });
 
-            //inititating command which swithces to add patinet view
-            SwitchToAddPatientViewModelCommand =
-                new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.AddPatientViewModel; });
+           
         }
 
         public RangeObservableCollection<StepModel> Steps
@@ -141,6 +139,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (Equals(value, _patient)) return;
                 _patient = value;
                 OnPropertyChanged();
+                Locator.AddPatientViewModel.SwitchToSinglePatientViewCommand.Execute(null);
                 LoadSteps();
 
             }
@@ -209,7 +208,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-        public ActionCommand SwitchToAddPatientViewModelCommand { get; set; }
+       
         public ActionCommand MarkCompleteCommand { get; set; }
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }

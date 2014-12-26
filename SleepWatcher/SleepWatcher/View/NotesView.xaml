@@ -24,7 +24,7 @@
     				HorizontalAlignment="Right"
     				VerticalAlignment="Center"
     				Margin="5"
-                        Command="{Binding AddPatientViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}" Height="25">
+                        Command="{Binding NotesViewModel.SwitchToSinglePatientViewCommand, Mode=OneWay, Source={StaticResource Locator}}" Height="25">
     				<Image Height="15"
     					Width="15"
     					Margin="5"

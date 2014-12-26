@@ -290,7 +290,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
         {
 
             _player = new SoundPlayer(@"Resources\Alarm.wav");
-            CurrentViewModel = new SinglePatientViewModel();
+            CurrentViewModel = new AddPatientButtonViewModel();
             _growlNotificaitons.Top = SystemParameters.WorkArea.Top + TopOffset;
             _growlNotificaitons.Left = SystemParameters.WorkArea.Left + SystemParameters.WorkArea.Width - LeftOffset;
             InitializeCommands();

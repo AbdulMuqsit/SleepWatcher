@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:SleepWatcher.View"
              xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-             xmlns:Converters="clr-namespace:SleepWatcher.Converters"
+             xmlns:converters="clr-namespace:SleepWatcher.Converters"
              x:Class="SleepWatcher.View.SinglePatinetView"
              mc:Ignorable="d"
              d:DesignHeight="506"
@@ -13,7 +13,6 @@
              x:Name="SinglePatient"
              Template="{DynamicResource SinplePatientControlTemplate}">
     <UserControl.Resources>
-
         <!-- Steps list box datatemplate!-->
         <DataTemplate x:Key="StepsListBoxItemsTemplate">
             <DataTemplate.Resources>
@@ -40,7 +39,7 @@
             </DataTemplate.Resources>
             <Grid Margin="0,5,0,0">
                 <Grid.Resources>
-                    <Converters:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
+                    <converters:EnumStringToFriendlyNameConverter x:Key="EnumConverter" />
                 </Grid.Resources>
             	<i:Interaction.Triggers>
             		<i:EventTrigger EventName="MouseMove" SourceName="grid" SourceObject="{Binding ElementName=grid}">
@@ -338,67 +337,6 @@
 
             </DataTemplate.Triggers>
         </DataTemplate>
-
-        <Style x:Key="AddNewPatientButtonStyle"
-               TargetType="{x:Type Button}">
-            <Setter Property="FocusVisualStyle"
-                    Value="{StaticResource FocusVisual}" />
-            <Setter Property="Background"
-                    Value="#FFBFBEBE" />
-            <Setter Property="Foreground"
-                    Value="#FF7F7F80" />
-            <Setter Property="BorderThickness"
-                    Value="1" />
-            <Setter Property="HorizontalContentAlignment"
-                    Value="Center" />
-            <Setter Property="VerticalContentAlignment"
-                    Value="Center" />
-            <Setter Property="Padding"
-                    Value="1,0,1,1" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="{x:Type Button}">
-                        <Border x:Name="border"
-                                CornerRadius="200"
-                                BorderBrush="{TemplateBinding BorderBrush}"
-                                BorderThickness="{TemplateBinding BorderThickness}"
-                                Background="{TemplateBinding Background}"
-                                SnapsToDevicePixels="true">
-                            <ContentPresenter x:Name="contentPresenter"
-                                              Focusable="False"
-                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
-                                              Margin="{TemplateBinding Padding}"
-                                              RecognizesAccessKey="True"
-                                              SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
-                                              VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver"
-                                     Value="True">
-                                <Setter Property="Background"
-                                        Value="#FFD1D1D1" />
-                                <Setter Property="Foreground"
-                                        Value="#FF979799" />
-                            </Trigger>
-                            <Trigger Property="IsPressed"
-                                     Value="True">
-                                <Setter Property="Foreground"
-                                        Value="#FF6B6B6C" />
-                                <Setter Property="Background"
-                                        Value="#FFAEAEAE" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-            <Setter Property="FontWeight"
-                    Value="Normal" />
-            <Setter Property="FontSize"
-                    Value="40" />
-            <Setter Property="FontFamily"
-                    Value="Arial" />
-        </Style>
-
         <ControlTemplate x:Key="SinplePatientControlTemplate"
                          TargetType="{x:Type UserControl}">
 
@@ -496,110 +434,6 @@
                         </VisualState>
                         <VisualState x:Name="Free" />
                     </VisualStateGroup>
-                    <VisualStateGroup x:Name="ViewStates">
-                        <VisualStateGroup.Transitions>
-                            <VisualTransition GeneratedDuration="0"
-                                              To="AddState">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                   Storyboard.TargetName="AddPatient">
-                                        <DiscreteObjectKeyFrame KeyTime="0"
-                                                                Value="{x:Static Visibility.Visible}" />
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                   Storyboard.TargetName="AddPatient">
-                                        <EasingDoubleKeyFrame KeyTime="0"
-                                                              Value="0" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                              Value="1" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                            <VisualTransition From="AddState"
-                                              GeneratedDuration="0">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                   Storyboard.TargetName="AddPatient">
-                                        <DiscreteObjectKeyFrame KeyTime="0"
-                                                                Value="{x:Static Visibility.Visible}" />
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.3"
-                                                                Value="{x:Static Visibility.Collapsed}" />
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                   Storyboard.TargetName="AddPatient">
-                                        <EasingDoubleKeyFrame KeyTime="0"
-                                                              Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                              Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                            <VisualTransition GeneratedDuration="0"
-                                              To="ViewState">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                   Storyboard.TargetName="ViewPatient">
-                                        <DiscreteObjectKeyFrame KeyTime="0"
-                                                                Value="{x:Static Visibility.Visible}" />
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                   Storyboard.TargetName="ViewPatient">
-                                        <EasingDoubleKeyFrame KeyTime="0"
-                                                              Value="0" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                              Value="1" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                            <VisualTransition From="ViewState"
-                                              GeneratedDuration="0">
-                                <Storyboard>
-                                    <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                                   Storyboard.TargetName="ViewPatient">
-                                        <DiscreteObjectKeyFrame KeyTime="0"
-                                                                Value="{x:Static Visibility.Visible}" />
-                                        <DiscreteObjectKeyFrame KeyTime="0:0:0.3"
-                                                                Value="{x:Static Visibility.Collapsed}" />
-                                    </ObjectAnimationUsingKeyFrames>
-                                    <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                                   Storyboard.TargetName="ViewPatient">
-                                        <EasingDoubleKeyFrame KeyTime="0"
-                                                              Value="1" />
-                                        <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                              Value="0" />
-                                    </DoubleAnimationUsingKeyFrames>
-                                </Storyboard>
-                            </VisualTransition>
-                        </VisualStateGroup.Transitions>
-                        <VisualState x:Name="AddState">
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                               Storyboard.TargetName="AddPatient">
-                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.3"
-                                                            Value="{x:Static Visibility.Visible}" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                               Storyboard.TargetName="AddPatient">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                          Value="1" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </VisualState>
-                        <VisualState x:Name="ViewState">
-                            <Storyboard>
-                                <ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
-                                                               Storyboard.TargetName="ViewPatient">
-                                    <DiscreteObjectKeyFrame KeyTime="0:0:0.3"
-                                                            Value="{x:Static Visibility.Visible}" />
-                                </ObjectAnimationUsingKeyFrames>
-                                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
-                                                               Storyboard.TargetName="ViewPatient">
-                                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
-                                                          Value="1" />
-                                </DoubleAnimationUsingKeyFrames>
-                            </Storyboard>
-                        </VisualState>
-                    </VisualStateGroup>
                 </VisualStateManager.VisualStateGroups>
                 <i:Interaction.Triggers>
                     <ei:DataTrigger Binding="{Binding SinglePatientViewModel.IsBusy}"
@@ -612,21 +446,8 @@
                         <ei:GoToStateAction StateName="Busy"
                                             TargetObject="{Binding ElementName=RootElement}" />
                     </ei:DataTrigger>
-                    <ei:DataTrigger Binding="{Binding SinglePatientViewModel.Patient}"
-                                    Value="{x:Null}">
-                        <ei:GoToStateAction StateName="AddState"
-                                            TargetObject="{Binding ElementName=RootElement}" />
-                    </ei:DataTrigger>
-                    <ei:DataTrigger Comparison="NotEqual"
-                                    Value="{x:Null}"
-                                    Binding="{Binding SinglePatientViewModel.Patient}">
-                        <ei:GoToStateAction StateName="ViewState"
-                                            TargetObject="{Binding ElementName=RootElement}" />
-                    </ei:DataTrigger>
-                    <i:EventTrigger>
-                        <ei:GoToStateAction StateName="AddState"
-                                            TargetObject="{Binding ElementName=RootElement}" />
-                    </i:EventTrigger>
+                   
+                  
                     <i:EventTrigger SourceName="ViewPatient">
                         <ei:GoToStateAction StateName="Busy"
                                             TargetObject="{Binding ElementName=RootElement}" />
@@ -634,36 +455,8 @@
 
                 </i:Interaction.Triggers>
 
-                <Grid x:Name="AddPatient"
-                      Visibility="Collapsed"
-                      Opacity="0">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="3*" />
-                    </Grid.RowDefinitions>
-
-                    <TextBlock Grid.Row="1"
-                               Text="Add New Patient"
-                               HorizontalAlignment="Center"
-                               Foreground="#FF7F7F80"
-                               FontSize="32"
-                               FontFamily="Trebuchet MS" />
-                    <Button Grid.Row="2"
-                            HorizontalAlignment="Center"
-                            Content="+"
-                            MinWidth="80"
-                            MinHeight="50"
-                            BorderBrush="{x:Null}"
-                            Margin="0,20,0,0"
-                            Style="{DynamicResource AddNewPatientButtonStyle}"
-                            Command="{Binding SinglePatientViewModel.SwitchToAddPatientViewModelCommand, Mode=OneWay}" />
-                </Grid>
                 <Grid x:Name="ViewPatient"
-                      Visibility="Collapsed"
-                      Opacity="0"
+                     
                       Background="White">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />
@@ -806,12 +599,9 @@
             </Grid>
 
         </ControlTemplate>
-
     </UserControl.Resources>
-
     <UserControl.DataContext>
         <Binding Mode="OneWay"
                  Source="{StaticResource Locator}" />
     </UserControl.DataContext>
-
 </UserControl>

@@ -129,9 +129,13 @@
     <Compile Include="SampleData\SingleNoteViewSample\SingleNoteViewSample.xaml.cs">
       <DependentUpon>SingleNoteViewSample.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\PatientViewModel\AddPatientButtonViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\NotesViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\OverDuePatientsViewModel.cs" />
     <Compile Include="ViewModel\PatientViewModel\SingleNoteViewModel.cs" />
+    <Compile Include="View\AddPatientButtonView.xaml.cs">
+      <DependentUpon>AddPatientButtonView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\NotesView.xaml.cs">
       <DependentUpon>NotesView.xaml</DependentUpon>
     </Compile>
@@ -186,6 +190,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </DesignTimeOnly>
+    <Page Include="View\AddPatientButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\NotesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

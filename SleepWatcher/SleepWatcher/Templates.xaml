@@ -99,7 +99,6 @@
         </DataTemplate.Triggers>
         
     </DataTemplate>
-   
     <DataTemplate DataType="{x:Type patientViewModels:SingleNoteViewModel}"> 
         <view:SingleNoteView x:Name="SingleNoteView"/>
         <DataTemplate.Resources>
@@ -121,6 +120,33 @@
             </EventTrigger>
         </DataTemplate.Triggers>
         
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type patientViewModels:AddPatientButtonViewModel}">
+        <view:AddPatientButtonView x:Name="AddPatientButtonView" />
+        <DataTemplate.Resources>
+            <Storyboard x:Key="Storyboard"
+                        TargetName="AddPatientButtonView"
+                        TargetProperty="Opacity">
+
+                <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+                                               Storyboard.TargetName="AddPatientButtonView">
+                    <EasingDoubleKeyFrame KeyTime="0"
+                                          Value="0" />
+                    <EasingDoubleKeyFrame KeyTime="0:0:0.3"
+                                          Value="1" />
+                </DoubleAnimationUsingKeyFrames>
+            </Storyboard>
+        </DataTemplate.Resources>
+
+        <DataTemplate.Triggers>
+            <EventTrigger SourceName="AddPatientButtonView"
+                          RoutedEvent="UserControl.Loaded">
+                <EventTrigger.Actions>
+                    <BeginStoryboard Storyboard="{StaticResource Storyboard}"></BeginStoryboard>
+                </EventTrigger.Actions>
+            </EventTrigger>
+        </DataTemplate.Triggers>
+
     </DataTemplate>
 
     <!-- Resource dictionary entries should be defined here. -->

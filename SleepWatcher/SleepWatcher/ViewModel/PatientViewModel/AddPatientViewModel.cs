@@ -113,8 +113,14 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             });
 
             //Initiate command which swithes the add pateint view back to the main view
-            SwitchToSinglePatientViewCommand =
-                new ActionCommand(() => { Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel; });
+            SwitchToSinglePatientViewCommand = new ActionCommand(async() =>
+            {
+                await Task.Run(() =>
+                {
+                    Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel;
+
+                });
+            });
         }
 
         public bool StartFirstStep

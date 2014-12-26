@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
@@ -37,6 +38,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     if (Note.Id == 0 && !String.IsNullOrWhiteSpace(Note.Text))
                     {
                         var step = (await Context.Steps.Include(e=>e.Notes).FirstAsync(e => e.Id == StepId));
+                        if (step.Notes==null) step.Notes = new Collection<Note>();
                         newNote = Mapper.Map<Note>(Note);
                         step.Notes.Add(newNote);
                         
