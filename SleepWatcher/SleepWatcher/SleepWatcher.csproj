@@ -289,6 +289,22 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Alarm.mp3" />
+    <Content Include="..\packages\Microsoft.SqlServer.Compact.4.0.8854.1\NativeBinaries\x86\sqlceer40EN.dll">
+      <Link>sqlceer40EN.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Compact.4.0.8854.1\NativeBinaries\x86\sqlceme40.dll">
+      <Link>sqlceme40.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Compact.4.0.8854.1\NativeBinaries\x86\sqlceqp40.dll">
+      <Link>sqlceqp40.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\packages\Microsoft.SqlServer.Compact.4.0.8854.1\NativeBinaries\x86\sqlcese40.dll">
+      <Link>sqlcese40.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Alarm.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

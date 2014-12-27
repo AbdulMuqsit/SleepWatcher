@@ -103,7 +103,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 });
             });
 
-           
+
         }
 
         public RangeObservableCollection<StepModel> Steps
@@ -147,8 +147,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private async void LoadNotesCount()
         {
-            await Task.Run(async() =>
+            await Task.Run(async () =>
             {
+                Busy();
                 foreach (var step in Patient.StepModels)
                 {
                     StepModel localStep = step;
@@ -156,8 +157,9 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     step.Count = Context.Entry(entity)
                            .Collection(b => b.Notes)
                            .Query()
-                           .Count(); 
-                }
+                           .Count();
+                } 
+                Free();
             });
         }
 
@@ -211,7 +213,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             }
         }
 
-       
+
         public ActionCommand MarkCompleteCommand { get; set; }
         public ActionCommand MarkCanceledCommand { get; set; }
         public ActionCommand ClearView { get; set; }

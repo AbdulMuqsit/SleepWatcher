@@ -17,7 +17,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public SingleNoteViewModel()
         {
-
             Notechanged += (() => SaveNoteCommand.Execute(null));
             SwitchToSingleNoteViewCommand = new ActionCommand(async (id) =>
             {
@@ -73,7 +72,6 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 OnPropertyChanged();
             }
         }
-
 
         public int StepId
         {

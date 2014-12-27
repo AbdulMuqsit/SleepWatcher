@@ -72,7 +72,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     {
                         //convert patient model to patient
                         var patient = Mapper.Map<Patient>(Patient);
-
+                        Busy(); 
+                        BusyMessage = "Saving Data";
                         //attach patient to context
                         DbEntityEntry entry = Context.Entry(patient);
                         if (entry.State == EntityState.Detached)
@@ -82,8 +83,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                         Context.Patients.Add(patient);
 
                         //Make state busy
-                        Busy();
-                        BusyMessage = "Saving Data";
+                       
+                       
 
                         //Assgn first step
                         var step = GetStep();

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30501.0
+VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepWatcher.EF", "SleepWatcher.EF\SleepWatcher.EF.csproj", "{B1075D63-CAB5-4CBD-B2D4-6FA726A1280B}"
 EndProject
@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SleepWatcher", "SleepWatche
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Amuqsit.CustomControls", "Amuqsit.CustomControls\Amuqsit.CustomControls.csproj", "{00E9B2D9-4CA0-4FFF-9A7D-7F26B36F7BDE}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SleepWathcer.Setup", "SleepWathcer.Setup\SleepWathcer.Setup.vdproj", "{EE677DA1-CAB7-4C93-AF0E-49F68987B673}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SleepWatcher.Setup", "SleepWathcer.Setup\SleepWathcer.Setup.vdproj", "{EE677DA1-CAB7-4C93-AF0E-49F68987B673}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

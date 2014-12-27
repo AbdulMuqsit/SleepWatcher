@@ -63,9 +63,10 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 {
                     return;
                 }
+                IsContextBusy = true;
                 await Task.Run(async () =>
                 {
-                    IsContextBusy = true;
+                    
                     if (id is int)
                     { var s = await Context.Steps.FirstAsync(e => e.Id == (int)id);
                         Step = Mapper.Map<StepModel>(s);
