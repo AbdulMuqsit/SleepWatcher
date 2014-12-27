@@ -4,6 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+             xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
              mc:Ignorable="d"
              d:DesignHeight="500"
              d:DesignWidth="700"
@@ -13,59 +15,216 @@
         <ControlTemplate x:Key="SingleNoteViewTemplate"
                          TargetType="{x:Type UserControl}">
 
-            <Grid HorizontalAlignment="Stretch"
-                  VerticalAlignment="Stretch" d:DataContext="{Binding Source={StaticResource SingleNoteViewSample}}" DataContext="{Binding SingleNoteViewModel, Source={StaticResource Locator}}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
+            <Grid x:Name="grid" HorizontalAlignment="Stretch"
+        		VerticalAlignment="Stretch" d:DataContext="{Binding Source={StaticResource SingleNoteViewSample}}" DataContext="{Binding SingleNoteViewModel, Source={StaticResource Locator}}">
+            	<i:Interaction.Triggers>
+            		<ei:DataTrigger Binding="{Binding IsBusy}" Value="True">
+            			<ei:GoToStateAction StateName="Busy" TargetObject="{Binding ElementName=grid}"/>
+            		</ei:DataTrigger>
+            		<ei:DataTrigger Binding="{Binding IsBusy}" Value="False">
+            			<ei:GoToStateAction StateName="Free" TargetObject="{Binding ElementName=grid}"/>
+            		</ei:DataTrigger>
+            	</i:Interaction.Triggers>
+        		<VisualStateManager.VisualStateGroups>
+        			<VisualStateGroup x:Name="BusyStates">
+        				<VisualStateGroup.Transitions>
+        					<VisualTransition GeneratedDuration="0"
+        						To="Busy">
+        						<Storyboard>
+        							<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+        								Storyboard.TargetName="stackPanel">
+        								<DiscreteObjectKeyFrame KeyTime="0"
+        									Value="{x:Static Visibility.Visible}" />
+        							</ObjectAnimationUsingKeyFrames>
+        							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+        								Storyboard.TargetName="stackPanel">
+        								<EasingDoubleKeyFrame KeyTime="0"
+        									Value="0" />
+        								<EasingDoubleKeyFrame KeyTime="0:0:0.6"
+        									Value="1" />
+        							</DoubleAnimationUsingKeyFrames>
+        						</Storyboard>
+        					</VisualTransition>
+        					<VisualTransition From="Busy"
+        						GeneratedDuration="0">
+        						<Storyboard>
+        							<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+        								Storyboard.TargetName="stackPanel">
+        								<DiscreteObjectKeyFrame KeyTime="0"
+        									Value="{x:Static Visibility.Visible}" />
+        								<DiscreteObjectKeyFrame KeyTime="0:0:0.6"
+        									Value="{x:Static Visibility.Collapsed}" />
+        							</ObjectAnimationUsingKeyFrames>
+        							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+        								Storyboard.TargetName="stackPanel">
+        								<EasingDoubleKeyFrame KeyTime="0"
+        									Value="1" />
+        								<EasingDoubleKeyFrame KeyTime="0:0:0.6"
+        									Value="0" />
+        							</DoubleAnimationUsingKeyFrames>
+        						</Storyboard>
+        					</VisualTransition>
+        				</VisualStateGroup.Transitions>
+        				<VisualState x:Name="Busy">
+        					<Storyboard>
+        						<ObjectAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Visibility)"
+        							Storyboard.TargetName="stackPanel">
+        							<DiscreteObjectKeyFrame KeyTime="0:0:0.6"
+        								Value="{x:Static Visibility.Visible}" />
+        						</ObjectAnimationUsingKeyFrames>
+        						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.Opacity)"
+        							Storyboard.TargetName="stackPanel">
+        							<EasingDoubleKeyFrame KeyTime="0:0:0.6"
+        								Value="1" />
+        						</DoubleAnimationUsingKeyFrames>
+        					</Storyboard>
+        				</VisualState>
+        				<VisualState x:Name="Free" />
+        			</VisualStateGroup>
 
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
-                <Button Grid.Row="0"
-                        Style="{DynamicResource BackButton}"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
+        		</VisualStateManager.VisualStateGroups>
+        		<Grid.RowDefinitions>
+        			<RowDefinition Height="Auto" />
+        			<RowDefinition Height="Auto" />
+        			<RowDefinition Height="Auto" />
+        			<RowDefinition Height="*" />
+
+        		</Grid.RowDefinitions>
+        		<Grid.ColumnDefinitions>
+        			<ColumnDefinition />
+        			<ColumnDefinition Width="Auto" />
+        		</Grid.ColumnDefinitions>
+        		<Button Grid.Row="0"
+        			Style="{DynamicResource BackButton}"
+        			HorizontalAlignment="Right"
+        			VerticalAlignment="Center"
                         
-                        Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}" Grid.Column="1" Height="25"
-                        CommandParameter="{Binding StepId}">
-                    <Image Height="15"
-                           Width="15"
-                           Margin="5"
-                           Source="../Resources/back.png" />
-                </Button>
-                <TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
-                           Style="{StaticResource TextBlockStyle}"
-                           Text="Title: " VerticalAlignment="Bottom" />
-                <TextBox Grid.Column="0"
-                         Grid.Row="1"
-                         Style="{StaticResource TextBoxStyle}"
-                         HorizontalAlignment="Stretch" 
-                         Text="{Binding Note.Title, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=700}" Margin="5,0,5,0"/>
-                <TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}"
-                           Text="Note: " ></TextBlock>
-                <DatePicker Height="30" VerticalAlignment="Center" Text="" SelectedDate="{Binding Note.Date, Mode=TwoWay, Delay=700, UpdateSourceTrigger=PropertyChanged, FallbackValue={x:Static system:DateTime.Now}}" Grid.Row="1" Grid.Column="1" Margin="0,1.307,0,28.752" Grid.RowSpan="2" Style="{DynamicResource DatePickerStyle}"></DatePicker>
-                <TextBox Grid.Column="0"
-                         Grid.ColumnSpan="2"
-                         Style="{StaticResource TextBoxStyle}"
-                         Grid.Row="3"
-                         HorizontalAlignment="Stretch"
-                         Height="Auto"
-                         AcceptsReturn="True"
-                         AcceptsTab="True"
-                         HorizontalScrollBarVisibility="Auto"
-                         VerticalScrollBarVisibility="Auto"
-                         VerticalAlignment="Stretch"
-                         Text="{Binding Note.Text, Mode=TwoWay, Delay=700, UpdateSourceTrigger=PropertyChanged}"
-                         VerticalContentAlignment="Top"
-                         TextWrapping="WrapWithOverflow" Margin="5,0,0,0">
-                   
-                    </TextBox>
-            </Grid>
+        			Command="{Binding NotesViewModel.SwitchToNotesViewCommand, Source={StaticResource Locator}}" Grid.Column="1" Height="25"
+        			CommandParameter="{Binding StepId}">
+        			<Image Height="15"
+        				Width="15"
+        				Margin="5"
+        				Source="../Resources/back.png" />
+        		</Button>
+        		<TextBlock Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left"
+        			Style="{StaticResource TextBlockStyle}"
+        			Text="Title: " VerticalAlignment="Bottom" />
+        		<TextBox Grid.Column="0"
+        			Grid.Row="1"
+        			Style="{StaticResource TextBoxStyle}"
+        			HorizontalAlignment="Stretch" 
+        			Text="{Binding Note.Title, Delay=700, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="5,0,5,0"/>
+        		<TextBlock Grid.Row="2" Grid.Column="0" Style="{StaticResource TextBlockStyle}"
+        			Text="Note: " />
+        		<DatePicker Height="30" VerticalAlignment="Center" Text="" SelectedDate="{Binding Note.Date, Delay=700, FallbackValue={x:Static system:DateTime.Now}, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Grid.Row="1" Grid.Column="1" Margin="0,1.307,0,28.752" Grid.RowSpan="2" Style="{DynamicResource DatePickerStyle}"/>
+        		<TextBox Grid.Column="0"
+        			Grid.ColumnSpan="2"
+        			Style="{StaticResource TextBoxStyle}"
+        			Grid.Row="3"
+        			HorizontalAlignment="Stretch"
+        			Height="Auto"
+        			AcceptsReturn="True"
+        			AcceptsTab="True"
+        			HorizontalScrollBarVisibility="Auto"
+        			VerticalScrollBarVisibility="Auto"
+        			VerticalAlignment="Stretch"
+        			Text="{Binding Note.Text, Delay=700, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+        			VerticalContentAlignment="Top"
+        			TextWrapping="WrapWithOverflow" Margin="5,0,0,0"/>
+        		<StackPanel x:Name="stackPanel"
+        			VerticalAlignment="Bottom"
+        			HorizontalAlignment="Right"
+        			Orientation="Vertical"
+        			Grid.Row="3"
+        			Grid.Column="1"
+        			Margin="10"
+        			Visibility="Collapsed"
+        			Opacity="0"
+        			Grid.ColumnSpan="2">
+        			<Grid Width="30" Height="30">
+        				<Ellipse x:Name="ellipse"
+        					StrokeThickness="6"
+        					RenderTransformOrigin="0.5,0.5"
+        					Height="30" Width="30">
+        					<Ellipse.Effect>
+        						<DropShadowEffect Color="#FFCFB79A"
+        							Opacity="0.5" />
+        					</Ellipse.Effect>
+        					<Ellipse.Stroke>
+        						<LinearGradientBrush EndPoint="0.5,1"
+        							MappingMode="RelativeToBoundingBox"
+        							StartPoint="0.5,0">
+        							<GradientStop Color="#FFC9C9C9"
+        								Offset="1" />
+        							<GradientStop Color="#FFEC9C28"
+        								Offset="0.3" />
+        						</LinearGradientBrush>
+        					</Ellipse.Stroke>
+        				</Ellipse>
+        				<Ellipse x:Name="ellipse1"
+        					StrokeThickness="6"
+        					RenderTransformOrigin="0.5,0.5"
+        					Height="30" Width="30">
+        					<Ellipse.Resources>
+        						<Storyboard x:Key="BusyAnimation"
+        							RepeatBehavior="Forever">
+        							<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[2].(RotateTransform.Angle)"
+        								Storyboard.TargetName="ellipse1">
+        								<EasingDoubleKeyFrame KeyTime="0:0:2"
+        									Value="360" />
+        							</DoubleAnimationUsingKeyFrames>
+        						</Storyboard>
+        					</Ellipse.Resources>
+        					<i:Interaction.Triggers>
+        						<ei:DataTrigger Binding="{Binding IsBusy}"
+        							Value="True">
+        							<ei:ControlStoryboardAction ControlStoryboardOption="Play"
+        								Storyboard="{StaticResource BusyAnimation}" />
+        						</ei:DataTrigger>
+        						<ei:DataTrigger Binding="{Binding IsBusy}"
+        							Value="False">
+        							<ei:ControlStoryboardAction ControlStoryboardOption="Stop"
+        								Storyboard="{StaticResource BusyAnimation}" />
+        						</ei:DataTrigger>
+        					</i:Interaction.Triggers>
+        					<Ellipse.RenderTransform>
+        						<TransformGroup>
+        							<ScaleTransform />
+        							<SkewTransform />
+        							<RotateTransform />
+        							<TranslateTransform />
+        						</TransformGroup>
+        					</Ellipse.RenderTransform>
+        					<Ellipse.Stroke>
+        						<LinearGradientBrush EndPoint="0.5,1"
+        							MappingMode="RelativeToBoundingBox"
+        							StartPoint="0.5,0">
+        							<GradientStop Color="#FFC9C9C9"
+        								Offset="1" />
+        							<GradientStop Color="#FFEC9C28"
+        								Offset="0.3" />
+        						</LinearGradientBrush>
+        					</Ellipse.Stroke>
+        				</Ellipse>
+        			</Grid>
+        			<TextBlock Margin="5"
+        				HorizontalAlignment="Center"
+        				Style="{DynamicResource TextBlockStyle}"
+        				Foreground="#FF727272"
+        				FontSize="12"><TextBlock.Effect>
+        					<DropShadowEffect Opacity="0.3" />
+        				</TextBlock.Effect><Run Text="Saving Changes" /></TextBlock>
+        			<TextBlock HorizontalAlignment="Center"
+        				Margin="5,-10,5,5"
+        				Style="{DynamicResource TextBlockStyle}"
+        				Foreground="#FF727272"
+        				FontSize="12"><TextBlock.Effect>
+        					<DropShadowEffect Opacity="0.3" />
+        				</TextBlock.Effect><Run Text="..." /></TextBlock>
+
+        		</StackPanel>
+
+        	</Grid>
 
         </ControlTemplate>
         <Style x:Key="DatePickerStyle" TargetType="{x:Type DatePicker}">

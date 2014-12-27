@@ -14,6 +14,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
     {
         private NoteModel _note;
         private int _stepId;
+        private bool _isBusy;
 
         public SingleNoteViewModel()
         {
@@ -24,7 +25,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 if (id is int)
                 {
                     _stepId = (int)id;
-                    if ((int)id == 0)
+                    if (Note == null)
                         _note = new NoteModel() { StepId = _stepId, Date = DateTime.Now };
                 }
             });
@@ -36,6 +37,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     IsContextBusy = true;
                     if (Note != null && Note.Id == 0 && !String.IsNullOrWhiteSpace(Note.Text))
                     {
+                        IsBusy = true;
                         var step = (await Context.Steps.Include(e => e.Notes).FirstAsync(e => e.Id == StepId));
                         if (step.Notes == null) step.Notes = new Collection<Note>();
                         var newNote = Mapper.Map<Note>(Note);
@@ -46,6 +48,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     }
                     else if (Note != null && Note.Id != 0)
                     {
+                        IsBusy = true;
                         Note entry = await Context.Notes.FirstAsync(note => note.Id == Note.Id);
                         entry.Date = Note.Date;
                         entry.Text = Note.Text;
@@ -53,7 +56,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                         Context.Entry(entry).State = EntityState.Modified;
                         await Context.SaveChangesAsync();
                     }
-
+                    IsBusy = false;
                     IsContextBusy = false;
                 });
             });
@@ -86,7 +89,17 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         public ActionCommand SaveNoteCommand { get; set; }
 
-        public bool IsBusy { get; set; }
+        public bool IsBusy
+        {
+            get { return _isBusy; }
+            set
+            {
+                if (Equals(value, _isBusy)) return;
+                _isBusy = value;
+                OnPropertyChanged();
+            }
+        }
+
         public event Action Notechanged;
 
         public void OnNoteChanged()

@@ -72,6 +72,15 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                     Free();
                 });
             });
+            SwitchToSinglePatientViewCommand = new ActionCommand(async () =>
+            {
+                await Task.Run(() =>
+                {
+                    Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel;
+                    LoadSteps();
+                });
+
+            });
             //Initializing command which marks a step as completed
             MarkCompleteCommand = new ActionCommand(async () =>
             {
@@ -106,6 +115,8 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         }
 
+        public ActionCommand SwitchToSinglePatientViewCommand { get; set; }
+
         public RangeObservableCollection<StepModel> Steps
         {
             get { return _steps; }
@@ -136,6 +147,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
             get { return _patient; }
             set
             {
+                if (value == null) return;
                 if (Equals(value, _patient)) return;
                 _patient = value;
                 OnPropertyChanged();
@@ -147,6 +159,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
 
         private async void LoadNotesCount()
         {
+            
             await Task.Run(async () =>
             {
                 Busy();

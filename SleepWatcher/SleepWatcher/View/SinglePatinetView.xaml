@@ -473,19 +473,20 @@
                                Text="{Binding SinglePatientViewModel.Patient.FullName, Mode=OneWay}"
                                Foreground="#FF636363"
                                FontSize="32"
-                               Margin="5,0,0,0" />
+                               Margin="0,0,5,0" />
                     <ListBox Grid.Row="1"
                              ScrollViewer.CanContentScroll="False"
                              ItemsSource="{Binding SinglePatientViewModel.Patient.StepModels}"
                              ItemTemplate="{StaticResource StepsListBoxItemsTemplate}"
                              HorizontalContentAlignment="Stretch"
-                             SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}" Margin="10,0,-10,0" />
+                             SelectedItem="{Binding SinglePatientViewModel.SelectedStep, Mode=OneWayToSource}"
+                             Margin="0" />
                     <Button Grid.Row="0"
                             Style="{DynamicResource BackButton}"
                             Command="{Binding AddPatientButtonViewModel.SwitchToAddPatientButtonViewModelCommand}"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Top"
-                            Margin="0,5,5,5"
+                            Margin="0,5,5,0"
                             Height="25">
                         <Image Height="15"
                                Width="15"

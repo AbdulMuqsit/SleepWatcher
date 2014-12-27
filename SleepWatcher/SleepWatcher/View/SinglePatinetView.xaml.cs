@@ -16,22 +16,18 @@ namespace SleepWatcher.View
             {
                 ApplyTemplate();
 
-                var vsmGroups = VisualStateManager.GetVisualStateGroups(Root);
-                var gone = VisualStateManager.GoToElementState(Root, "Free", false);
-                Debug.Write(gone);
+                var gone = VisualStateManager.GoToElementState(_root, "Free", false);
             };
             InitializeComponent();
             
 
         }
 
-        private FrameworkElement Root;
+        private FrameworkElement _root;
 
         public override void OnApplyTemplate()
         {
-            base.OnApplyTemplate();
-            Root = (FrameworkElement)GetTemplateChild("RootElement");
-            Debug.Write(Root);
+            _root = (FrameworkElement)GetTemplateChild("RootElement");
 
         }
     }

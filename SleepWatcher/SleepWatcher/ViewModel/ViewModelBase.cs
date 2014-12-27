@@ -15,8 +15,8 @@ namespace SleepWatcher.ViewModel
         public static bool IsContextBusy { get; set; }
         static ViewModelBase()
         {
-            AppDomain.CurrentDomain.SetData("DataDirectory",
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+            //AppDomain.CurrentDomain.SetData("DataDirectory",
+            //    Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
             Context = new SleepWatcherDbContext();
         }
 

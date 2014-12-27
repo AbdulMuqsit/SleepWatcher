@@ -123,6 +123,7 @@
     <Compile Include="Model\PatientModel.cs" />
     <Compile Include="Model\PatientNotificaitonModel.cs" />
     <Compile Include="Model\StepModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleData\NotesViewModelSample\NotesViewModelSample.xaml.cs">
       <DependentUpon>NotesViewModelSample.xaml</DependentUpon>
     </Compile>

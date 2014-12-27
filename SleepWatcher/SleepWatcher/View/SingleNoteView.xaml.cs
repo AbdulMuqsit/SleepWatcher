@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,7 +23,25 @@ namespace SleepWatcher.View
     {
         public SingleNoteView()
         {
+            Initialized += (sender, args) =>
+            {
+                ApplyTemplate();
+
+                var gone = VisualStateManager.GoToElementState(_root, "Free", false);
+             
+            };
             InitializeComponent();
+
+
+        }
+
+        private FrameworkElement _root;
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+            _root = (FrameworkElement)GetTemplateChild("grid");
+
         }
     }
 }

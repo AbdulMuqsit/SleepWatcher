@@ -92,4 +92,9 @@ internal static class Ipsum
 
 		return string.Join(" ", result.Take(wordCount)) + ".";
 	}
+
+	public static string GetWord()
+	{
+		return words[random.Next(words.Length - 1)];
+	}
 }

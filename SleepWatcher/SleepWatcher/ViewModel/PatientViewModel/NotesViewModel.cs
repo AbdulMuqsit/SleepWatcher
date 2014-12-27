@@ -91,7 +91,7 @@ namespace SleepWatcher.ViewModel.PatientViewModel
                 await Task.Run(() =>
                 {
                     Locator.PatientViewModel.CurrentViewModel = Locator.SinglePatientViewModel;
-                   
+                    
                 });
 
             });

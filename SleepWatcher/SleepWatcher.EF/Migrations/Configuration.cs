@@ -28,8 +28,8 @@ namespace SleepWatcher.EF.Migrations
             {
                 var patient = new Patient()
                 {
-                    FirstName = "Bill" + i,
-                    LastName = "Peters"
+                    FirstName = Ipsum.GetWord(),
+                    LastName = Ipsum.GetWord()
                 };
                 var totalSteps = rand.Next(1, 7);
                 bool canceled = rand.Next(0, 9) == 0;
